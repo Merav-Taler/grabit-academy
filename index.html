@@ -434,6 +434,36 @@ h2.q{font-size:20px;font-weight:900;color:var(--navy);line-height:1.3;}
   .tvl-pool{gap:5px;}
   .tvl-chip{font-size:10px;padding:7px 2px;}
 }
+
+/* --- CHAT bubble (customer quote in walkthrough) --- */
+.chat-row{display:flex;gap:9px;align-items:flex-end;margin-top:6px;}
+.chat-av{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#E4DED3,#C9BFAC);
+  display:grid;place-items:center;font-size:18px;font-weight:900;color:var(--navy);
+  box-shadow:var(--shadow-sm);
+}
+.chat-bubble{
+  background:#fff;border:1.5px solid var(--line);border-radius:16px 16px 16px 4px;
+  padding:11px 13px;max-width:85%;position:relative;
+  font-size:14.5px;line-height:1.5;color:var(--ink);box-shadow:var(--shadow-sm);
+}
+.chat-bubble .who{font-size:11px;font-weight:900;color:var(--ink-soft);letter-spacing:.02em;margin-bottom:3px;}
+.chat-bubble .typing{display:inline-flex;gap:3px;align-items:center;}
+.chat-bubble .typing span{width:5px;height:5px;border-radius:50%;background:var(--ink-soft);opacity:.4;animation:typing 1.2s infinite;}
+.chat-bubble .typing span:nth-child(2){animation-delay:.2s;} .chat-bubble .typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typing{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+.chat-time{font-size:10px;color:var(--ink-soft);text-align:left;margin-top:4px;font-weight:600;}
+
+/* --- SMS-style scenario card (opentext) --- */
+.sms-card{
+  background:linear-gradient(180deg,#E8F4FF,#D8EBFC);
+  border:1.5px solid #B5D7F2;border-radius:18px;padding:13px;display:flex;flex-direction:column;gap:8px;
+}
+.sms-head{display:flex;gap:9px;align-items:center;font-size:12px;color:var(--ink-soft);font-weight:700;}
+.sms-head .who{font-weight:900;color:var(--navy);font-size:14px;}
+.sms-msg{background:#fff;border-radius:13px 13px 13px 3px;padding:10px 12px;font-size:14.5px;line-height:1.5;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08);align-self:flex-start;max-width:92%;}
+.sms-meta{font-size:11px;color:var(--ink-soft);text-align:left;font-weight:600;}
 </style>
 </head>
 <body>
@@ -644,29 +674,30 @@ const SCREENS=[
 },
 {ch:2,time:'14:30',type:'scene',
   img:'image45.png',room:'פרק 2 · פריקה · חיפה',
-  title:'הגענו לבית החדש',
-  lead:'הציוד הגיע בשלום. עכשיו <b>פורקים בסדר ובבטחה</b>. הפריקה היא הרגע שבו הלקוח פוגש את כל העבודה שלנו.',
-  coach:'הרושם האחרון נוצר כאן. <b>סדר, מעברים פנויים, ויושר במקרה של נזק</b> — אלו 3 הדברים שעושים את ההבדל.'
+  title:'הגענו לבית של נעמי',
+  lead:'המשאית הגיעה לבית החדש בחיפה. נעמי מחכה בדלת, הילדים מתרוצצים. עכשיו <b>פורקים בסדר ובבטחה</b> — זה הרגע שבו היא תראה את כל העבודה שלכם.',
+  grabi:{mood:'think',line:'<b>תקשיב לי טוב:</b> הפריקה היא ה"רושם האחרון". מה שיקרה פה — זה מה שנעמי תזכור. סדר, מעברים פנויים, ויושר אם משהו נשרט.'}
 },
 {ch:2,time:'14:50',type:'hotspot',
-  eyebrow:'זיהוי פריקה נכונה',
-  q:'לחצו על כל נקודה כדי לזהות סימני פריקה טובה',
+  eyebrow:'מסתכלים מסביב · הסלון של נעמי',
+  q:'נעצו דגל על כל סימן של פריקה טובה',
   img:'image45.png',
   spots:[
     {x:30,y:42,ic:'🚪',t:'קרטונים לפי חדרים',
-      d:'כל קרטון מונח באזור המתאים — מונע בלבול וחיפוש בזמן הפריקה.'},
+      d:'כל קרטון באזור שלו — כי נעמי לא צריכה לחפש את הקופסה של חדר הילדים בסלון.'},
     {x:65,y:62,ic:'↔️',t:'מעברים פנויים',
-      d:'נתיב תנועה פתוח — מונע נפילות וחוסך זמן. לא חוסמים מסדרונות עם קרטונים.'},
+      d:'הילדים של נעמי רצים פה. מסדרון חסום = נפילה. תמיד משאירים נתיב פתוח.'},
     {x:50,y:30,ic:'🛋️',t:'רהיטים במיקום הסופי',
-      d:'ממקמים רהיטים גדולים במיקום הסופי לפני פתיחת קרטונים — שומר על סדר ומונע הזזה חוזרת.'},
-    {x:80,y:80,ic:'🛒',t:'עבודה עם עגלה',
-      d:'שימוש בעגלה ותכנון סדר הפריקה מקצרים זמן ומפחיתים עבודה כפולה.'}
-  ]
+      d:'הספה זזה פעם אחת — למקום שלה. אחרי שפותחים קרטונים, אי אפשר להזיז ספה.'},
+    {x:80,y:80,ic:'🛒',t:'עגלה זה לא בושה',
+      d:'מי שמרים 50 ארגזים ביד — מסיים לא חי. עגלה חוסכת לכם גב וזמן.'}
+  ],
+  grabiDone:{mood:'happy',line:'<b>4 סימנים של עבודה מסודרת.</b> נעמי תראה את זה ותדע — היא בידיים טובות.'}
 },
 {ch:2,time:'15:20',type:'dragorder',
-  eyebrow:'סדר הפריקה',
-  q:'באיזה סדר פורקים את הבית?',
-  sub:'העיקרון: <b>מבפנים החוצה</b>. הקישו מספר ואז משימה.',
+  eyebrow:'סדר הפריקה בבית של גלבוע',
+  q:'באיזה סדר פורקים?',
+  sub:'<b>מבפנים החוצה</b> — כדי לא לחסום את הדרך לעצמכם. הקישו מספר ואז משימה.',
   mode:'emoji',
   targets:[
     {emoji:'🛏️',label:'ארגזי חדרי שינה וארגזי בגדים',correct:1},
@@ -675,81 +706,93 @@ const SCREENS=[
     {emoji:'🛋️',label:'ספה וריהוט סלון',correct:4},
     {emoji:'📦',label:'מחסן ומרפסת',correct:5}
   ],
-  okTitle:'כל הכבוד — זה הסדר הנכון!',
-  okDesc:'חדרים פנימיים ראשונים, אזורים מרכזיים אחרונים — כך לא נוצרים פקקים של ארגזים במסדרונות.',
-  errDesc:'נסו שוב — מאיפה כדאי להתחיל כדי לא לחסום את הדרך?'
+  okTitle:'זה הסדר הנכון',
+  okDesc:'חדרים פנימיים ראשונים, מרכזיים אחרונים — אין פקקי קרטונים במסדרון של נעמי.',
+  errDesc:'נסו שוב — חשבו: מאיפה מתחילים כדי לא לחסום לעצמכם את הדרך?',
+  grabiDone:{mood:'proud',line:'<b>זה הסוד.</b> מובילים מתחילים מהקל; מקצוענים מתחילים מהפנימי. אתם עכשיו בקבוצה השנייה.'}
 },
 {ch:2,time:'15:50',type:'summary',
-  title:'ניהול נזק · שיטת נ.ע.ת.ת',
-  intro:'זיהיתם נזק במהלך הפריקה? הסדר חשוב:',
+  title:'משהו נשבר? פעלו לפי נ.ע.ת.ת',
+  intro:'אפילו לגרבי קרה. הסדר הוא מה שמבדיל מקצוען מחובבן:',
   steps:[
-    {t:'נ — זיהוי הנזק',d:'מזהים מיד, לא מתעלמים ולא מסתירים.'},
-    {t:'ע — עצירה',d:'מפסיקים את העבודה באזור כדי לא להחמיר את הנזק.'},
-    {t:'ת — תיעוד',d:'צילום, תיאור, מה קרה — בשטח, לפני שממשיכים.'},
-    {t:'ת — תקשורת',d:'רק אז פונים ללקוח, משתפים בכנות ומציעים פתרון.'}
+    {t:'נ — זיהוי הנזק',d:'אתם רואים שריטה במקרר. אל תקווה שאף אחד לא ישים לב — מסמנים, ממשיכים בראש שקט.'},
+    {t:'ע — עצירה',d:'מפסיקים את העבודה באזור. ממשיכים לעבוד = הופכים שריטה לפגיעה.'},
+    {t:'ת — תיעוד',d:'צילום מהזווית הטובה ביותר, תיאור קצר, שעה. לפני שאתם פונים ללקוח.'},
+    {t:'ת — תקשורת',d:'רק עכשיו פונים לנעמי. בכנות. עם פתרון, לא רק עם בעיה.'}
   ],
-  outro:'<b>לקוחות סולחים לנזק — לא לחוסר יושר.</b> שקיפות בשטח שומרת על האמון.'
+  stamp:'פריקה הושלמה ✓',
+  grabiOutro:{mood:'think',line:'<b>תזכרו:</b> לקוחות סולחים לנזק. אף לקוח לא סולח לחוסר יושר. זה כל הסיפור.'}
 },
 {ch:3,time:'16:10',type:'exploretabs',
-  eyebrow:'פרק 3 · תקשורת עם לקוח',
-  q:'4 כללים לתקשורת נכונה',
+  eyebrow:'פרק 3 · תקשורת עם נעמי',
+  q:'4 כללים שגרבי לא מוותר עליהם',
   sub:'הקישו על כל כלל כדי לחשוף אותו',
-  intro:'אחרי שהפריקה הסתיימה, חשוב לשמור על תקשורת <b>מקצועית, רגועה ומכבדת</b>.',
+  intro:'הציוד פרוק, אבל המשימה עוד לא נגמרה. <b>איך אתם מדברים עם נעמי</b> — זה מה שיקבע אם היא תזמין אתכם שוב או תספר לחברה שלה.',
   tabs:[
     {ic:'🤝',t:'תיאום ציפיות',name:'תיאום ציפיות מראש',
-      d:'מתאמים ציפיות באופן ברור ומלא לפני ההובלה — שירות, תנאי עבודה, עלויות. מונע אי־הבנות בהמשך.'},
+      d:'מתאמים בבירור לפני ההובלה: מה כלול, מה לא, כמה זה עולה. אין הפתעות = אין כעסים.'},
     {ic:'💬',t:'תקשורת מכבדת',name:'תקשורת מכבדת ושקופה',
-      d:'מתקשרים בצורה רגועה ושקופה — גם במצבים מורכבים. שומר על אמון וחוויית שירות חיובית.'},
+      d:'מדברים בנחת גם כשלקוח מתעצבן. ה-tone שלך הוא ה-tone של השיחה.'},
     {ic:'🔔',t:'הצפת פערים',name:'הצפת פערים מוקדם',
-      d:'מציפים בעיות כבר בתחילת העבודה (פריטים שלא סוכמו, תנאי גישה) ופותרים יחד עם הלקוח לפני שממשיכים.'},
+      d:'משהו לא סוכם? פריט נוסף? תנאי גישה משונה? <b>אומרים מיד</b>, פותרים יחד, ממשיכים.'},
     {ic:'📲',t:'עדכון בזמן אמת',name:'עדכון בזמן אמת',
-      d:'מעדכנים את הלקוח על שינויים, עיכובים או התקדמות — מפחית לחץ ומחזק תחושת ביטחון.'}
-  ]
+      d:'נתקעתם בפקק? תגידו. צריך עוד 20 דקות? תגידו. שתיקה = חרדה אצל הלקוח.'}
+  ],
+  grabi:{mood:'happy',line:'אל תפחדו לדבר. <b>לקוח מעודכן זה לקוח רגוע.</b> ולקוח רגוע — זה לקוח שמשלם ומחייך.'}
 },
 {ch:3,time:'16:30',type:'walkthrough',
-  eyebrow:'רגעי האמת',
-  intro:'במהלך היום קורים דברים לא צפויים. עברו את <b>3 הסיטואציות</b> ובחרו את התגובה הנכונה.',
+  eyebrow:'רגעי האמת מהשטח',
+  intro:'במהלך היום קורים דברים לא צפויים. הנה <b>3 מצבים אמיתיים</b> מתוך השיחות שלכם עם משפחת גלבוע.',
   steps:[
-    {room:'הארון הנסתר',
-      q:'08:30 בבוקר, הגעתם לדירה. בסלון יש ארון 4 דלתות שלא הופיע בהזמנה ולא פורק. איך תגיבו?',
+    {room:'הארון הנסתר · בוקר ההובלה',
+      customerName:'נעמי גלבוע',customerInitial:'נ',
+      customerQuote:'בוקר טוב! זה הארון של אמא שלי, גם אותו אתם לוקחים, נכון?',
+      q:'08:30 בבוקר. הגעתם לדירה — בסלון יש ארון 4 דלתות שלא הופיע בהזמנה ולא פורק. איך עונים?',
       opts:[
         {t:'"בוקר טוב, בוא נתחיל! נסתדר עם הכל תוך כדי."'},
         {t:'"הארון הזה לא בהזמנה. אני לא נוגע עד שתשולם תוספת."'},
-        {t:'"אני רואה ארון שלא סוכם מראש — בוא נסגור יחד איך ממשיכים."',correct:true}
+        {t:'"בוקר טוב, אני רואה את הארון. הוא לא היה בהזמנה — בואי נסגור יחד איך ממשיכים."',correct:true}
       ],
-      ok:'<b>תיאום ציפיות בזמן</b> מונע קונפליקטים ויוצר שקיפות. כך נשמר אמון הלקוח.',
-      err:'נסו שוב. גם דחייה וגם תקיפות פוגעות באמון. מה הדרך השקופה והמכבדת?'
+      ok:'<b>תיאום ציפיות בזמן</b> — לא דוחים, לא תוקפניים. שקופים מההתחלה.',
+      err:'דחייה או תקיפות פוגעות באמון. מה הדרך השקופה והמכבדת?',
+      grabi:{mood:'think',line:'הביטוי "בואי נסגור יחד" עושה פלאים. הוא הופך אותך משירות לשותף.'}
     },
-    {room:'השריטה במקרר',
-      q:'במעבר במסדרון צר נוצרה שריטה בולטת במקרר. הלקוח בחדר השני ולא ראה. איך תגיבו?',
+    {room:'השריטה במקרר · אמצע הפריקה',
+      q:'במעבר במסדרון צר נוצרה שריטה בולטת על דופן המקרר. נעמי בחדר השני ולא ראתה. מה אתם עושים?',
       opts:[
         {t:'מחכים לסוף היום ואז אומרים — "לא שמנו לב"'},
         {t:'ממקמים את המקרר כך שהשריטה פחות נראית, בלי לעדכן'},
-        {t:'ניגשים ללקוח, משתפים מיד, מתנצלים ומציעים פתרון',correct:true}
+        {t:'ניגשים לנעמי, משתפים מיד, מתנצלים ומציעים פתרון',correct:true}
       ],
-      ok:'<b>שקיפות ולקיחת אחריות</b> בונות אמון. לקוחות סולחים לנזק, לא לחוסר יושר.',
-      err:'נסו שוב. תגובה מתחמקת או הסתרה פוגעות באמון. מה עושה מוביל מקצועי?'
+      ok:'<b>שקיפות ולקיחת אחריות</b>. נעמי תסלח לשריטה — היא לא תסלח אם תגלה בעצמה.',
+      err:'הסתרה זה הסיכון הכי גדול שאתה לוקח כמוביל. מה הדרך הישרה?',
+      grabi:{mood:'think',line:'10 שניות של "סליחה, קרה ככה" שווים יותר מ-10 שנות שירות מושלם. תזכרו את זה.'}
     },
-    {room:'המעלית התקלקלה',
-      q:'סוף יום, הגעתם ליעד והמעלית התקלקלה. הלקוחה לחוצה, הצוות עייף. איך תגיבו?',
+    {room:'המעלית התקלקלה · 17:00',
+      customerName:'נעמי גלבוע',customerInitial:'נ',
+      customerQuote:'איך זה יכול להיות?! עברנו את כל היום הזה ועכשיו אין מעלית?!',
+      q:'סוף יום ארוך. המעלית בבניין החדש התקלקלה. נעמי לחוצה, הצוות עייף. איך עונים?',
       opts:[
-        {t:'"מבין שזה מתסכל. נבדוק יחד פתרון ונעשה כל מה שאפשר לסיים היום."',correct:true},
+        {t:'"אני מבין שזה מתסכל. נבדוק יחד פתרון ונעשה כל מה שאפשר לסיים היום."',correct:true},
         {t:'"עוצרים את ההובלה. תתקשרי למשרד לקבוע מועד חדש."'},
         {t:'"זה לא באשמתנו. אם אין מעלית נמשיך מחר."'}
       ],
-      ok:'<b>הכרה ברגש</b> + מחויבות לפתרון מיידי — שומרת על האמון וממשיכה את ההובלה.',
-      err:'נסו שוב. הפניה למשרד או התנערות לא נותנות מענה. מה הלקוחה צריכה לשמוע עכשיו?'
+      ok:'<b>הכרה ברגש</b> + מחויבות לפתרון. נעמי לא רוצה הסבר — היא רוצה לדעת שאתה איתה.',
+      err:'הפנייה למשרד או "זה לא באשמתנו" — בדיוק הדברים שלקוחה לחוצה לא רוצה לשמוע.',
+      grabi:{mood:'happy',line:'הכלל שלי: <b>קודם רגש, אחרי זה פתרון.</b> "אני מבין" — שורה אחת, חצי מהכעס נעלם.'}
     }
   ],
-  doneTitle:'פעלת כמו מקצוען!',
-  doneDesc:'3 רגעי אמת, 3 תגובות נכונות — שקופות, מכבדות ופותרות.'
+  doneTitle:'פעלת כמו מקצוען בכל 3',
+  doneDesc:'3 מצבים שונים, אותו עיקרון — שקופים, מכבדים, פותרים. זה ההבדל בין מוביל לבין שירות.',
+  grabiDone:{mood:'proud',line:'<b>סיימת את היום של נעמי בחיוך.</b> זה השיא שלנו במקצוע הזה. כל הכבוד.'}
 },
 {ch:3,time:'16:55',type:'opentext',
-  eyebrow:'סימולציה · תיאום ציפיות',
-  q:'הלקוח מתקשר יום לפני ההובלה',
-  scenario:'"רגע, אתם גם מפרקים את הארון? ומה עם מנוף — זה כלול?"  הלקוח נשמע מבולבל לגבי מה כולל השירות.',
-  prompt:'איך הייתם עונים ללקוח? כתבו את התשובה שלכם:',
-  model:'מתן הסבר ברור ומלא על השירותים — כולל פרטים שהלקוח לא שאל עליהם: האם השירות כולל פירוק והרכבה, שימוש במנוף, ומהן העלויות הנלוות. תשובה כזו יוצרת תיאום ציפיות, מחזקת אמון ומונעת הפתעות ביום ההובלה.'
+  eyebrow:'הסימולציה האחרונה · יום לפני ההובלה',
+  q:'מה הייתם עונים?',
+  callerName:'נעמי גלבוע',callerInitial:'נ',callerSub:'שיחת טלפון · יום לפני ההובלה',
+  scenario:'רגע, אתם גם מפרקים את הארון? ומה עם מנוף — זה כלול במחיר? עוד לא הבנתי בדיוק מה אתם עושים…',
+  prompt:'נעמי מבולבלת. איך עונים לה כדי שתיכנס לבוקר ההובלה רגועה ועם תמונה מלאה?',
+  model:'תשובה טובה תכלול הסבר ברור ומלא על השירותים — כולל פרטים שנעמי לא שאלה עליהם: האם השירות כולל פירוק והרכבה, שימוש במנוף, מהן העלויות הנלוות. תיאום ציפיות מלא מראש מונע הפתעות ביום ההובלה, מחזק אמון, ומקטין סיכוי לחיכוך כספי או רגשי בשטח.'
 },
 {ch:4,time:'17:00',type:'done'}
 ];
@@ -1028,7 +1071,11 @@ RENDER.dragorder=(s,root)=>{
         }
       });
       fbHolder.innerHTML='';
-      if(allOk){fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));markDone();}
+      if(allOk){
+        fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));
+        if(s.grabiDone)fbHolder.appendChild(grabiFrom(s.grabiDone));
+        markDone();
+      }
       else fbHolder.appendChild(feedback(false,'כמעט שם',s.errDesc));
     }else fbHolder.innerHTML='';
   }
@@ -1102,6 +1149,17 @@ RENDER.walkthrough=(s,root)=>{
       h.innerHTML=`<img src="${IMG}${st.img}" alt=""><div class="hero-grad" style="background:linear-gradient(0deg,rgba(11,24,46,.5),transparent 60%)"></div>
         <div class="hero-cap"><div class="hero-title" style="font-size:17px">${st.room}</div></div>`;
       wrap.appendChild(h);
+    }
+    if(st.customerQuote){
+      const row=el('div','chat-row');
+      row.innerHTML=`<div class="chat-av">${st.customerInitial||'ל'}</div>
+        <div class="chat-bubble">
+          <div class="who">${st.customerName||'הלקוח'}</div>
+          ${st.customerQuote}
+          <div class="chat-time">${SCREENS[idx].time||''}</div>
+        </div>`;
+      row.style.marginBottom='4px';
+      wrap.appendChild(row);
     }
     const qEl=el('h2','q',st.q);qEl.style.marginTop='10px';wrap.appendChild(qEl);
     const opts=el('div','opts');
@@ -1476,14 +1534,20 @@ RENDER.exploretabs=(s,root)=>{
   });
   scr.appendChild(row);
   scr.appendChild(panel);
+  if(s.grabi)scr.appendChild(grabiFrom(s.grabi));
   root.appendChild(scr);
 };
 
 RENDER.opentext=(s,root)=>{
   const scr=el('div','scr');
   scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div><h2 class="q" style="margin-top:4px">${s.q}</h2></div>`;
-  const sc=el('div','card');sc.style.background='#FFF6EE';sc.style.borderColor='#F6D9BE';
-  sc.innerHTML=`<p class="lead" style="font-size:15px">📞 ${s.scenario}</p>`;
+  const sc=el('div','sms-card');
+  sc.innerHTML=`<div class="sms-head">
+      <div class="chat-av" style="width:34px;height:34px;font-size:15px">${s.callerInitial||'ל'}</div>
+      <div><div class="who">${s.callerName||'הלקוח'}</div><div>${s.callerSub||'שיחת טלפון נכנסת · יום לפני ההובלה'}</div></div>
+    </div>
+    <div class="sms-msg">${s.scenario}</div>
+    <div class="sms-meta">${SCREENS[idx].time||''} · נמסר</div>`;
   scr.appendChild(sc);
   scr.appendChild(el('p','muted','<b style="color:var(--navy)">'+s.prompt+'</b>'));
   const ta=el('textarea','ta');ta.placeholder='כתבו כאן את התשובה שלכם...';
@@ -1532,15 +1596,20 @@ RENDER.done=(s,root)=>{
   w.innerHTML=`
     <span class="badge">משימה #2048 הושלמה</span>
     <div style="font-size:54px">🎓</div>
-    <h1>סיימת בהצלחה!</h1>
-    <p class="sub">כל הכבוד — סיימת את האקדמיה של Grabit. עכשיו יש לך את כל הכלים לספק שירות מקצועי, מדויק ואמין בכל הובלה.</p>
+    <h1>נסעת טוב!</h1>
+    <p class="sub">משפחת גלבוע מסודרת בחיפה. ארזת, פרקת, סגרת מול נעמי — והיא ממליצה.</p>
     <div class="done-areas">
       <div class="done-a"><div class="di">📦</div><div class="dt">אריזה</div><div class="dd">שביר, חשמל וסימון</div></div>
       <div class="done-a"><div class="di">🏠</div><div class="dt">פריקה</div><div class="dd">סידור וניהול נזק</div></div>
       <div class="done-a"><div class="di">💬</div><div class="dt">תקשורת</div><div class="dd">הקשבה ושקיפות</div></div>
       <div class="done-a"><div class="di">🚚</div><div class="dt">הובלה</div><div class="dd">עבודה בטוחה</div></div>
     </div>
-    <p class="sub" style="font-size:13px">המשאית הגיעה ליעד — חיפה. נסיעה טובה! 🏁</p>`;
+    <div style="background:rgba(255,235,165,.18);border:1px dashed rgba(255,235,165,.45);border-radius:14px;padding:11px 13px;margin-top:4px;text-align:right;max-width:380px;width:100%;display:flex;gap:10px;align-items:flex-start;">
+      <img src="${IMG}image5.png" style="width:38px;height:38px;border-radius:50%;background:#fff;padding:2px;flex-shrink:0;">
+      <div><div style="font-weight:900;color:#FFD96B;font-size:13px;">גרבי · מוביל ותיק</div>
+      <div style="font-size:13.5px;line-height:1.55;color:#E8EEF8;margin-top:2px;">היה כיף לעבוד איתך, חבר. תזכור — <b style="color:#FFD96B">לקוח מרוצה זה המוביל הכי טוב שלך.</b> נתראה בהובלה הבאה. 🚚</div></div>
+    </div>
+    <p class="sub" style="font-size:12.5px">המשאית הגיעה ליעד · 🏁</p>`;
   const restart=el('button','btn btn-back','חזרה לעמוד הראשי ⟳');
   restart.style.maxWidth='260px';restart.style.flex='unset';
   restart.onclick=()=>{idx=0;render();};
