@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#16335B">
+<title>Grabit Academy · מדריך למובילים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16335B; --navy-2:#1E4378;
+  --orange:#F0833A; --orange-d:#D96A1F;
+  --cyan:#3FA9F5;
+  --cream:#F7F4EF; --paper:#FFFFFF;
+  --ink:#1B2942; --ink-soft:#5A6B86;
+  --line:#E4DED3;
+  --good:#2BA66B; --good-bg:#E7F6EE;
+  --bad:#D8443B;  --bad-bg:#FCEBEA;
+  --shadow:0 8px 28px rgba(22,51,91,.12);
+  --shadow-sm:0 3px 12px rgba(22,51,91,.08);
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{font-family:'Heebo',sans-serif;background:var(--navy);color:var(--ink);display:flex;justify-content:center;overscroll-behavior:none;line-height:1.5;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+
+#app{width:100%;max-width:520px;min-height:100vh;min-height:100dvh;background:var(--cream);display:flex;flex-direction:column;position:relative;box-shadow:0 0 60px rgba(0,0,0,.4);}
+
+#topbar{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;position:sticky;top:0;z-index:40;}
+.task-row{display:flex;align-items:center;gap:10px;}
+.task-logo{width:40px;height:40px;border-radius:11px;background:#fff;padding:3px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+.task-meta{flex:1;min-width:0;}
+.task-id{font-weight:900;font-size:14px;line-height:1.15;letter-spacing:.01em;}
+.task-route{font-size:11.5px;color:#A9C2E6;font-weight:500;margin-top:1px;}
+.task-clock{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:4px 10px;text-align:center;flex-shrink:0;}
+.task-clock .t{font-weight:900;font-size:15px;font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+.task-clock .l{font-size:9px;color:#A9C2E6;font-weight:600;margin-top:-1px;}
+
+#road{position:relative;height:30px;margin:8px 4px 0;}
+.road-line{position:absolute;top:50%;right:0;left:0;height:5px;transform:translateY(-50%);background:rgba(255,255,255,.13);border-radius:5px;overflow:hidden;}
+.road-fill{position:absolute;top:0;right:0;height:100%;background:linear-gradient(90deg,var(--orange),var(--cyan));border-radius:5px;transition:width .55s cubic-bezier(.4,1.3,.5,1);}
+.road-dot{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:#fff;transform:translate(50%,-50%);opacity:.5;}
+.road-dot.right{right:0;} .road-dot.left{left:0;}
+.road-city{position:absolute;top:-1px;font-size:9px;color:#A9C2E6;font-weight:700;letter-spacing:.02em;}
+.road-city.r{right:0;} .road-city.l{left:0;}
+#truck{position:absolute;top:50%;transform:translate(50%,-58%) scaleX(-1);font-size:20px;transition:right .55s cubic-bezier(.4,1.3,.5,1);z-index:2;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));}
+
+#rail{display:flex;gap:5px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;}
+.chip{flex:1;text-align:center;padding:7px 2px;border-radius:11px;font-size:11px;font-weight:800;color:var(--ink-soft);background:var(--cream);border:2px solid transparent;line-height:1.2;transition:.18s;}
+.chip .ci{font-size:14px;display:block;margin-bottom:1px;}
+.chip.active{background:var(--navy);color:#fff;}
+.chip.done{color:var(--good);background:var(--good-bg);}
+.chip.locked{opacity:.4;}
+.chip.done .ci::after{content:" ✓";font-size:11px;}
+
+#screen{flex:1;display:flex;flex-direction:column;animation:fade .35s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.scr{padding:14px 16px 22px;display:flex;flex-direction:column;gap:14px;flex:1;}
+
+.hero{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);min-height:180px;background:var(--navy-2);}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,24,46,.92) 5%,rgba(11,24,46,.4) 50%,transparent 80%);}
+.hero-cap{position:absolute;inset:auto 0 0 0;padding:14px 16px;color:#fff;}
+.hero-room{font-size:11px;font-weight:900;color:var(--cyan);letter-spacing:.05em;text-transform:uppercase;}
+.hero-title{font-size:22px;font-weight:900;line-height:1.2;margin-top:3px;text-shadow:0 2px 10px rgba(0,0,0,.5);}
+
+.eyebrow{font-size:11px;font-weight:900;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;}
+h2.q{font-size:20px;font-weight:900;color:var(--navy);line-height:1.3;}
+.card{background:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--shadow-sm);border:1px solid var(--line);}
+.lead{font-size:16px;line-height:1.65;color:var(--ink);}
+.lead b{color:var(--navy);}
+.muted{color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
+
+.itemlist{display:flex;flex-direction:column;gap:8px;}
+.item{display:flex;align-items:center;gap:11px;background:var(--cream);border-radius:13px;padding:11px 13px;font-weight:600;font-size:15px;color:var(--ink);}
+.item .ic{width:32px;height:32px;border-radius:9px;background:#fff;display:grid;place-items:center;font-size:17px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+
+.coach{display:flex;gap:11px;align-items:flex-start;background:#FFF6EE;border:1.5px solid #F6D9BE;border-radius:var(--r);padding:12px 13px;}
+.coach-av{width:38px;height:38px;border-radius:50%;background:#fff;padding:2px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+.coach-tx{font-size:14.5px;line-height:1.55;color:var(--ink);}
+.coach-tx b{color:var(--orange-d);}
+
+.fb{border-radius:14px;padding:13px 14px;display:flex;gap:11px;align-items:flex-start;animation:fade .3s;}
+.fb .fi{font-size:20px;flex-shrink:0;line-height:1.2;}
+.fb-good{background:var(--good-bg);border:1.5px solid #B6E3CB;}
+.fb-good .ft{font-weight:900;color:var(--good);font-size:15px;}
+.fb-bad{background:var(--bad-bg);border:1.5px solid #F2C4C0;}
+.fb-bad .ft{font-weight:900;color:var(--bad);font-size:15px;}
+.fb .fd{font-size:13.5px;line-height:1.55;color:var(--ink);margin-top:2px;}
+
+.hs-wrap{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--navy-2);}
+.hs-img{display:block;width:100%;height:auto;}
+.hs-dot{position:absolute;width:36px;height:36px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;font-size:17px;display:grid;place-items:center;transform:translate(50%,-50%);box-shadow:0 0 0 4px rgba(240,131,58,.35),0 4px 10px rgba(0,0,0,.3);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(240,131,58,.35),0 4px 10px rgba(0,0,0,.3);}50%{box-shadow:0 0 0 9px rgba(240,131,58,.1),0 4px 10px rgba(0,0,0,.3);}}
+.hs-dot.done{background:var(--good);animation:none;box-shadow:0 0 0 3px rgba(43,166,107,.3),0 3px 8px rgba(0,0,0,.25);}
+.hs-counter{position:absolute;top:10px;right:10px;background:rgba(11,24,46,.7);color:#fff;font-weight:800;font-size:12px;padding:5px 11px;border-radius:30px;backdrop-filter:blur(4px);}
+.hs-panel{background:#fff;border:2px solid var(--cyan);border-radius:var(--r);padding:14px;display:flex;gap:11px;align-items:flex-start;animation:fade .25s;}
+.hs-panel .pic{width:42px;height:42px;border-radius:11px;background:var(--cream);display:grid;place-items:center;font-size:21px;flex-shrink:0;}
+.hs-panel .pt{font-weight:900;color:var(--navy);font-size:15.5px;line-height:1.3;}
+.hs-panel .pd{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-top:3px;}
+.hs-empty{text-align:center;padding:18px;color:var(--ink-soft);font-size:14px;font-weight:600;background:#fff;border:2px dashed var(--line);border-radius:var(--r);}
+
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opt{display:flex;align-items:center;gap:11px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:13px 13px;text-align:right;font-size:15px;font-weight:600;line-height:1.4;color:var(--ink);transition:.18s;width:100%;}
+.opt:active{transform:scale(.99);}
+.opt .lt{width:28px;height:28px;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-weight:900;color:var(--navy);flex-shrink:0;font-size:14px;}
+.opt.correct{border-color:var(--good);background:var(--good-bg);}
+.opt.correct .lt{background:var(--good);color:#fff;}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg);animation:shake .35s;}
+.opt.wrong .lt{background:var(--bad);color:#fff;}
+.opt.lock{pointer-events:none;opacity:.5;}
+.opt.correct.lock{opacity:1;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+.wt-prog{display:flex;gap:6px;justify-content:center;margin-top:-4px;}
+.wt-pd{width:32px;height:5px;border-radius:3px;background:var(--line);}
+.wt-pd.on{background:var(--orange);}
+.wt-pd.done{background:var(--good);}
+.btn-step{background:var(--navy);color:#fff;border-radius:13px;padding:13px;font-weight:900;font-size:15px;width:100%;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:var(--shadow-sm);}
+.btn-step:active{transform:scale(.99);}
+
+.do-stage{background:#fff;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm);padding:13px;display:flex;flex-direction:column;gap:9px;}
+.do-target{display:flex;align-items:center;gap:11px;background:var(--cream);border:2px dashed #C9BFAC;border-radius:14px;padding:9px 11px;min-height:62px;transition:.18s;text-align:right;width:100%;}
+.do-target.has{border-style:solid;border-color:var(--cyan);background:#F0F7FF;}
+.do-target.ok{border-color:var(--good);background:var(--good-bg);}
+.do-target.err{border-color:var(--bad);background:var(--bad-bg);animation:shake .35s;}
+.do-thumb{width:46px;height:46px;border-radius:10px;object-fit:cover;background:#fff;flex-shrink:0;border:1px solid var(--line);}
+.do-emoji{width:46px;height:46px;border-radius:10px;background:#fff;display:grid;place-items:center;font-size:22px;flex-shrink:0;border:1px solid var(--line);}
+.do-tlabel{font-weight:700;font-size:14.5px;flex:1;color:var(--ink);}
+.do-slot{width:40px;height:40px;border-radius:11px;background:#fff;border:2px solid var(--line);display:grid;place-items:center;font-weight:900;font-size:17px;color:var(--ink-soft);flex-shrink:0;}
+.do-slot.filled{background:var(--navy);color:#fff;border-color:var(--navy);}
+.do-slot.ok{background:var(--good);border-color:var(--good);color:#fff;}
+.do-tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding-top:4px;}
+.token{min-width:42px;padding:9px 14px;border-radius:12px;background:var(--orange);color:#fff;font-weight:900;font-size:16px;box-shadow:var(--shadow-sm);transition:.15s;}
+.token.sel{outline:3px solid var(--navy);transform:translateY(-3px) scale(1.06);}
+.token.used{opacity:0;pointer-events:none;width:0;min-width:0;padding:0;margin:0;}
+.do-hint{text-align:center;font-size:12.5px;color:var(--ink-soft);font-weight:600;}
+
+.tp-stage{background:#fff;border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm);padding:13px;display:flex;flex-direction:column;gap:11px;}
+.tp-box{position:relative;border-radius:14px;overflow:hidden;background:#F5EFE4;aspect-ratio:1.5/1;}
+.tp-box img{width:100%;height:100%;object-fit:contain;}
+.tp-zone{position:absolute;border:2px dashed rgba(22,51,91,.4);border-radius:9px;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--navy);background:rgba(255,255,255,.5);text-align:center;padding:4px;transition:.18s;cursor:pointer;}
+.tp-zone.filled{border-style:solid;border-color:var(--good);background:rgba(231,246,238,.92);font-size:11.5px;line-height:1.25;cursor:default;}
+.tp-tokens{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+.tp-token{display:inline-flex;align-items:center;gap:6px;background:var(--cream);border:2px solid var(--line);border-radius:11px;padding:8px 11px;font-size:13px;font-weight:800;color:var(--navy);}
+.tp-token .ic{font-size:15px;}
+.tp-token.sel{background:var(--orange);color:#fff;border-color:var(--orange);transform:translateY(-2px);}
+.tp-token.used{opacity:0;width:0;padding:0;margin:0;border:0;pointer-events:none;}
+
+.mt-cols{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.mt-side{display:flex;flex-direction:column;gap:8px;}
+.mt-card{background:#fff;border:2px solid var(--line);border-radius:13px;padding:11px;text-align:right;font-size:13.5px;font-weight:600;line-height:1.4;color:var(--ink);min-height:74px;display:flex;flex-direction:column;justify-content:center;gap:3px;}
+.mt-card.sel{border-color:var(--orange);background:#FFF6EE;}
+.mt-card.matched{border-color:var(--good);background:var(--good-bg);pointer-events:none;}
+.mt-card.wrong{border-color:var(--bad);background:var(--bad-bg);animation:shake .35s;}
+.mt-name{font-weight:900;color:var(--navy);font-size:14.5px;}
+.mt-ic{font-size:24px;line-height:1;}
+.mt-col-h{font-size:11px;font-weight:900;color:var(--ink-soft);text-align:center;text-transform:uppercase;letter-spacing:.05em;padding-bottom:3px;}
+
+.tb-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.tb-tab{background:#fff;border:2px solid var(--line);border-radius:12px;padding:11px 9px;text-align:center;font-size:13px;font-weight:800;color:var(--ink);line-height:1.25;display:flex;flex-direction:column;align-items:center;gap:5px;min-height:74px;justify-content:center;transition:.18s;position:relative;}
+.tb-tab .tbi{font-size:21px;}
+.tb-tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.tb-tab.viewed{border-color:var(--good);}
+.tb-tab.viewed::after{content:"✓";position:absolute;top:5px;left:7px;font-size:11px;color:var(--good);font-weight:900;}
+.tb-tab.active.viewed::after{color:#A8E5C3;}
+.tb-panel{background:#fff;border-radius:var(--r);padding:15px;box-shadow:var(--shadow-sm);border:1px solid var(--line);min-height:120px;animation:fade .25s;}
+.tb-panel .pt{font-weight:900;color:var(--navy);font-size:16px;}
+.tb-panel .pd{font-size:14.5px;color:var(--ink-soft);line-height:1.6;margin-top:6px;}
+
+.ta{width:100%;min-height:104px;border:2px solid var(--line);border-radius:14px;padding:12px;font-family:inherit;font-size:15px;line-height:1.5;resize:vertical;color:var(--ink);background:#fff;}
+.ta:focus{outline:none;border-color:var(--cyan);}
+.rate-row{display:flex;gap:7px;justify-content:center;}
+.rate-b{width:46px;height:46px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:900;font-size:17px;color:var(--navy);}
+.rate-b.on{background:var(--orange);color:#fff;border-color:var(--orange);}
+
+.audio-row{display:flex;gap:11px;}
+.audio-c{flex:1;background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:14px 10px;display:flex;flex-direction:column;gap:10px;align-items:center;transition:.18s;}
+.audio-c.correct{border-color:var(--good);background:var(--good-bg);}
+.audio-c.wrong{border-color:var(--bad);background:var(--bad-bg);}
+.audio-box{font-size:40px;}
+.audio-name{font-weight:900;color:var(--navy);font-size:14px;}
+.btn-play{background:var(--navy);color:#fff;border-radius:11px;padding:9px 14px;font-weight:800;font-size:13px;display:flex;gap:6px;align-items:center;}
+.btn-play.playing{background:var(--orange);}
+.btn-pick{background:var(--cream);border:2px solid var(--line);border-radius:11px;padding:9px 14px;font-weight:800;font-size:13px;color:var(--navy);width:100%;}
+
+.sum-i{display:flex;gap:12px;background:#fff;border-radius:var(--r);padding:14px;box-shadow:var(--shadow-sm);border:1px solid var(--line);}
+.sum-n{width:34px;height:34px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:900;flex-shrink:0;font-size:15px;}
+.sum-t{font-weight:900;color:var(--navy);font-size:15px;line-height:1.3;}
+.sum-d{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin-top:3px;}
+
+.cover{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;padding:34px 22px;background:radial-gradient(ellipse at top,#244D85,#0E2748);color:#fff;}
+.cover-logo{width:140px;background:#fff;border-radius:28px;padding:14px;box-shadow:var(--shadow);}
+.cover h1{font-size:30px;font-weight:900;line-height:1.1;}
+.cover .sub{font-size:15px;color:#B8CFED;line-height:1.6;max-width:340px;}
+.badge{background:var(--orange);color:#fff;font-weight:900;font-size:12px;padding:6px 14px;border-radius:30px;letter-spacing:.05em;text-transform:uppercase;}
+.rooms-prev{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;}
+.room-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:30px;padding:6px 13px;font-size:12.5px;font-weight:700;}
+.done-areas{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%;max-width:380px;}
+.done-a{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:15px;padding:14px 11px;text-align:center;}
+.done-a .di{font-size:26px;}
+.done-a .dt{font-weight:900;font-size:13.5px;margin-top:4px;}
+.done-a .dd{font-size:11px;color:#A9C2E6;margin-top:2px;line-height:1.4;}
+
+#nav{position:sticky;bottom:0;z-index:40;display:flex;gap:10px;padding:10px 14px;padding-bottom:calc(env(safe-area-inset-bottom) + 10px);background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(22,51,91,.06);}
+.btn{flex:1;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s;}
+.btn:active{transform:scale(.98);}
+.btn-next{background:var(--orange);color:#fff;flex:2;box-shadow:0 4px 14px rgba(240,131,58,.35);}
+.btn-next:disabled{background:#D8D2C5;color:#fff;box-shadow:none;}
+.btn-back{background:var(--cream);color:var(--navy);border:2px solid var(--line);}
+.btn-back:disabled{opacity:.4;}
+.locktip{font-size:12px;color:var(--ink-soft);text-align:center;font-weight:600;padding:5px 14px 0;background:#fff;}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:99;}
+.cft{position:absolute;width:9px;height:14px;top:-20px;border-radius:2px;animation:drop linear forwards;}
+@keyframes drop{to{transform:translateY(110vh) rotate(720deg);opacity:.7;}}
+
+@media(max-width:360px){.scr{padding:12px 12px 18px;}.hero-title{font-size:19px;}h2.q{font-size:18px;}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="task-row">
+      <img class="task-logo" src="images/image5.png" alt="Grabit">
+      <div class="task-meta">
+        <div class="task-id">משימה #2048</div>
+        <div class="task-route">תל אביב <span style="color:var(--orange)">←</span> חיפה · 4 חדרים</div>
+      </div>
+      <div class="task-clock"><div class="t" id="clock">08:00</div><div class="l">שעון משימה</div></div>
+    </div>
+    <div id="road">
+      <div class="road-city r">ת"א</div><div class="road-city l">חיפה</div>
+      <div class="road-line"><div class="road-fill" id="roadFill"></div></div>
+      <div class="road-dot right"></div><div class="road-dot left"></div>
+      <div id="truck">🚚</div>
+    </div>
+  </header>
+  <nav id="rail"></nav>
+  <main id="screen"></main>
+  <div class="locktip" id="locktip"></div>
+  <footer id="nav">
+    <button class="btn btn-back" id="btnBack">⟶ חזור</button>
+    <button class="btn btn-next" id="btnNext">התקדם ⟵</button>
+  </footer>
+</div>
+<div id="confetti"></div>
+
+<script>
+"use strict";
+const IMG='images/';
+const CHAPTERS=[
+  {key:'open',label:'פתיחה',icon:'🏁'},
+  {key:'pack',label:'אריזה',icon:'📦'},
+  {key:'unload',label:'פריקה',icon:'🏠'},
+  {key:'comm',label:'תקשורת',icon:'💬'},
+  {key:'end',label:'סיום',icon:'🎓'}
+];
+const RENDER={};
+
+const SCREENS=[
+{ch:0,time:'08:00',type:'cover'},
+{ch:0,time:'08:00',type:'scene',
+  img:'image4.png',room:'דירת משפחת גלבוע · תל אביב',
+  title:'הגעתם למשימה #2048',
+  lead:'משפחת גלבוע עוברת היום מתל אביב לחיפה. <b>4 חדרים</b>, כמה <b>חפצים מיוחדים</b>, ולקוחה שמחכה לכם בבית החדש.',
+  items:[
+    {ic:'📍',t:'מסלול: תל אביב ← חיפה'},
+    {ic:'🕗',t:'תחילת עבודה: 08:00'},
+    {ic:'🚪',t:'4 חדרים לאריזה'},
+    {ic:'⭐',t:'חפצים מיוחדים בדירה'}
+  ],
+  coach:'המדריך מחולק ל-4 פרקים לפי שלבי ההובלה. <b>עוברים לפי הסדר</b>. בדרך נלמד את הכללים — דרך משימות אמיתיות, לא הרצאות. קדימה!'
+},
+{ch:1,time:'08:20',type:'scene',
+  img:'image57.png',room:'פרק 1 · אריזה',
+  title:'מתחילים מהסלון',
+  lead:'לפני שמעמיסים את המשאית, כל פריט נארז <b>בטוח, מסודר ומותאם לסוג התכולה</b>. בסלון של משפחת גלבוע מחכים לכם פריטים שבירים.',
+  items:[
+    {ic:'🍷',t:'כוסות יין'},
+    {ic:'🪞',t:'מראת זכוכית'},
+    {ic:'🗿',t:'פסל דקורטיבי'}
+  ],
+  coach:'במסך הבא — היכנסו לסלון ולחצו על כל פריט כדי לגלות איך אורזים אותו נכון.'
+},
+{ch:1,time:'08:35',type:'hotspot',
+  eyebrow:'חקירת הסלון',
+  q:'לחצו על כל פריט כדי ללמוד את כלל האריזה שלו',
+  img:'image57.png',
+  spots:[
+    {x:38,y:62,ic:'🗿',t:'פסל דקורטיבי · סידור נכון',
+      d:'כבד? יורד ראשון לתחתית הארגז. פריטים כבדים בתחתית, וקלים ושבירים מעל — לשמירה על יציבות ומניעת נזק.'},
+    {x:62,y:55,ic:'🪞',t:'מראת זכוכית · ריפוד מתאים',
+      d:'משתמשים בכמות מספקת של חומרי ריפוד — פצפצים או נייר אריזה — מסביב לפריט, כדי לבלום זעזועים ומכות.'},
+    {x:50,y:78,ic:'🍷',t:'כוסות יין · עטיפה אישית',
+      d:'כל פריט שביר נארז בנפרד בחומר ריפוד — כדי למנוע חיכוך ושבר בין הפריטים בתוך הארגז.'},
+    {x:78,y:38,ic:'📦',t:'הארגז עצמו · מניעת תזוזה',
+      d:'אחרי שכל הפריטים בפנים — ממלאים את החללים הריקים בנייר או פצפצים, כדי שכלום לא יזוז במהלך הנסיעה.'}
+  ]
+},
+{ch:1,time:'08:50',type:'dragorder',
+  eyebrow:'היררכיה של ארגז',
+  q:'באיזה סדר מכניסים את הפריטים לארגז?',
+  sub:'הקישו על מספר ואז על הפריט. הכבד נכנס ראשון — לתחתית.',
+  mode:'thumbs',
+  targets:[
+    {img:'image16.png',label:'פסל דקורטיבי (כבד)',correct:1},
+    {img:'image11.png',label:'מראת זכוכית (בינוני)',correct:2},
+    {img:'image12.png',label:'כוסות יין (קל ושביר)',correct:3}
+  ],
+  okTitle:'מעולה! סידרת נכון',
+  okDesc:'פריטים כבדים בתחתית, וקלים ושבירים מעל — לשמירה על יציבות ומניעת נזקים.',
+  errDesc:'נסו שוב — חישבו: מה אתם רוצים בתחתית כדי שהארגז יישאר יציב?'
+},
+{ch:1,time:'09:00',type:'audio',
+  eyebrow:'מבחן הניעור',
+  q:'איזה ארגז בטוח להובלה?',
+  sub:'סיימתם לארוז. עכשיו מוודאים שאין תזוזה. נערו את שני הארגזים והקשיבו טוב.',
+  okTitle:'בחרת נכון!',
+  okDesc:'ארגז שאינו משמיע רעשי תזוזה מעיד על אריזה יציבה — הפריטים מקובעים ולא זזים.',
+  errDesc:'נסו שוב — רעש תזוזה בעת ניעור מעיד על חללים ריקים ופריטים שלא מקובעים.'
+},
+{ch:1,time:'09:30',type:'walkthrough',
+  eyebrow:'מכשירי החשמל',
+  intro:'ממשיכים לאריזת המכשירים. עברו <b>חדר אחר חדר</b> ובחרו את הפעולה הנכונה.',
+  steps:[
+    {room:'המטבח · מקרר',img:'image23.png',
+      q:'מה צריך לעשות לפני הובלת המקרר?',
+      opts:[
+        {t:'לנתק מהחשמל ולהמתין 3 שעות'},
+        {t:'לוודא שהמקרר מרוקן, יבש ומוכן להובלה',correct:true},
+        {t:'להשאיר את המדפים בפנים שלא ילכו לאיבוד'}
+      ],
+      ok:'נכון — עקרון <b>הריקון והייבוש</b>. מקרר ריק ויבש מגיע תקין ליעד.',
+      err:'נסו שוב. חשבו על העיקרון: ריקון וייבוש לפני הכל.'
+    },
+    {room:'חדר השירות · מכונת כביסה',img:'image35.png',
+      q:'מה חשוב לעשות לפני הובלת מכונת הכביסה?',
+      opts:[
+        {t:'לרוקן מים ולסגור את הדלת היטב'},
+        {t:'לקבע את התוף ולרוקן את המים',correct:true},
+        {t:'לוודא שיש לפחות 3 אנשי צוות'}
+      ],
+      ok:'בדיוק — <b>קיבוע החלקים הפנימיים</b>. תוף לא מקובע יכול להישבר בנסיעה.',
+      err:'נסו שוב. חשבו: מה החלק הפנימי שעלול לזוז ולהישבר?'
+    },
+    {room:'הסלון · טלוויזיה',img:'image26.png',
+      q:'איך נכון להגן על הטלוויזיה לפני הובלה?',
+      opts:[
+        {t:'לעטוף בניילון נצמד ולהניח בארגז'},
+        {t:'להגן על המסך והפינות בריפוד מתאים',correct:true},
+        {t:'להניח את הטלוויזיה בצורה שטוחה'}
+      ],
+      ok:'נכון. <b>המסך והפינות</b> הם החלקים הרגישים ביותר — ריפוד מגן עליהם מזעזועים.',
+      err:'נסו שוב. אילו חלקים בטלוויזיה הכי רגישים לפגיעה?'
+    }
+  ],
+  doneTitle:'כל המכשירים מוכנים!',
+  doneDesc:'יישמתם את 3 העקרונות — ריקון וייבוש, קיבוע, וריפוד מתאים — לפי המכשיר והחדר.'
+},
+{ch:1,time:'10:30',type:'tapplace',
+  eyebrow:'סימון הקרטון',
+  q:'סמנו את הקרטון של משפחת גלבוע',
+  sub:'הקישו על סימון ואז על מקום ריק על הקרטון. צריכים להופיע כל 4 הסימונים.',
+  boxImg:'image40.png',
+  tokens:[
+    {ic:'🍳',t:'מטבח · סירים'},
+    {ic:'⚠️',t:'שביר'},
+    {ic:'🏋️',t:'כבד'},
+    {ic:'⬆️',t:'צד למעלה'}
+  ],
+  zones:[
+    {x:6,y:8,w:42,h:38,ph:'מקום לסימון'},
+    {x:52,y:8,w:42,h:38,ph:'מקום לסימון'},
+    {x:6,y:54,w:42,h:38,ph:'מקום לסימון'},
+    {x:52,y:54,w:42,h:38,ph:'מקום לסימון'}
+  ],
+  okTitle:'מצוין!',
+  okDesc:'מיקום נכון של הסימונים עושה את כל ההבדל — הקרטון מוכן להובלה ולפריקה מסודרת בבית החדש.',
+  coach:'<b>טיפ מהשטח:</b> סמנו כל קרטון בכמה צדדים — כך המידע גלוי מכל כיוון בעמסה ובפריקה.'
+},
+{ch:1,time:'11:30',type:'matching',
+  eyebrow:'חפצים מיוחדים',
+  q:'התאימו כל פריט לדרך הטיפול הנכונה',
+  intro:'משפחת גלבוע מעדכנת שיש עוד 3 חפצים שדורשים טיפול מיוחד. הקישו על פריט ואז על הפתרון.',
+  items:[
+    {id:'aq',ic:'🐠',name:'אקווריום',detail:'רגיש וכבד · מים ודגים'},
+    {id:'pn',ic:'🎹',name:'פסנתר',detail:'כבד ויקר · מעברים צרים'},
+    {id:'pl',ic:'🪴',name:'צמח גדול',detail:'גבוה ורגיש לתזוזות'}
+  ],
+  approaches:[
+    {id:'pn',t:'ציוד ייעודי וצוות',d:'מתכננים מראש, מוציאים בצורה מבוקרת'},
+    {id:'aq',t:'דגים לשקיות עם חמצן',d:'האקווריום נארז ומוסע בנפרד'},
+    {id:'pl',t:'בעמידה, עציץ מקובע',d:'נשמר מתזוזות ושבר'}
+  ],
+  okTitle:'מצוין!',
+  okDesc:'כך פועלים עם חפצים מיוחדים — מזהים את הפריט, ומתאימים את שיטת העבודה לפי הצורך.',
+  errDesc:'לא מתאים. חשבו: מה הצורך הייחודי של הפריט?'
+},
+{ch:1,time:'12:30',type:'summary',
+  title:'סיכום פרק האריזה',
+  intro:'הדירה בתל אביב ארוזה. שלוש דרכים שכדאי לזכור:',
+  steps:[
+    {t:'לפני האריזה — מזהים',d:'שביר, חשמלי או מיוחד? כל אחד דורש שיטה אחרת. מתאימים גישה לפני שמתחילים.'},
+    {t:'בזמן האריזה — בונים שכבות הגנה',d:'אוספים → קרטון → ריפוד → הידוק → סימון. השיטה הזו עובדת לכל מכשיר חשמלי.'},
+    {t:'לפני ההעמסה — מוודאים',d:'ארגז יציב, סימון ברור, מבחן ניעור עובר. רק אז עולים על המשאית.'}
+  ],
+  outro:'המשאית יוצאת לדרך. נפגש בחיפה!'
+},
+{ch:2,time:'14:30',type:'scene',
+  img:'image45.png',room:'פרק 2 · פריקה · חיפה',
+  title:'הגענו לבית החדש',
+  lead:'הציוד הגיע בשלום. עכשיו <b>פורקים בסדר ובבטחה</b>. הפריקה היא הרגע שבו הלקוח פוגש את כל העבודה שלנו.',
+  coach:'הרושם האחרון נוצר כאן. <b>סדר, מעברים פנויים, ויושר במקרה של נזק</b> — אלו 3 הדברים שעושים את ההבדל.'
+},
+{ch:2,time:'14:50',type:'hotspot',
+  eyebrow:'זיהוי פריקה נכונה',
+  q:'לחצו על כל נקודה כדי לזהות סימני פריקה טובה',
+  img:'image45.png',
+  spots:[
+    {x:30,y:42,ic:'🚪',t:'קרטונים לפי חדרים',
+      d:'כל קרטון מונח באזור המתאים — מונע בלבול וחיפוש בזמן הפריקה.'},
+    {x:65,y:62,ic:'↔️',t:'מעברים פנויים',
+      d:'נתיב תנועה פתוח — מונע נפילות וחוסך זמן. לא חוסמים מסדרונות עם קרטונים.'},
+    {x:50,y:30,ic:'🛋️',t:'רהיטים במיקום הסופי',
+      d:'ממקמים רהיטים גדולים במיקום הסופי לפני פתיחת קרטונים — שומר על סדר ומונע הזזה חוזרת.'},
+    {x:80,y:80,ic:'🛒',t:'עבודה עם עגלה',
+      d:'שימוש בעגלה ותכנון סדר הפריקה מקצרים זמן ומפחיתים עבודה כפולה.'}
+  ]
+},
+{ch:2,time:'15:20',type:'dragorder',
+  eyebrow:'סדר הפריקה',
+  q:'באיזה סדר פורקים את הבית?',
+  sub:'העיקרון: <b>מבפנים החוצה</b>. הקישו מספר ואז משימה.',
+  mode:'emoji',
+  targets:[
+    {emoji:'🛏️',label:'ארגזי חדרי שינה וארגזי בגדים',correct:1},
+    {emoji:'🔧',label:'הרכבת מיטות וארונות',correct:2},
+    {emoji:'🍽️',label:'ארגזי מטבח וכלי בית',correct:3},
+    {emoji:'🛋️',label:'ספה וריהוט סלון',correct:4},
+    {emoji:'📦',label:'מחסן ומרפסת',correct:5}
+  ],
+  okTitle:'כל הכבוד — זה הסדר הנכון!',
+  okDesc:'חדרים פנימיים ראשונים, אזורים מרכזיים אחרונים — כך לא נוצרים פקקים של ארגזים במסדרונות.',
+  errDesc:'נסו שוב — מאיפה כדאי להתחיל כדי לא לחסום את הדרך?'
+},
+{ch:2,time:'15:50',type:'summary',
+  title:'ניהול נזק · שיטת נ.ע.ת.ת',
+  intro:'זיהיתם נזק במהלך הפריקה? הסדר חשוב:',
+  steps:[
+    {t:'נ — זיהוי הנזק',d:'מזהים מיד, לא מתעלמים ולא מסתירים.'},
+    {t:'ע — עצירה',d:'מפסיקים את העבודה באזור כדי לא להחמיר את הנזק.'},
+    {t:'ת — תיעוד',d:'צילום, תיאור, מה קרה — בשטח, לפני שממשיכים.'},
+    {t:'ת — תקשורת',d:'רק אז פונים ללקוח, משתפים בכנות ומציעים פתרון.'}
+  ],
+  outro:'<b>לקוחות סולחים לנזק — לא לחוסר יושר.</b> שקיפות בשטח שומרת על האמון.'
+},
+{ch:3,time:'16:10',type:'exploretabs',
+  eyebrow:'פרק 3 · תקשורת עם לקוח',
+  q:'4 כללים לתקשורת נכונה',
+  sub:'הקישו על כל כלל כדי לחשוף אותו',
+  intro:'אחרי שהפריקה הסתיימה, חשוב לשמור על תקשורת <b>מקצועית, רגועה ומכבדת</b>.',
+  tabs:[
+    {ic:'🤝',t:'תיאום ציפיות',name:'תיאום ציפיות מראש',
+      d:'מתאמים ציפיות באופן ברור ומלא לפני ההובלה — שירות, תנאי עבודה, עלויות. מונע אי־הבנות בהמשך.'},
+    {ic:'💬',t:'תקשורת מכבדת',name:'תקשורת מכבדת ושקופה',
+      d:'מתקשרים בצורה רגועה ושקופה — גם במצבים מורכבים. שומר על אמון וחוויית שירות חיובית.'},
+    {ic:'🔔',t:'הצפת פערים',name:'הצפת פערים מוקדם',
+      d:'מציפים בעיות כבר בתחילת העבודה (פריטים שלא סוכמו, תנאי גישה) ופותרים יחד עם הלקוח לפני שממשיכים.'},
+    {ic:'📲',t:'עדכון בזמן אמת',name:'עדכון בזמן אמת',
+      d:'מעדכנים את הלקוח על שינויים, עיכובים או התקדמות — מפחית לחץ ומחזק תחושת ביטחון.'}
+  ]
+},
+{ch:3,time:'16:30',type:'walkthrough',
+  eyebrow:'רגעי האמת',
+  intro:'במהלך היום קורים דברים לא צפויים. עברו את <b>3 הסיטואציות</b> ובחרו את התגובה הנכונה.',
+  steps:[
+    {room:'הארון הנסתר',
+      q:'08:30 בבוקר, הגעתם לדירה. בסלון יש ארון 4 דלתות שלא הופיע בהזמנה ולא פורק. איך תגיבו?',
+      opts:[
+        {t:'"בוקר טוב, בוא נתחיל! נסתדר עם הכל תוך כדי."'},
+        {t:'"הארון הזה לא בהזמנה. אני לא נוגע עד שתשולם תוספת."'},
+        {t:'"אני רואה ארון שלא סוכם מראש — בוא נסגור יחד איך ממשיכים."',correct:true}
+      ],
+      ok:'<b>תיאום ציפיות בזמן</b> מונע קונפליקטים ויוצר שקיפות. כך נשמר אמון הלקוח.',
+      err:'נסו שוב. גם דחייה וגם תקיפות פוגעות באמון. מה הדרך השקופה והמכבדת?'
+    },
+    {room:'השריטה במקרר',
+      q:'במעבר במסדרון צר נוצרה שריטה בולטת במקרר. הלקוח בחדר השני ולא ראה. איך תגיבו?',
+      opts:[
+        {t:'מחכים לסוף היום ואז אומרים — "לא שמנו לב"'},
+        {t:'ממקמים את המקרר כך שהשריטה פחות נראית, בלי לעדכן'},
+        {t:'ניגשים ללקוח, משתפים מיד, מתנצלים ומציעים פתרון',correct:true}
+      ],
+      ok:'<b>שקיפות ולקיחת אחריות</b> בונות אמון. לקוחות סולחים לנזק, לא לחוסר יושר.',
+      err:'נסו שוב. תגובה מתחמקת או הסתרה פוגעות באמון. מה עושה מוביל מקצועי?'
+    },
+    {room:'המעלית התקלקלה',
+      q:'סוף יום, הגעתם ליעד והמעלית התקלקלה. הלקוחה לחוצה, הצוות עייף. איך תגיבו?',
+      opts:[
+        {t:'"מבין שזה מתסכל. נבדוק יחד פתרון ונעשה כל מה שאפשר לסיים היום."',correct:true},
+        {t:'"עוצרים את ההובלה. תתקשרי למשרד לקבוע מועד חדש."'},
+        {t:'"זה לא באשמתנו. אם אין מעלית נמשיך מחר."'}
+      ],
+      ok:'<b>הכרה ברגש</b> + מחויבות לפתרון מיידי — שומרת על האמון וממשיכה את ההובלה.',
+      err:'נסו שוב. הפניה למשרד או התנערות לא נותנות מענה. מה הלקוחה צריכה לשמוע עכשיו?'
+    }
+  ],
+  doneTitle:'פעלת כמו מקצוען!',
+  doneDesc:'3 רגעי אמת, 3 תגובות נכונות — שקופות, מכבדות ופותרות.'
+},
+{ch:3,time:'16:55',type:'opentext',
+  eyebrow:'סימולציה · תיאום ציפיות',
+  q:'הלקוח מתקשר יום לפני ההובלה',
+  scenario:'"רגע, אתם גם מפרקים את הארון? ומה עם מנוף — זה כלול?"  הלקוח נשמע מבולבל לגבי מה כולל השירות.',
+  prompt:'איך הייתם עונים ללקוח? כתבו את התשובה שלכם:',
+  model:'מתן הסבר ברור ומלא על השירותים — כולל פרטים שהלקוח לא שאל עליהם: האם השירות כולל פירוק והרכבה, שימוש במנוף, ומהן העלויות הנלוות. תשובה כזו יוצרת תיאום ציפיות, מחזקת אמון ומונעת הפתעות ביום ההובלה.'
+},
+{ch:4,time:'17:00',type:'done'}
+];
+
+let idx=0,maxIdx=0;
+const done={};
+const screenEl=document.getElementById('screen'),
+      railEl=document.getElementById('rail'),
+      btnNext=document.getElementById('btnNext'),
+      btnBack=document.getElementById('btnBack'),
+      lockTip=document.getElementById('locktip');
+const TOTAL=SCREENS.length;
+const PASSIVE=['cover','scene','summary','done'];
+function isComplete(i){return PASSIVE.includes(SCREENS[i].type)||!!done[i];}
+function el(tag,cls,html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!=null)n.innerHTML=html;return n;}
+
+function render(){
+  const s=SCREENS[idx];
+  screenEl.innerHTML='';
+  screenEl.style.animation='none';void screenEl.offsetWidth;screenEl.style.animation='';
+  (RENDER[s.type]||RENDER.scene)(s,screenEl);
+  document.getElementById('clock').textContent=s.time;
+  updateChrome();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function updateChrome(){
+  const pct=TOTAL>1?(idx/(TOTAL-1))*100:0;
+  document.getElementById('roadFill').style.width=pct+'%';
+  document.getElementById('truck').style.right=pct+'%';
+  const curCh=SCREENS[idx].ch;
+  railEl.innerHTML='';
+  CHAPTERS.forEach((c,ci)=>{
+    const firstIdx=SCREENS.findIndex(x=>x.ch===ci);
+    const reached=SCREENS.slice(0,maxIdx+1).some(x=>x.ch===ci);
+    const nextFirst=SCREENS.findIndex(x=>x.ch===ci+1);
+    const chDone=nextFirst!==-1&&maxIdx>=nextFirst;
+    let cls='chip';
+    if(ci===curCh)cls+=' active';
+    else if(chDone)cls+=' done';
+    if(!reached)cls+=' locked';
+    const chip=el('button',cls,`<span class="ci">${c.icon}</span>${c.label}`);
+    if(reached&&ci!==curCh&&firstIdx!==-1)chip.onclick=()=>{idx=firstIdx;render();};
+    railEl.appendChild(chip);
+  });
+  btnBack.disabled=idx===0;
+  const complete=isComplete(idx),last=idx===TOTAL-1;
+  btnNext.disabled=!complete||last;
+  btnNext.textContent=last?'סיימת 🎓':(SCREENS[idx+1]&&SCREENS[idx+1].ch!==SCREENS[idx].ch?'לפרק הבא ⟵':'התקדם ⟵');
+  lockTip.textContent=(!complete&&!last)?'השלימו את המשימה במסך כדי להמשיך':'';
+  lockTip.style.display=lockTip.textContent?'block':'none';
+}
+function next(){if(idx<TOTAL-1&&isComplete(idx)){idx++;if(idx>maxIdx)maxIdx=idx;render();}}
+function prev(){if(idx>0){idx--;render();}}
+function markDone(){done[idx]=true;updateChrome();}
+btnNext.onclick=next;btnBack.onclick=prev;
+
+let AC=null;
+function ac(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;}
+function rattle(){const a=ac(),now=a.currentTime;for(let i=0;i<7;i++){const t=now+i*0.085+Math.random()*0.03;const o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.value=900+Math.random()*1700;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.16+Math.random()*0.12,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+0.09);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+0.12);}}
+function thud(){const a=ac(),now=a.currentTime;const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(150,now);o.frequency.exponentialRampToValueAtTime(70,now+0.18);g.gain.setValueAtTime(0.0001,now);g.gain.linearRampToValueAtTime(0.13,now+0.02);g.gain.exponentialRampToValueAtTime(0.0001,now+0.3);o.connect(g);g.connect(a.destination);o.start(now);o.stop(now+0.34);}
+
+function coach(t){const c=el('div','coach');c.innerHTML=`<img class="coach-av" src="${IMG}image5.png" alt=""><div class="coach-tx">${t}</div>`;return c;}
+function feedback(ok,title,desc){const f=el('div','fb '+(ok?'fb-good':'fb-bad'));f.innerHTML=`<div class="fi">${ok?'✅':'🔁'}</div><div><div class="ft">${title}</div><div class="fd">${desc}</div></div>`;return f;}
+function confetti(){const box=document.getElementById('confetti');const cols=['#F0833A','#2C7BE5','#3FA9F5','#2BA66B','#FFC000'];for(let i=0;i<70;i++){const c=el('div','cft');c.style.left=Math.random()*100+'%';c.style.background=cols[i%cols.length];c.style.animationDuration=(2.4+Math.random()*2)+'s';c.style.animationDelay=(Math.random()*0.6)+'s';box.appendChild(c);setTimeout(()=>c.remove(),5200);}}
+
+RENDER.cover=(s,root)=>{
+  const w=el('div','cover');
+  w.innerHTML=`
+    <span class="badge">Grabit Academy</span>
+    <img class="cover-logo" src="${IMG}image5.png" alt="Grabit">
+    <h1>מדריך עבודה<br>למובילים</h1>
+    <p class="sub">לומדים לבצע הובלה מקצועית — מאריזה נכונה, דרך פריקה בטוחה, ועד תקשורת מנצחת מול הלקוח. דרך משימה אמיתית אחת.</p>
+    <div class="rooms-prev">
+      <span class="room-pill">📦 אריזה</span>
+      <span class="room-pill">🏠 פריקה</span>
+      <span class="room-pill">💬 תקשורת</span>
+      <span class="room-pill">🎓 סיום</span>
+    </div>
+    <p class="sub" style="font-size:13px">לחצו "התקדם" כדי לצאת לדרך 🚚</p>`;
+  root.appendChild(w);
+};
+
+RENDER.scene=(s,root)=>{
+  const scr=el('div','scr');
+  const h=el('div','hero');
+  h.innerHTML=`<img src="${IMG}${s.img}" alt=""><div class="hero-grad"></div>
+    <div class="hero-cap">
+      ${s.room?`<div class="hero-room">${s.room}</div>`:''}
+      <div class="hero-title">${s.title}</div>
+    </div>`;
+  scr.appendChild(h);
+  const card=el('div','card');
+  card.innerHTML=`<p class="lead">${s.lead}</p>`;
+  if(s.items){
+    const list=el('div','itemlist');list.style.marginTop='12px';
+    s.items.forEach(it=>list.appendChild(el('div','item',`<span class="ic">${it.ic}</span><span>${it.t}</span>`)));
+    card.appendChild(list);
+  }
+  scr.appendChild(card);
+  if(s.coach)scr.appendChild(coach(s.coach));
+  root.appendChild(scr);
+};
+
+RENDER.hotspot=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div><h2 class="q" style="margin-top:4px">${s.q}</h2></div>`;
+  const wrap=el('div','hs-wrap');
+  const img=el('img','hs-img');img.src=IMG+s.img;img.alt='';
+  wrap.appendChild(img);
+  const counter=el('div','hs-counter','0 / '+s.spots.length);
+  wrap.appendChild(counter);
+  const visited=new Set();
+  const panelHolder=el('div');
+  panelHolder.appendChild(el('div','hs-empty','👆 לחצו על אחת הנקודות הכתומות'));
+  s.spots.forEach((sp,i)=>{
+    const dot=el('button','hs-dot',String(i+1));
+    dot.style.right=sp.x+'%';dot.style.top=sp.y+'%';
+    dot.onclick=()=>{
+      visited.add(i);
+      dot.classList.add('done');
+      counter.textContent=visited.size+' / '+s.spots.length;
+      const panel=el('div','hs-panel');
+      panel.innerHTML=`<div class="pic">${sp.ic}</div>
+        <div><div class="pt">${sp.t}</div><div class="pd">${sp.d}</div></div>`;
+      panelHolder.innerHTML='';panelHolder.appendChild(panel);
+      if(visited.size===s.spots.length&&!done[idx])setTimeout(()=>markDone(),200);
+    };
+    wrap.appendChild(dot);
+  });
+  scr.appendChild(wrap);
+  scr.appendChild(panelHolder);
+  root.appendChild(scr);
+};
+
+RENDER.dragorder=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage=el('div','do-stage');
+  const N=s.targets.length;
+  const placed=new Array(N).fill(null);
+  let selected=null;
+  const targetEls=[];
+  s.targets.forEach((t,ti)=>{
+    const row=el('button','do-target');
+    const thumb=s.mode==='thumbs'?`<img class="do-thumb" src="${IMG}${t.img}" alt="">`:`<div class="do-emoji">${t.emoji}</div>`;
+    row.innerHTML=`${thumb}<div class="do-tlabel">${t.label}</div><div class="do-slot">?</div>`;
+    const slot=row.querySelector('.do-slot');
+    row.onclick=()=>{
+      if(done[idx])return;
+      if(placed[ti]!=null){
+        const v=placed[ti];placed[ti]=null;
+        slot.textContent='?';slot.classList.remove('filled');
+        row.classList.remove('has');
+        tray.querySelector('[data-v="'+v+'"]').classList.remove('used');
+        checkFull();return;
+      }
+      if(selected!=null){
+        placed[ti]=selected;
+        slot.textContent=selected;slot.classList.add('filled');
+        row.classList.add('has');
+        tray.querySelector('[data-v="'+selected+'"]').classList.add('used');
+        selected=null;
+        [...tray.children].forEach(c=>c.classList.remove('sel'));
+        checkFull();
+      }
+    };
+    targetEls.push(row);stage.appendChild(row);
+  });
+  stage.appendChild(el('div','do-hint','הקישו מספר ↓ ואז את הפריט שמתאים לו'));
+  const tray=el('div','do-tray');
+  for(let v=1;v<=N;v++){
+    const tk=el('button','token',String(v));tk.dataset.v=v;
+    tk.onclick=()=>{
+      if(done[idx]||tk.classList.contains('used'))return;
+      if(selected===v){selected=null;tk.classList.remove('sel');return;}
+      selected=v;
+      [...tray.children].forEach(c=>c.classList.remove('sel'));
+      tk.classList.add('sel');
+    };
+    tray.appendChild(tk);
+  }
+  stage.appendChild(tray);
+  scr.appendChild(stage);
+  const fbHolder=el('div');
+  function checkFull(){
+    if(placed.every(x=>x!=null)){
+      let allOk=true;
+      placed.forEach((v,ti)=>{
+        const row=targetEls[ti],slot=row.querySelector('.do-slot');
+        if(v===s.targets[ti].correct){row.classList.add('ok');slot.classList.add('ok');}
+        else{
+          allOk=false;
+          row.classList.add('err');
+          setTimeout(()=>{
+            row.classList.remove('err','has');
+            slot.textContent='?';slot.classList.remove('filled');
+            tray.querySelector('[data-v="'+v+'"]').classList.remove('used');
+            placed[ti]=null;
+          },650);
+        }
+      });
+      fbHolder.innerHTML='';
+      if(allOk){fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));markDone();}
+      else fbHolder.appendChild(feedback(false,'כמעט שם',s.errDesc));
+    }else fbHolder.innerHTML='';
+  }
+  scr.appendChild(fbHolder);
+  root.appendChild(scr);
+};
+
+RENDER.audio=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const safeLeft=Math.random()<0.5;
+  const boxes=[{name:'ארגז א׳',safe:safeLeft},{name:'ארגז ב׳',safe:!safeLeft}];
+  const row=el('div','audio-row');
+  const fbHolder=el('div');
+  boxes.forEach(bx=>{
+    const c=el('div','audio-c');
+    c.innerHTML=`<div class="audio-box">📦</div><div class="audio-name">${bx.name}</div>`;
+    const play=el('button','btn-play','▶ נערו את הארגז');
+    play.onclick=()=>{try{ac().resume();}catch(e){}bx.safe?thud():rattle();play.classList.add('playing');setTimeout(()=>play.classList.remove('playing'),bx.safe?360:680);};
+    const pick=el('button','btn-pick','בחרו ארגז זה');
+    pick.onclick=()=>{
+      if(done[idx])return;
+      fbHolder.innerHTML='';
+      if(bx.safe){c.classList.add('correct');[...row.children].forEach(x=>x.style.pointerEvents='none');fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));markDone();}
+      else{c.classList.add('wrong');fbHolder.appendChild(feedback(false,'לא מדויק',s.errDesc));setTimeout(()=>c.classList.remove('wrong'),1400);}
+    };
+    c.appendChild(play);c.appendChild(pick);
+    row.appendChild(c);
+  });
+  scr.appendChild(row);
+  scr.appendChild(coach('הקליקו על <b>"נערו את הארגז"</b> בכל אחד והקשיבו טוב — ארגז בטוח כמעט לא משמיע רעש תזוזה.'));
+  scr.appendChild(fbHolder);
+  root.appendChild(scr);
+};
+
+RENDER.walkthrough=(s,root)=>{
+  const scr=el('div','scr');
+  let stepIdx=0;
+  const N=s.steps.length;
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <p class="muted" style="margin-top:4px">${s.intro}</p></div>`;
+  const prog=el('div','wt-prog');
+  for(let i=0;i<N;i++){const d=el('div','wt-pd');prog.appendChild(d);}
+  scr.appendChild(prog);
+  const stageHost=el('div');
+  scr.appendChild(stageHost);
+  function updateProg(){
+    [...prog.children].forEach((d,i)=>{
+      d.classList.remove('on','done');
+      if(i<stepIdx)d.classList.add('done');
+      else if(i===stepIdx)d.classList.add('on');
+    });
+  }
+  function renderStep(){
+    updateProg();
+    stageHost.innerHTML='';
+    if(stepIdx>=N){
+      stageHost.appendChild(feedback(true,s.doneTitle,s.doneDesc));
+      if(!done[idx])markDone();
+      return;
+    }
+    const st=s.steps[stepIdx];
+    const wrap=el('div');
+    wrap.innerHTML=`<div class="eyebrow" style="color:var(--ink-soft)">חדר ${stepIdx+1} מתוך ${N} · ${st.room}</div>`;
+    if(st.img){
+      const h=el('div','hero');h.style.minHeight='140px';h.style.marginTop='6px';
+      h.innerHTML=`<img src="${IMG}${st.img}" alt=""><div class="hero-grad" style="background:linear-gradient(0deg,rgba(11,24,46,.5),transparent 60%)"></div>
+        <div class="hero-cap"><div class="hero-title" style="font-size:17px">${st.room}</div></div>`;
+      wrap.appendChild(h);
+    }
+    const qEl=el('h2','q',st.q);qEl.style.marginTop='10px';wrap.appendChild(qEl);
+    const opts=el('div','opts');
+    const fbHolder=el('div');
+    const letters=['א','ב','ג','ד'];
+    let answered=false;
+    st.opts.forEach((o,i)=>{
+      const b=el('button','opt',`<span class="lt">${letters[i]}</span><span>${o.t}</span>`);
+      b.onclick=()=>{
+        if(answered)return;
+        fbHolder.innerHTML='';
+        if(o.correct){
+          answered=true;
+          b.classList.add('correct');
+          [...opts.children].forEach(c=>c.classList.add('lock'));
+          b.classList.remove('lock');
+          fbHolder.appendChild(feedback(true,'נכון!',st.ok));
+          const adv=el('button','btn-step',stepIdx<N-1?'המשך לחדר הבא ⟵':'לסיכום ⟵');
+          adv.onclick=()=>{stepIdx++;renderStep();};
+          fbHolder.appendChild(adv);
+        }else{
+          b.classList.add('wrong');
+          fbHolder.appendChild(feedback(false,'לא מדויק',st.err));
+          setTimeout(()=>b.classList.remove('wrong'),1400);
+        }
+      };
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+    wrap.appendChild(fbHolder);
+    stageHost.appendChild(wrap);
+  }
+  renderStep();
+  root.appendChild(scr);
+};
+
+RENDER.tapplace=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage=el('div','tp-stage');
+  const boxWrap=el('div','tp-box');
+  boxWrap.innerHTML=`<img src="${IMG}${s.boxImg}" alt="">`;
+  const zoneEls=[];
+  s.zones.forEach((z,zi)=>{
+    const zn=el('div','tp-zone',z.ph);
+    zn.style.right=z.x+'%';zn.style.top=z.y+'%';
+    zn.style.width=z.w+'%';zn.style.height=z.h+'%';
+    zn.dataset.idx=zi;
+    boxWrap.appendChild(zn);
+    zoneEls.push(zn);
+  });
+  stage.appendChild(boxWrap);
+  const tokens=el('div','tp-tokens');
+  let selected=null;
+  const placedZones=new Set();
+  const fbHolder=el('div');
+  s.tokens.forEach((tk,ti)=>{
+    const b=el('button','tp-token',`<span class="ic">${tk.ic}</span><span>${tk.t}</span>`);
+    b.dataset.idx=ti;
+    b.onclick=()=>{
+      if(done[idx]||b.classList.contains('used'))return;
+      if(selected===ti){selected=null;b.classList.remove('sel');return;}
+      selected=ti;
+      [...tokens.children].forEach(c=>c.classList.remove('sel'));
+      b.classList.add('sel');
+    };
+    tokens.appendChild(b);
+  });
+  zoneEls.forEach(zn=>{
+    zn.onclick=()=>{
+      if(done[idx]||selected==null||zn.classList.contains('filled'))return;
+      const tk=s.tokens[selected];
+      zn.classList.add('filled');
+      zn.innerHTML=`<div style="font-size:18px;line-height:1">${tk.ic}</div><div>${tk.t}</div>`;
+      placedZones.add(zn.dataset.idx);
+      tokens.children[selected].classList.add('used');
+      selected=null;
+      [...tokens.children].forEach(c=>c.classList.remove('sel'));
+      if(placedZones.size===s.zones.length&&!done[idx]){
+        fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));
+        markDone();
+      }
+    };
+  });
+  stage.appendChild(tokens);
+  scr.appendChild(stage);
+  scr.appendChild(fbHolder);
+  if(s.coach)scr.appendChild(coach(s.coach));
+  root.appendChild(scr);
+};
+
+RENDER.matching=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.intro||s.sub||''}</p></div>`;
+  const cols=el('div','mt-cols');
+  const leftCol=el('div','mt-side');
+  const rightCol=el('div','mt-side');
+  leftCol.appendChild(el('div','mt-col-h','הפריט'));
+  rightCol.appendChild(el('div','mt-col-h','הגישה'));
+  let selected=null;
+  let matched=0;
+  const fbHolder=el('div');
+  s.items.forEach(it=>{
+    const c=el('button','mt-card');
+    c.innerHTML=`<div class="mt-ic">${it.ic}</div><div class="mt-name">${it.name}</div><div style="font-size:12px;color:var(--ink-soft)">${it.detail}</div>`;
+    c.dataset.id=it.id;
+    c.onclick=()=>{
+      if(c.classList.contains('matched')||done[idx])return;
+      if(selected&&selected.kind==='item'&&selected.el===c){selected=null;c.classList.remove('sel');return;}
+      [...leftCol.querySelectorAll('.mt-card')].forEach(x=>x.classList.remove('sel'));
+      c.classList.add('sel');
+      selected={kind:'item',id:it.id,el:c};
+    };
+    leftCol.appendChild(c);
+  });
+  const approaches=[...s.approaches].sort(()=>Math.random()-0.5);
+  approaches.forEach(ap=>{
+    const c=el('button','mt-card');
+    c.innerHTML=`<div class="mt-name">${ap.t}</div><div style="font-size:12.5px;color:var(--ink-soft)">${ap.d}</div>`;
+    c.dataset.id=ap.id;
+    c.onclick=()=>{
+      if(c.classList.contains('matched')||done[idx])return;
+      if(selected&&selected.kind==='item'){
+        if(selected.id===ap.id){
+          selected.el.classList.remove('sel');
+          selected.el.classList.add('matched');
+          c.classList.add('matched');
+          matched++;
+          selected=null;
+          if(matched===s.items.length){
+            fbHolder.innerHTML='';
+            fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));
+            markDone();
+          }
+        }else{
+          c.classList.add('wrong');
+          fbHolder.innerHTML='';
+          fbHolder.appendChild(feedback(false,'לא מתאים',s.errDesc));
+          setTimeout(()=>c.classList.remove('wrong'),700);
+        }
+      }
+    };
+    rightCol.appendChild(c);
+  });
+  cols.appendChild(leftCol);cols.appendChild(rightCol);
+  scr.appendChild(cols);
+  scr.appendChild(fbHolder);
+  root.appendChild(scr);
+};
+
+RENDER.exploretabs=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  if(s.intro)scr.appendChild(el('div','card',`<p class="lead" style="font-size:15px">${s.intro}</p>`));
+  const row=el('div','tb-row');
+  const panel=el('div','tb-panel','<p class="muted" style="text-align:center;padding:18px 0">👆 בחרו אחד הכללים למעלה כדי לחשוף אותו</p>');
+  const viewed=new Set();
+  s.tabs.forEach((tb,i)=>{
+    const b=el('button','tb-tab',`<div class="tbi">${tb.ic}</div>${tb.t}`);
+    b.onclick=()=>{
+      [...row.children].forEach(c=>c.classList.remove('active'));
+      b.classList.add('active');b.classList.add('viewed');
+      viewed.add(i);
+      panel.innerHTML=`<div class="pt">${tb.name}</div><div class="pd">${tb.d}</div>`;
+      if(viewed.size===s.tabs.length&&!done[idx])markDone();
+    };
+    row.appendChild(b);
+  });
+  scr.appendChild(row);
+  scr.appendChild(panel);
+  root.appendChild(scr);
+};
+
+RENDER.opentext=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div><h2 class="q" style="margin-top:4px">${s.q}</h2></div>`;
+  const sc=el('div','card');sc.style.background='#FFF6EE';sc.style.borderColor='#F6D9BE';
+  sc.innerHTML=`<p class="lead" style="font-size:15px">📞 ${s.scenario}</p>`;
+  scr.appendChild(sc);
+  scr.appendChild(el('p','muted','<b style="color:var(--navy)">'+s.prompt+'</b>'));
+  const ta=el('textarea','ta');ta.placeholder='כתבו כאן את התשובה שלכם...';
+  scr.appendChild(ta);
+  const showBtn=el('button','btn-step','הצג את "תשובת בית הספר" ⟵');
+  scr.appendChild(showBtn);
+  const reveal=el('div');reveal.style.display='none';
+  reveal.innerHTML=`<div class="card" style="margin-bottom:12px">
+      <div class="eyebrow" style="color:var(--good)">תשובת בית הספר</div>
+      <p class="muted" style="margin-top:6px">${s.model}</p>
+    </div>
+    <p class="muted" style="text-align:center;font-weight:700;color:var(--navy)">דרגו: כמה התשובה שלכם דומה?<br><span style="font-size:12px;color:var(--ink-soft)">(1 — ממש לא · 5 — מאוד דומה)</span></p>`;
+  const rate=el('div','rate-row');rate.style.marginTop='10px';
+  for(let r=1;r<=5;r++){
+    const b=el('button','rate-b',String(r));
+    b.onclick=()=>{[...rate.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');if(!done[idx])markDone();};
+    rate.appendChild(b);
+  }
+  reveal.appendChild(rate);
+  scr.appendChild(reveal);
+  showBtn.onclick=()=>{showBtn.style.display='none';reveal.style.display='block';reveal.scrollIntoView({behavior:'smooth',block:'nearest'});};
+  root.appendChild(scr);
+};
+
+RENDER.summary=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<h2 class="q" style="font-size:22px">${s.title}</h2><p class="muted">${s.intro}</p>`;
+  s.steps.forEach((st,i)=>{
+    const it=el('div','sum-i');
+    it.innerHTML=`<div class="sum-n">${i+1}</div>
+      <div><div class="sum-t">${st.t}</div><div class="sum-d">${st.d}</div></div>`;
+    scr.appendChild(it);
+  });
+  scr.appendChild(coach(s.outro));
+  root.appendChild(scr);
+};
+
+RENDER.done=(s,root)=>{
+  const w=el('div','cover');
+  w.innerHTML=`
+    <span class="badge">משימה #2048 הושלמה</span>
+    <div style="font-size:54px">🎓</div>
+    <h1>סיימת בהצלחה!</h1>
+    <p class="sub">כל הכבוד — סיימת את האקדמיה של Grabit. עכשיו יש לך את כל הכלים לספק שירות מקצועי, מדויק ואמין בכל הובלה.</p>
+    <div class="done-areas">
+      <div class="done-a"><div class="di">📦</div><div class="dt">אריזה</div><div class="dd">שביר, חשמל וסימון</div></div>
+      <div class="done-a"><div class="di">🏠</div><div class="dt">פריקה</div><div class="dd">סידור וניהול נזק</div></div>
+      <div class="done-a"><div class="di">💬</div><div class="dt">תקשורת</div><div class="dd">הקשבה ושקיפות</div></div>
+      <div class="done-a"><div class="di">🚚</div><div class="dt">הובלה</div><div class="dd">עבודה בטוחה</div></div>
+    </div>
+    <p class="sub" style="font-size:13px">המשאית הגיעה ליעד — חיפה. נסיעה טובה! 🏁</p>`;
+  const restart=el('button','btn btn-back','חזרה לעמוד הראשי ⟳');
+  restart.style.maxWidth='260px';restart.style.flex='unset';
+  restart.onclick=()=>{idx=0;render();};
+  w.appendChild(restart);
+  root.appendChild(w);
+  confetti();
+};
+
+render();
+</script>
+</body>
+</html>
