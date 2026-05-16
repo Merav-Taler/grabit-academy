@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#16335B">
+<title>פרק 1 · אריזה — V2 · אצל משפחת גלבוע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Suez+One&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16335B; --navy-2:#1E4378;
+  --orange:#F0833A; --orange-d:#D96A1F;
+  --cyan:#3FA9F5;
+  --cream:#F7F4EF; --paper:#FFFFFF;
+  --ink:#1B2942; --ink-soft:#5A6B86;
+  --line:#E4DED3;
+  --good:#2BA66B; --good-bg:#E7F6EE;
+  --bad:#D8443B;  --bad-bg:#FCEBEA;
+  --cardboard:#C8A06E;
+  --cardboard-d:#A67E4C;
+  --tape:#FFE39A;
+  --sticky-yellow:#FFF1A8;
+  --stamp-red:#C8413A;
+  --shadow:0 8px 28px rgba(22,51,91,.12);
+  --shadow-sm:0 3px 12px rgba(22,51,91,.08);
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{font-family:'Heebo',sans-serif;background:var(--navy);color:var(--ink);display:flex;justify-content:center;overscroll-behavior:none;line-height:1.5;-webkit-user-select:none;user-select:none;}
+img{max-width:100%;display:block;pointer-events:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.display-font{font-family:'Suez One',serif;letter-spacing:-.01em;}
+.hand-font{font-family:'Caveat',cursive;}
+
+#app{width:100%;max-width:520px;min-height:100vh;min-height:100dvh;background:var(--cream);display:flex;flex-direction:column;position:relative;box-shadow:0 0 60px rgba(0,0,0,.4);overflow:hidden;}
+
+/* ===== TASK HEADER ===== */
+#topbar{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;position:sticky;top:0;z-index:40;}
+.task-row{display:flex;align-items:center;gap:10px;}
+.task-logo{width:40px;height:40px;border-radius:11px;background:#fff;padding:3px;flex-shrink:0;box-shadow:var(--shadow-sm);}
+.task-meta{flex:1;min-width:0;}
+.task-id{font-weight:900;font-size:14px;line-height:1.15;display:flex;align-items:center;gap:6px;}
+.beta-badge{background:var(--orange);color:#fff;font-size:9px;padding:2px 7px;border-radius:30px;font-weight:900;letter-spacing:.04em;}
+.task-route{font-size:11.5px;color:#A9C2E6;font-weight:500;margin-top:1px;}
+.task-clock{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:11px;padding:4px 10px;text-align:center;flex-shrink:0;}
+.task-clock .t{font-weight:900;font-size:15px;font-variant-numeric:tabular-nums;}
+.task-clock .l{font-size:9px;color:#A9C2E6;font-weight:600;margin-top:-1px;}
+
+#road{position:relative;height:30px;margin:8px 4px 0;}
+.road-line{position:absolute;top:50%;right:0;left:0;height:5px;transform:translateY(-50%);background:rgba(255,255,255,.13);border-radius:5px;overflow:hidden;}
+.road-fill{position:absolute;top:0;right:0;height:100%;background:linear-gradient(90deg,var(--orange),var(--cyan));border-radius:5px;transition:width .55s cubic-bezier(.4,1.3,.5,1);}
+.road-dot{position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:#fff;transform:translate(50%,-50%);opacity:.5;}
+.road-dot.right{right:0;} .road-dot.left{left:0;}
+.road-city{position:absolute;top:-1px;font-size:9px;color:#A9C2E6;font-weight:700;}
+.road-city.r{right:0;} .road-city.l{left:0;}
+#truck{position:absolute;top:50%;transform:translate(50%,-58%) scaleX(-1);font-size:20px;transition:right .55s cubic-bezier(.4,1.3,.5,1);z-index:2;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));}
+
+/* ===== SCREEN ===== */
+#screen{flex:1;display:flex;flex-direction:column;animation:fadeUp .4s ease;position:relative;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.scr{padding:16px 16px 22px;display:flex;flex-direction:column;gap:14px;flex:1;}
+
+/* ===== TYPOGRAPHY ===== */
+.eyebrow{font-size:11px;font-weight:900;color:var(--orange);letter-spacing:.07em;text-transform:uppercase;}
+h2.title{font-family:'Suez One',serif;font-size:26px;font-weight:400;color:var(--navy);line-height:1.2;letter-spacing:-.01em;}
+.lead{font-size:16px;line-height:1.65;color:var(--ink);}
+.lead b{color:var(--navy);}
+.muted{color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
+
+/* ===== STICKY NOTE (family welcome) ===== */
+.welcome-stage{position:relative;padding:16px;display:flex;flex-direction:column;gap:14px;}
+.door-photo{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#1a2b40;height:240px;}
+.door-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.door-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(11,24,46,.5));}
+.door-num{position:absolute;top:14px;right:14px;background:var(--navy);color:#fff;padding:7px 13px;border-radius:9px;font-weight:900;font-size:14px;box-shadow:var(--shadow-sm);transform:rotate(-3deg);}
+.door-name{position:absolute;bottom:14px;right:14px;color:#fff;font-family:'Suez One',serif;font-size:22px;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+.door-name small{display:block;font-family:'Heebo',sans-serif;font-size:11.5px;color:#FFB87E;font-weight:700;letter-spacing:.04em;}
+
+.sticky{
+  position:relative;background:var(--sticky-yellow);
+  padding:18px 16px 16px;
+  font-family:'Caveat',cursive;font-size:21px;line-height:1.35;color:#3D2D0C;
+  box-shadow:0 8px 20px rgba(120,90,30,.22),0 2px 4px rgba(120,90,30,.15);
+  transform:rotate(-1.5deg);
+  border-radius:2px 14px 6px 10px;
+  background-image:linear-gradient(140deg, rgba(255,255,255,.4), transparent 30%, transparent 70%, rgba(160,120,30,.05));
+}
+.sticky::before{
+  content:"";position:absolute;top:-9px;right:38%;left:38%;height:18px;
+  background:rgba(220,180,80,.55);transform:rotate(2deg);
+  box-shadow:0 2px 4px rgba(0,0,0,.12);
+  border-radius:2px;
+}
+.sticky strong{font-weight:700;}
+.sticky-sig{font-size:24px;text-align:left;margin-top:6px;color:#5A3A12;}
+
+/* ===== CARDBOARD ===== */
+.cardboard{
+  background:var(--cardboard);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, transparent 1px 4px),
+    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(255,255,255,.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,0,0,.08), transparent);
+  color:#3A2410;
+  border-radius:14px;
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.12), 0 6px 20px rgba(140,90,40,.25);
+}
+
+/* ===== TAPE STRIP (decorative) ===== */
+.tape{position:absolute;background:linear-gradient(180deg,rgba(255,235,150,.55),rgba(255,215,100,.78));box-shadow:0 1px 3px rgba(0,0,0,.15);}
+.tape::after,.tape::before{content:"";position:absolute;width:5px;height:100%;top:0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.1));}
+.tape::after{right:-1px;background:linear-gradient(-90deg,transparent,rgba(0,0,0,.1));}
+.tape.h{height:18px;left:-8px;right:-8px;}
+.tape.v{width:18px;top:-8px;bottom:-8px;}
+
+/* ===== STAMP ===== */
+.stamp{
+  position:absolute;color:var(--stamp-red);font-family:'Suez One',serif;font-size:18px;
+  border:3px solid var(--stamp-red);padding:6px 12px;border-radius:6px;
+  transform:rotate(-12deg);opacity:0;letter-spacing:.05em;
+  background:rgba(252,235,234,.4);
+  text-shadow:1px 0 0 rgba(200,65,58,.3);
+  font-weight:400;
+}
+.stamp.show{animation:stampDown .55s cubic-bezier(.5,1.7,.5,1) forwards;}
+@keyframes stampDown{0%{opacity:0;transform:rotate(-12deg) scale(3);}55%{opacity:1;transform:rotate(-12deg) scale(.92);}80%{transform:rotate(-12deg) scale(1.06);}100%{opacity:1;transform:rotate(-12deg) scale(1);}}
+
+/* ===== GRABBY CHARACTER ===== */
+#grabby{
+  position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(120%);
+  width:min(420px,calc(100% - 24px));z-index:60;
+  display:flex;gap:11px;align-items:flex-end;
+  pointer-events:none;transition:transform .45s cubic-bezier(.4,1.5,.5,1);
+}
+#grabby.on{transform:translateX(-50%) translateY(0);pointer-events:auto;}
+.gb-av{width:62px;height:62px;border-radius:50%;background:#fff;padding:4px;box-shadow:0 6px 18px rgba(22,51,91,.25);flex-shrink:0;border:2px solid #fff;}
+.gb-av img{border-radius:50%;}
+.gb-bubble{
+  position:relative;background:#fff;padding:11px 14px 12px;border-radius:16px;
+  box-shadow:0 8px 24px rgba(22,51,91,.22);
+  border:1px solid var(--line);flex:1;min-width:0;
+}
+.gb-bubble::after{
+  content:"";position:absolute;bottom:14px;right:-7px;
+  width:14px;height:14px;background:#fff;transform:rotate(45deg);
+  border-right:1px solid var(--line);border-top:1px solid var(--line);
+}
+.gb-name{font-weight:900;color:var(--orange);font-size:11px;letter-spacing:.05em;text-transform:uppercase;}
+.gb-text{font-size:14.5px;line-height:1.5;color:var(--ink);margin-top:2px;}
+.gb-text b{color:var(--navy);}
+.gb-x{position:absolute;top:6px;left:8px;width:22px;height:22px;border-radius:50%;background:var(--cream);color:var(--ink-soft);font-size:14px;font-weight:900;display:grid;place-items:center;line-height:1;}
+
+/* ===== PHOTO MARKER (mark fragile items) ===== */
+.pm-stage{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#000;}
+.pm-img{display:block;width:100%;height:auto;touch-action:none;}
+.pm-counter{position:absolute;top:10px;right:10px;background:rgba(11,24,46,.78);color:#fff;font-weight:800;font-size:13px;padding:6px 12px;border-radius:30px;backdrop-filter:blur(4px);display:flex;align-items:center;gap:7px;}
+.pm-counter .ic{font-size:14px;}
+.pm-circle{position:absolute;width:80px;height:80px;border-radius:50%;border:4px solid var(--orange);transform:translate(50%,-50%) scale(0);pointer-events:none;animation:circleIn .45s cubic-bezier(.5,1.4,.5,1) forwards;box-shadow:0 0 0 2px rgba(240,131,58,.3),0 4px 12px rgba(0,0,0,.4);}
+.pm-circle::after{content:"";position:absolute;inset:-4px;border:4px solid transparent;border-top-color:rgba(240,131,58,.5);border-radius:50%;animation:spin 1.4s linear infinite;}
+@keyframes circleIn{to{transform:translate(50%,-50%) scale(1);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.pm-circle.done{border-color:var(--good);box-shadow:0 0 0 2px rgba(43,166,107,.3),0 4px 12px rgba(0,0,0,.4);}
+.pm-circle.done::after{display:none;}
+.pm-label{position:absolute;background:#fff;color:var(--navy);font-weight:900;font-size:12px;padding:4px 9px;border-radius:6px;box-shadow:var(--shadow-sm);white-space:nowrap;animation:fadeUp .3s .25s both;}
+.pm-miss{position:absolute;color:rgba(255,255,255,.85);font-size:24px;font-weight:900;transform:translate(50%,-50%);pointer-events:none;animation:missX .8s ease-out forwards;text-shadow:0 0 6px rgba(0,0,0,.6);}
+@keyframes missX{0%{opacity:0;transform:translate(50%,-50%) scale(0);}30%{opacity:1;transform:translate(50%,-50%) scale(1.4);}100%{opacity:0;transform:translate(50%,-50%) scale(1.1);}}
+.pm-hint{font-size:13px;color:var(--ink-soft);font-weight:600;text-align:center;}
+
+/* ===== PACK-REAL-BOX ===== */
+.pb-stage{display:flex;flex-direction:column;gap:14px;}
+.pb-box{position:relative;height:230px;border-radius:0;}
+.pb-box .box-inner{
+  position:absolute;inset:35px 10px 10px;
+  background:linear-gradient(180deg,#8A6440,#7A5630);
+  border-radius:4px 4px 8px 8px;
+  box-shadow:inset 0 14px 22px rgba(0,0,0,.4), inset 0 -6px 14px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.pb-box .box-flap-back{
+  position:absolute;top:0;left:0;right:0;height:80px;
+  background:linear-gradient(180deg,#C39060 0%,#A87545 100%);
+  border-radius:6px 6px 0 0;
+  clip-path:polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  box-shadow:inset 0 -4px 8px rgba(0,0,0,.15);
+}
+.pb-box .box-front{
+  position:absolute;left:0;right:0;bottom:0;height:120px;
+  background:linear-gradient(180deg,#C8A06E,#A67E4C);
+  border-radius:0 0 8px 8px;
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 4px);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),inset 0 6px 12px rgba(0,0,0,.18);
+}
+.pb-box .box-label{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%) rotate(-1deg);
+  background:#fff;padding:6px 14px;font-family:'Caveat',cursive;font-size:18px;color:#3A2410;font-weight:700;
+  box-shadow:0 2px 5px rgba(0,0,0,.15);
+}
+.pb-stack{position:absolute;bottom:18px;left:0;right:0;height:96px;display:flex;flex-direction:column-reverse;align-items:center;gap:0;padding:0 22px;}
+.pb-stack-item{
+  width:80%;border-radius:6px;padding:8px 10px;font-size:13px;font-weight:800;color:#fff;
+  text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.3);transition:transform .4s cubic-bezier(.4,1.3,.5,1);
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.pb-stack-item .it{font-size:18px;}
+.pb-shelf{
+  background:#F3EBDA;border-radius:14px;padding:14px;
+  display:flex;flex-direction:column;gap:9px;
+  box-shadow:inset 0 0 0 1px var(--line);
+  border:1px dashed rgba(166,126,76,.4);
+}
+.pb-shelf-h{font-size:11.5px;font-weight:900;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+.pb-item{
+  display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;box-shadow:var(--shadow-sm);touch-action:none;cursor:grab;
+  position:relative;
+}
+.pb-item.dragging{cursor:grabbing;z-index:999;transition:none;box-shadow:0 12px 30px rgba(22,51,91,.3);}
+.pb-item.placed{opacity:0;transform:scale(.7);transition:.3s;pointer-events:none;}
+.pb-item img{width:46px;height:46px;object-fit:cover;border-radius:8px;border:1px solid var(--line);}
+.pb-item .name{flex:1;font-weight:800;font-size:14px;color:var(--ink);}
+.pb-item .weight{background:var(--cream);font-size:11px;font-weight:900;color:var(--ink-soft);padding:4px 8px;border-radius:6px;display:flex;gap:4px;align-items:center;}
+
+.pb-box.drophover .box-front{box-shadow:inset 0 0 0 3px var(--orange),inset 0 6px 12px rgba(240,131,58,.4);}
+.pb-box.shaking{animation:boxShake .5s ease-in-out;}
+@keyframes boxShake{0%,100%{transform:translateX(0) rotate(0);}20%{transform:translateX(-8px) rotate(-1.5deg);}50%{transform:translateX(7px) rotate(1.2deg);}80%{transform:translateX(-4px) rotate(-.5deg);}}
+
+.btn-seal{
+  background:var(--navy);color:#fff;border-radius:13px;padding:14px;
+  font-weight:900;font-size:15px;width:100%;box-shadow:var(--shadow-sm);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-seal:disabled{background:#C9C2B0;}
+.btn-seal:not(:disabled):active{transform:scale(.98);}
+
+/* tape across the closed box */
+.pb-box .seal-tape{
+  position:absolute;top:32px;left:50%;width:40%;height:18px;
+  background:linear-gradient(180deg,rgba(255,228,140,.85),rgba(240,200,80,.9));
+  transform:translateX(-50%) scaleY(0);transform-origin:top;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+  z-index:5;
+}
+.pb-box.sealed .seal-tape{animation:tapeDown .35s ease-out forwards;}
+@keyframes tapeDown{to{transform:translateX(-50%) scaleY(1);}}
+.pb-box.sealed .box-stamp{animation:stampDown .55s .35s cubic-bezier(.5,1.7,.5,1) forwards;}
+.pb-box .box-stamp{position:absolute;top:78px;left:20%;color:var(--stamp-red);font-family:'Suez One',serif;font-size:16px;border:3px solid var(--stamp-red);padding:5px 11px;border-radius:5px;transform:rotate(-12deg) scale(3);opacity:0;background:rgba(252,235,234,.55);z-index:6;letter-spacing:.05em;}
+
+/* ===== AUDIO RESKIN (cardboard boxes) ===== */
+.audio-row{display:flex;gap:11px;}
+.audio-c{flex:1;background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:0;display:flex;flex-direction:column;gap:0;align-items:stretch;transition:.18s;overflow:hidden;}
+.audio-c.correct{border-color:var(--good);}
+.audio-c.wrong{border-color:var(--bad);}
+.audio-box-3d{height:88px;position:relative;overflow:hidden;border-radius:14px 14px 0 0;}
+.audio-box-3d .top{position:absolute;top:0;left:0;right:0;height:30%;background:linear-gradient(180deg,#C8A06E,#A87B49);clip-path:polygon(0 0,100% 0,86% 100%,14% 100%);box-shadow:inset 0 -2px 4px rgba(0,0,0,.2);}
+.audio-box-3d .front{position:absolute;bottom:0;left:0;right:0;height:75%;background:linear-gradient(180deg,#B68850,#8A6238);background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 1px,transparent 1px 4px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);}
+.audio-box-3d .lbl{position:absolute;bottom:10px;left:50%;transform:translateX(-50%) rotate(-2deg);background:#fff;font-family:'Caveat',cursive;font-size:14px;font-weight:700;color:#3A2410;padding:2px 10px;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.audio-c.shaking .audio-box-3d{animation:boxShake .55s ease-in-out;}
+.audio-name{padding:10px 8px 4px;font-weight:900;color:var(--navy);font-size:13.5px;text-align:center;}
+.audio-actions{padding:8px 10px 12px;display:flex;flex-direction:column;gap:7px;}
+.btn-play{background:var(--navy);color:#fff;border-radius:10px;padding:8px;font-weight:800;font-size:12.5px;display:flex;gap:5px;align-items:center;justify-content:center;}
+.btn-play.playing{background:var(--orange);}
+.btn-pick{background:var(--cream);border:2px solid var(--line);border-radius:10px;padding:8px;font-weight:800;font-size:12.5px;color:var(--navy);}
+
+/* ===== TV LAYERS ===== */
+.tv-stage{background:linear-gradient(180deg,#F0EAD9 50%,#D8C9A6);border-radius:14px;padding:18px;position:relative;overflow:hidden;border:1px solid var(--line);}
+.tv-stage::before{content:"";position:absolute;left:0;right:0;bottom:0;height:18%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.12));}
+.tv-frame{
+  position:relative;width:84%;height:160px;margin:0 auto;
+  background:#1a1a1a;border-radius:6px;border:4px solid #0d0d0d;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+  z-index:1;
+}
+.tv-frame::after{content:"";position:absolute;inset:8px;background:radial-gradient(ellipse at center,#2a2a2a,#0a0a0a);border-radius:3px;}
+.tv-stand{width:48%;height:14px;margin:6px auto 0;background:linear-gradient(180deg,#2a2a2a,#0a0a0a);border-radius:3px;}
+/* layer overlays */
+.tv-layer{position:absolute;inset:-8px;border-radius:8px;opacity:0;transition:opacity .35s ease;pointer-events:none;}
+.tv-layer.on{opacity:1;}
+.tv-layer.L1{background:repeating-linear-gradient(45deg,#dadada 0 4px,#c0c0c0 4px 8px);inset:-6px;border-radius:6px;opacity:0;}
+.tv-layer.L1.on{opacity:.55;}
+.tv-layer.L2{background:linear-gradient(180deg,#C8A06E,#A67E4C);background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 1px,transparent 1px 5px);border-radius:8px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.15);inset:-12px;}
+.tv-layer.L3{background:radial-gradient(circle at 6px 6px, rgba(255,255,255,.5) 2px, transparent 3px),radial-gradient(circle at 6px 6px, rgba(255,255,255,.5) 2px, transparent 3px);background-size:10px 10px,10px 10px;background-color:rgba(220,220,235,.7);background-position:0 0,5px 5px;inset:-18px;border-radius:14px;}
+.tv-layer.L4{background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(255,255,255,.25));inset:-22px;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);}
+.tv-layer.L5{display:flex;align-items:center;justify-content:center;}
+.tv-layer.L5 .fragile-sticker{
+  position:absolute;top:-18px;left:14px;background:var(--stamp-red);color:#fff;
+  font-family:'Suez One',serif;font-size:11px;padding:4px 9px;border-radius:3px;
+  transform:rotate(-6deg);box-shadow:0 2px 5px rgba(0,0,0,.3);opacity:0;
+  letter-spacing:.05em;
+}
+.tv-layer.L5.on .fragile-sticker{animation:stickerStick .35s ease-out forwards;}
+@keyframes stickerStick{0%{opacity:0;transform:rotate(-30deg) scale(2.5) translate(20px,-20px);}80%{opacity:1;transform:rotate(-4deg) scale(.95);}100%{opacity:1;transform:rotate(-6deg) scale(1);}}
+
+.tv-layers-tray{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.tv-layer-card{
+  background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 12px;
+  display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-sm);
+  touch-action:none;cursor:grab;
+}
+.tv-layer-card.dragging{cursor:grabbing;z-index:999;box-shadow:0 12px 30px rgba(22,51,91,.3);}
+.tv-layer-card.placed{opacity:.45;background:var(--good-bg);border-color:var(--good);}
+.tv-layer-card.placed .ln-n{background:var(--good);}
+.ln-n{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px;flex-shrink:0;}
+.ln-t{flex:1;font-weight:800;font-size:13.5px;color:var(--ink);}
+.ln-t small{display:block;color:var(--ink-soft);font-weight:600;font-size:11.5px;margin-top:1px;}
+.tv-prog{display:flex;justify-content:center;gap:5px;margin-top:8px;}
+.tv-prog .d{width:9px;height:9px;border-radius:50%;background:var(--line);}
+.tv-prog .d.on{background:var(--good);}
+
+.tv-stage.dropok{box-shadow:inset 0 0 0 3px var(--orange);}
+
+/* ===== STICKERS on cardboard box ===== */
+.sk-stage{position:relative;display:flex;flex-direction:column;gap:14px;}
+.sk-box{
+  position:relative;aspect-ratio:1.5/1;border-radius:14px;
+  background:linear-gradient(180deg,#C8A06E,#A67E4C);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 1px,transparent 1px 5px),radial-gradient(ellipse 70% 60% at 30% 20%, rgba(255,255,255,.15), transparent 60%);
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.12), 0 6px 20px rgba(140,90,40,.25);
+  overflow:hidden;touch-action:none;
+}
+.sk-box::before{content:"";position:absolute;top:46%;left:0;right:0;height:14px;background:linear-gradient(180deg,rgba(255,228,140,.55),rgba(240,200,80,.78));box-shadow:0 1px 2px rgba(0,0,0,.15);}
+.sk-tray{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;}
+.sk-token{padding:8px 12px;border-radius:10px;font-weight:900;font-size:13px;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2);display:flex;gap:6px;align-items:center;touch-action:none;cursor:grab;}
+.sk-token.dragging{cursor:grabbing;z-index:999;}
+.sk-token.placed{opacity:0;width:0;padding:0;margin:0;}
+.sk-token.t-room{background:#5B7FB8;}
+.sk-token.t-fragile{background:var(--stamp-red);}
+.sk-token.t-heavy{background:#1F3A5F;}
+.sk-token.t-up{background:#2BA66B;}
+.sk-placed{position:absolute;font-weight:900;font-size:12px;color:#fff;padding:5px 10px;border-radius:6px;box-shadow:0 3px 8px rgba(0,0,0,.3);transform-origin:center;animation:slap .35s cubic-bezier(.5,1.5,.5,1) forwards;display:flex;gap:5px;align-items:center;}
+.sk-placed.t-room{background:#5B7FB8;}
+.sk-placed.t-fragile{background:var(--stamp-red);}
+.sk-placed.t-heavy{background:#1F3A5F;}
+.sk-placed.t-up{background:#2BA66B;}
+@keyframes slap{0%{transform:translate(-50%,-50%) scale(2) rotate(-15deg);opacity:0;}60%{transform:translate(-50%,-50%) scale(.93) rotate(-3deg);opacity:1;}100%{transform:translate(-50%,-50%) scale(1) rotate(-2deg);opacity:1;}}
+
+/* ===== POLAROID MATCHING ===== */
+.pl-wrap{display:flex;flex-direction:column;gap:12px;}
+.pl-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.pl-col-h{font-size:11px;font-weight:900;color:var(--ink-soft);text-align:center;text-transform:uppercase;letter-spacing:.05em;}
+.pl-side{display:flex;flex-direction:column;gap:11px;}
+.polaroid{
+  background:#fff;padding:8px 8px 18px;border-radius:3px;
+  box-shadow:0 6px 14px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.12);
+  text-align:center;display:flex;flex-direction:column;gap:6px;
+  transition:transform .25s;cursor:pointer;
+}
+.polaroid:nth-child(2n){transform:rotate(1.5deg);}
+.polaroid:nth-child(3n){transform:rotate(-2deg);}
+.polaroid.sel{transform:scale(1.04) rotate(0);box-shadow:0 12px 24px rgba(240,131,58,.35),0 0 0 3px var(--orange);}
+.polaroid.matched{transform:rotate(0);box-shadow:0 8px 18px rgba(43,166,107,.35),0 0 0 3px var(--good);pointer-events:none;}
+.polaroid.wrong{animation:shake .4s;}
+.polaroid-img{width:100%;aspect-ratio:1;background:var(--cream);border-radius:2px;display:grid;place-items:center;font-size:50px;}
+.polaroid-cap{font-family:'Caveat',cursive;font-size:18px;font-weight:700;color:#3D2D0C;line-height:1.1;}
+.polaroid-detail{font-size:10.5px;color:var(--ink-soft);font-weight:600;line-height:1.3;}
+.approach-card{
+  background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px;
+  text-align:right;font-size:13.5px;cursor:pointer;line-height:1.4;
+}
+.approach-card.sel{border-color:var(--orange);background:#FFF6EE;}
+.approach-card.matched{border-color:var(--good);background:var(--good-bg);pointer-events:none;}
+.approach-card.wrong{animation:shake .4s;border-color:var(--bad);background:var(--bad-bg);}
+.approach-card .t{font-weight:900;color:var(--navy);font-size:14.5px;margin-bottom:3px;}
+.approach-card .d{color:var(--ink-soft);font-size:12.5px;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+/* ===== POSTCARD SUMMARY ===== */
+.pc-stage{padding:6px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.pc-card{
+  position:relative;width:100%;background:#FBF4E2;border-radius:6px;
+  box-shadow:0 12px 30px rgba(80,60,30,.25),0 2px 6px rgba(80,60,30,.15);
+  padding:18px;transform:rotate(-1.2deg);
+  background-image:radial-gradient(circle at 20% 30%, rgba(160,120,40,.05), transparent 30%);
+  border:1px solid #E8DCB8;
+}
+.pc-postmark{position:absolute;top:14px;left:14px;width:62px;height:62px;border:2px dashed var(--stamp-red);border-radius:50%;color:var(--stamp-red);font-family:'Suez One',serif;font-size:9px;text-align:center;display:grid;place-items:center;padding:8px;line-height:1.05;transform:rotate(-15deg);opacity:.85;}
+.pc-from{font-family:'Suez One',serif;font-size:16px;color:var(--navy);letter-spacing:.01em;}
+.pc-route{font-family:'Caveat',cursive;font-size:24px;color:var(--orange-d);margin-top:6px;}
+.pc-msg{font-family:'Caveat',cursive;font-size:18px;line-height:1.4;color:#3D2D0C;margin-top:12px;}
+.pc-stamps{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.pc-stamp{
+  background:linear-gradient(135deg,#fff,#FAF0D8);border:1.5px solid #C49E5C;
+  padding:6px 10px;border-radius:3px;font-weight:800;font-size:11.5px;color:var(--navy);
+  display:flex;gap:5px;align-items:center;box-shadow:0 2px 4px rgba(0,0,0,.1);
+  transform:scale(0);animation:popIn .4s cubic-bezier(.4,1.6,.5,1) forwards;
+}
+@keyframes popIn{to{transform:scale(1);}}
+.pc-sig{text-align:left;font-family:'Caveat',cursive;font-size:20px;color:var(--orange-d);margin-top:14px;font-weight:700;}
+
+/* ===== NAV ===== */
+#nav{position:sticky;bottom:0;z-index:40;display:flex;gap:10px;padding:10px 14px;padding-bottom:calc(env(safe-area-inset-bottom) + 10px);background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(22,51,91,.06);}
+.btn{flex:1;padding:14px;border-radius:14px;font-weight:900;font-size:15.5px;display:flex;align-items:center;justify-content:center;gap:7px;transition:.15s;}
+.btn:active{transform:scale(.98);}
+.btn-next{background:var(--orange);color:#fff;flex:2;box-shadow:0 4px 14px rgba(240,131,58,.35);}
+.btn-next:disabled{background:#D8D2C5;color:#fff;box-shadow:none;}
+.btn-back{background:var(--cream);color:var(--navy);border:2px solid var(--line);}
+.btn-back:disabled{opacity:.4;}
+.locktip{font-size:12px;color:var(--ink-soft);text-align:center;font-weight:600;padding:5px 14px 0;background:#fff;}
+
+/* ===== STEP DOTS ===== */
+.steps-rail{display:flex;justify-content:center;gap:6px;padding:9px 12px;background:#fff;border-bottom:1px solid var(--line);}
+.step-dot{width:24px;height:6px;border-radius:4px;background:var(--line);transition:.2s;}
+.step-dot.on{background:var(--orange);width:32px;}
+.step-dot.done{background:var(--good);}
+
+@media(max-width:360px){.scr{padding:14px 12px 18px;}h2.title{font-size:22px;}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="task-row">
+      <img class="task-logo" src="images/image5.png" alt="Grabit">
+      <div class="task-meta">
+        <div class="task-id">משימה #2048 <span class="beta-badge">V2</span></div>
+        <div class="task-route">תל אביב <span style="color:var(--orange)">←</span> חיפה · משפחת גלבוע</div>
+      </div>
+      <div class="task-clock"><div class="t" id="clock">08:00</div><div class="l">שעון משימה</div></div>
+    </div>
+    <div id="road">
+      <div class="road-city r">ת"א</div><div class="road-city l">חיפה</div>
+      <div class="road-line"><div class="road-fill" id="roadFill"></div></div>
+      <div class="road-dot right"></div><div class="road-dot left"></div>
+      <div id="truck">🚚</div>
+    </div>
+  </header>
+  <nav class="steps-rail" id="stepsRail"></nav>
+  <main id="screen"></main>
+  <div class="locktip" id="locktip"></div>
+  <footer id="nav">
+    <button class="btn btn-back" id="btnBack">⟶ חזור</button>
+    <button class="btn btn-next" id="btnNext">התקדם ⟵</button>
+  </footer>
+</div>
+
+<!-- Grabby character bubble -->
+<div id="grabby">
+  <div class="gb-av"><img src="images/image5.png" alt="Grabby"></div>
+  <div class="gb-bubble">
+    <button class="gb-x" id="gbX">×</button>
+    <div class="gb-name">גרבי · מהשטח</div>
+    <div class="gb-text" id="gbText"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const IMG='images/';
+
+/* ============================================================
+   GRABBY — recurring mentor character
+   ============================================================ */
+const gbEl = document.getElementById('grabby');
+const gbText = document.getElementById('gbText');
+let gbTimer = null;
+function grabby(text, ms=8500){
+  gbText.innerHTML = text;
+  gbEl.classList.add('on');
+  clearTimeout(gbTimer);
+  gbTimer = setTimeout(()=>gbEl.classList.remove('on'), ms);
+}
+document.getElementById('gbX').onclick = ()=>{ gbEl.classList.remove('on'); clearTimeout(gbTimer); };
+
+/* ============================================================
+   POINTER-EVENT DRAG (mobile + desktop)
+   ============================================================ */
+function makeDraggable(el, zones, opts={}){
+  let startX, startY, dragging=false, origTransform='', pointerId=null;
+  el.addEventListener('pointerdown', e=>{
+    if(el.classList.contains('placed') || el.classList.contains('matched')) return;
+    e.preventDefault();
+    pointerId = e.pointerId;
+    el.setPointerCapture(pointerId);
+    startX = e.clientX; startY = e.clientY;
+    dragging = true;
+    el.classList.add('dragging');
+    origTransform = el.style.transform || '';
+    opts.onPickup && opts.onPickup(el);
+  });
+  el.addEventListener('pointermove', e=>{
+    if(!dragging || e.pointerId!==pointerId) return;
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    el.style.transform = `translate(${dx}px, ${dy}px) scale(1.06) rotate(2deg)`;
+    const over = hitZone(e.clientX, e.clientY, zones);
+    zones.forEach(z=>z.el.classList.toggle('dropok', z===over));
+    zones.forEach(z=>z.el.classList.toggle('drophover', z===over));
+  });
+  function endDrag(e){
+    if(!dragging) return;
+    dragging=false;
+    try{ el.releasePointerCapture(pointerId); }catch(_){}
+    el.classList.remove('dragging');
+    const over = hitZone(e.clientX, e.clientY, zones);
+    zones.forEach(z=>{z.el.classList.remove('dropok');z.el.classList.remove('drophover');});
+    if(over){
+      try{ navigator.vibrate && navigator.vibrate(18); }catch(_){}
+      const handled = opts.onDrop && opts.onDrop(over, el);
+      if(handled === false){
+        // bounce back
+        el.style.transition = 'transform .35s cubic-bezier(.5,1.6,.5,1)';
+        el.style.transform = origTransform;
+        setTimeout(()=>el.style.transition='', 360);
+      }
+    } else {
+      el.style.transition = 'transform .35s cubic-bezier(.5,1.6,.5,1)';
+      el.style.transform = origTransform;
+      setTimeout(()=>el.style.transition='', 360);
+    }
+  }
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+}
+function hitZone(x, y, zones){
+  for(const z of zones){
+    const r = z.el.getBoundingClientRect();
+    if(x>=r.left && x<=r.right && y>=r.top && y<=r.bottom) return z;
+  }
+  return null;
+}
+
+/* ============================================================
+   AUDIO
+   ============================================================ */
+let AC=null;
+function ac(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;}
+function rattle(){const a=ac(),now=a.currentTime;for(let i=0;i<7;i++){const t=now+i*0.085+Math.random()*0.03;const o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.value=900+Math.random()*1700;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.16+Math.random()*0.12,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+0.09);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+0.12);}}
+function thud(){const a=ac(),now=a.currentTime;const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(150,now);o.frequency.exponentialRampToValueAtTime(70,now+0.18);g.gain.setValueAtTime(0.0001,now);g.gain.linearRampToValueAtTime(0.13,now+0.02);g.gain.exponentialRampToValueAtTime(0.0001,now+0.3);o.connect(g);g.connect(a.destination);o.start(now);o.stop(now+0.34);}
+function snap(){const a=ac(),now=a.currentTime;const o=a.createOscillator(),g=a.createGain();o.type='square';o.frequency.setValueAtTime(450,now);o.frequency.exponentialRampToValueAtTime(900,now+0.05);g.gain.setValueAtTime(0.001,now);g.gain.linearRampToValueAtTime(0.08,now+0.01);g.gain.exponentialRampToValueAtTime(0.001,now+0.08);o.connect(g);g.connect(a.destination);o.start(now);o.stop(now+0.1);}
+function tape(){const a=ac(),now=a.currentTime;const buf=a.createBuffer(1,a.sampleRate*0.25,a.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.max(0,1-i/d.length)*0.4;const s=a.createBufferSource();const f=a.createBiquadFilter();f.type='highpass';f.frequency.value=2000;s.buffer=buf;s.connect(f);f.connect(a.destination);s.start(now);}
+
+/* ============================================================
+   SCREENS — chapter 1 V2 (at the Gilboa family's apartment)
+   ============================================================ */
+const SCREENS = [
+
+/* 1. WELCOME — front door, sticky note from family */
+{time:'08:00',type:'welcome'},
+
+/* 2. MARK FRAGILE on photo */
+{time:'08:15',type:'markphoto',
+  eyebrow:'הסלון של גלבוע',
+  q:'סמנו את הפריטים השבירים',
+  sub:'געו בכל פריט בסלון שדורש אריזה זהירה',
+  img:'image57.png',
+  spots:[
+    {x:38, y:62, r:14, name:'פסל דקורטיבי'},
+    {x:62, y:55, r:14, name:'מראת זכוכית'},
+    {x:50, y:78, r:14, name:'כוסות יין'}
+  ],
+  grabbyHit:'יפה. עוד אחד.',
+  grabbyMiss:'אין שם שום דבר שביר — תסתכל היטב על המדפים.',
+  done:'מצוין. עכשיו אנחנו יודעים מה דורש אריזה זהירה.'
+},
+
+/* 3. PACK THE BOX */
+{time:'08:35',type:'packbox',
+  eyebrow:'אורזים את הקרטון',
+  q:'גררו את הפריטים לקרטון — לפי הסדר הנכון',
+  sub:'הכבד יורד ראשון, השביר מעל. כשסיימתם — סִגרו את הקרטון.',
+  items:[
+    {id:'sculpt', img:'image16.png', name:'פסל דקורטיבי', weight:'8 ק"ג', color:'#5B4225', correctOrder:1},
+    {id:'mirror', img:'image11.png', name:'מראת זכוכית',  weight:'4 ק"ג', color:'#6B7588', correctOrder:2},
+    {id:'glass',  img:'image12.png', name:'כוסות יין',    weight:'0.5 ק"ג', color:'#3FA9F5', correctOrder:3}
+  ],
+  okGrabby:'<b>זה ארגז שמגיע שלם.</b> כבד בתחתית, שביר מעל — חוק ראשון.',
+  errGrabby:'הכוסות מעל הפסל? הן יישברו עד שדרות. <b>תהפכו את הסדר.</b>'
+},
+
+/* 4. SHAKE TEST (reskinned) */
+{time:'09:00',type:'shake',
+  eyebrow:'מבחן הניעור',
+  q:'איזה קרטון יוצא לדרך?',
+  sub:'2 קרטונים סגורים. נערו, הקשיבו — ובחרו את הבטוח.',
+  okGrabby:'<b>שקט = יציב.</b> זה ארגז שאני סומך עליו.',
+  errGrabby:'שמעת את הקליק-קלאק? זה כוסות יין שמתחתנות בפעם האחרונה. <b>פיתחו את הקרטון, מילאו חללים.</b>'
+},
+
+/* 5. TV LAYER WRAP */
+{time:'09:30',type:'tvlayers',
+  eyebrow:'הטלוויזיה של גלבוע',
+  q:'בנו את שכבות ההגנה — שכבה אחר שכבה',
+  sub:'גררו כל שכבה אל המסך, לפי הסדר. כל שכבה מתעטפת בזמן אמת.',
+  layers:[
+    {n:1, t:'איסוף כבלים ושלטים', sub:'שקית נפרדת — שלא ילכו לאיבוד', cls:'L1'},
+    {n:2, t:'לוח קרטון', sub:'השריון — מגן מפני מכות ישירות', cls:'L2'},
+    {n:3, t:'פצפצים', sub:'הריפוד — סופג זעזועים', cls:'L3'},
+    {n:4, t:'ניילון נצמד', sub:'ההידוק — נועל את כל השכבות', cls:'L4'},
+    {n:5, t:'מדבקת "שביר"', sub:'הסימון — מדבר עם שאר הצוות', cls:'L5'}
+  ],
+  okGrabby:'<b>כל שכבה — תפקיד אחד.</b> זה לא קישוט. זה הנדסה.'
+},
+
+/* 6. STICKERS on cardboard */
+{time:'10:30',type:'stickers',
+  eyebrow:'מסמנים את הקרטון',
+  q:'הדביקו את כל הסימונים על הקרטון',
+  sub:'גררו כל סימון לכל מקום ריק. בכל קרטון — כל 4 הסימונים.',
+  tokens:[
+    {id:'room', ic:'🏠', t:'מטבח · סירים', cls:'t-room'},
+    {id:'frag', ic:'⚠️', t:'שביר', cls:'t-fragile'},
+    {id:'heavy', ic:'🏋️', t:'כבד', cls:'t-heavy'},
+    {id:'up', ic:'⬆️', t:'צד למעלה', cls:'t-up'}
+  ],
+  zones:[
+    {x:18, y:22}, {x:62, y:22}, {x:18, y:68}, {x:62, y:68}
+  ],
+  okGrabby:'פעם לקחתי קרטון בלי "צד למעלה". הגיעו ביצים שטוחות. <b>מאז — אני מסמן כמו טייסי קרב.</b>'
+},
+
+/* 7. POLAROID MATCHING — special items */
+{time:'11:30',type:'polaroid',
+  eyebrow:'חפצים מיוחדים',
+  q:'התאימו כל פריט לדרך הטיפול הנכונה',
+  sub:'געו בפולארויד, ואז בגישה המתאימה.',
+  items:[
+    {id:'aq', ic:'🐠', name:'האקווריום', detail:'בסלון · מים, דגים, צמחייה'},
+    {id:'pn', ic:'🎹', name:'הפסנתר',   detail:'בחדר פנימי · 4 מדרגות צרות'},
+    {id:'pl', ic:'🪴', name:'הצמח הגדול', detail:'במרפסת · גבוה, רגיש'}
+  ],
+  approaches:[
+    {id:'pn', t:'ציוד ייעודי וצוות', d:'מתכננים מראש, מוציאים בצורה מבוקרת'},
+    {id:'aq', t:'דגים לשקיות חמצן',  d:'האקווריום נארז ומוסע בנפרד'},
+    {id:'pl', t:'בעמידה, עציץ מקובע', d:'נשמר מתזוזות ומשבר'}
+  ],
+  okGrabby:'אקווריום, פסנתר, צמח — כל אחד עולם. <b>כל הכבוד שזיהית את ההבדל.</b>'
+},
+
+/* 8. POSTCARD SUMMARY */
+{time:'12:30',type:'postcard'}
+];
+
+/* ============================================================
+   STATE + NAV
+   ============================================================ */
+let idx=0, maxIdx=0;
+const done={};
+const screenEl = document.getElementById('screen');
+const stepsRail = document.getElementById('stepsRail');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const lockTip = document.getElementById('locktip');
+const TOTAL = SCREENS.length;
+const PASSIVE = ['welcome','postcard'];
+function isComplete(i){return PASSIVE.includes(SCREENS[i].type) || !!done[i];}
+function el(tag, cls, html){const n=document.createElement(tag);if(cls)n.className=cls;if(html!=null)n.innerHTML=html;return n;}
+
+function render(){
+  const s = SCREENS[idx];
+  screenEl.innerHTML='';
+  screenEl.style.animation='none'; void screenEl.offsetWidth; screenEl.style.animation='';
+  (RENDER[s.type])(s, screenEl);
+  document.getElementById('clock').textContent = s.time;
+  updateChrome();
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function updateChrome(){
+  const pct = TOTAL>1 ? (idx/(TOTAL-1))*100 : 0;
+  document.getElementById('roadFill').style.width = pct+'%';
+  document.getElementById('truck').style.right = pct+'%';
+  stepsRail.innerHTML='';
+  for(let i=0;i<TOTAL;i++){
+    const d = el('div','step-dot');
+    if(i<idx) d.classList.add('done');
+    else if(i===idx) d.classList.add('on');
+    stepsRail.appendChild(d);
+  }
+  btnBack.disabled = idx===0;
+  const complete = isComplete(idx), last = idx===TOTAL-1;
+  btnNext.disabled = !complete || last;
+  btnNext.textContent = last ? '🎉 סיימת את הפרק' : 'התקדם ⟵';
+  lockTip.textContent = (!complete && !last) ? 'השלימו את המשימה כדי להמשיך' : '';
+  lockTip.style.display = lockTip.textContent ? 'block' : 'none';
+}
+function nextScr(){if(idx<TOTAL-1 && isComplete(idx)){idx++;if(idx>maxIdx)maxIdx=idx;render();}}
+function prevScr(){if(idx>0){idx--;render();}}
+function markDone(){done[idx]=true;updateChrome();}
+btnNext.onclick = nextScr; btnBack.onclick = prevScr;
+
+const RENDER = {};
+
+/* ============================================================
+   RENDERERS
+   ============================================================ */
+
+/* ---- WELCOME: family front door + sticky note ---- */
+RENDER.welcome = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">🏠 הגעתם · 08:00</div>
+    <h2 class="title" style="margin-top:6px">דירת משפחת גלבוע</h2></div>`;
+
+  // door scene
+  const door = el('div','door-photo');
+  door.innerHTML = `<img src="${IMG}image4.png" alt="">
+    <div class="door-num">דירה 7</div>
+    <div class="door-name">גלבוע<small>רותי · שחר · יהלי</small></div>`;
+  scr.appendChild(door);
+
+  // sticky note from family
+  const sticky = el('div','sticky');
+  sticky.innerHTML = `שלום ל-Grabit 👋<br>
+    יצאנו מוקדם לחיפה. <strong>המפתחות במגירה</strong> ליד הכניסה.<br>
+    בבקשה תשמרו על הפסל של סבתא והאקווריום של יהלי. תודה רבה!
+    <div class="sticky-sig">— רותי</div>`;
+  scr.appendChild(sticky);
+
+  // task ledger
+  const ledger = el('div','cardboard');
+  ledger.style.padding='14px 16px';
+  ledger.innerHTML = `<div style="font-weight:900;font-size:13px;letter-spacing:.04em;color:#3A2410;margin-bottom:6px">משימה #2048 · יום אחד · 4 חדרים</div>
+    <div style="font-size:13.5px;line-height:1.7;color:#3A2410">
+      🍷 פריטים שבירים בסלון<br>
+      🔌 מכשירי חשמל ב-3 חדרים<br>
+      📦 קרטונים לסימון<br>
+      ⭐ חפצים מיוחדים: אקווריום, פסנתר, צמח גדול
+    </div>`;
+  scr.appendChild(ledger);
+
+  root.appendChild(scr);
+  setTimeout(()=>grabby('היי, אני <b>גרבי</b>. אני אהיה איתך לאורך היום. כשאני אומר משהו — בדרך כלל זה למד מטעות שעשיתי בעצמי. <b>בוא נכנס.</b>'), 800);
+};
+
+/* ---- MARK FRAGILE on photo ---- */
+RENDER.markphoto = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage = el('div','pm-stage');
+  const img = el('img','pm-img');img.src = IMG+s.img;img.alt='';
+  stage.appendChild(img);
+  const counter = el('div','pm-counter','<span class="ic">🎯</span><span><b>0</b> / '+s.spots.length+'</span>');
+  stage.appendChild(counter);
+  const found = new Set();
+  stage.addEventListener('pointerdown', e=>{
+    if(done[idx])return;
+    const r = stage.getBoundingClientRect();
+    const xPct = ((e.clientX - r.left) / r.width) * 100;
+    const yPct = ((e.clientY - r.top) / r.height) * 100;
+    // RTL: convert clientX→right-based for matching spots which are right-based
+    const xRight = 100 - xPct;
+    // check spots
+    let hit = null;
+    s.spots.forEach((sp,i)=>{
+      if(found.has(i)) return;
+      const dx = xRight - sp.x, dy = yPct - sp.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist <= sp.r) hit = {sp, i};
+    });
+    if(hit){
+      found.add(hit.i);
+      const c = el('div','pm-circle');
+      c.style.right = hit.sp.x+'%';
+      c.style.top = hit.sp.y+'%';
+      const label = el('div','pm-label',hit.sp.name);
+      label.style.right = hit.sp.x+'%';
+      label.style.top = (hit.sp.y+10)+'%';
+      stage.appendChild(c); stage.appendChild(label);
+      setTimeout(()=>c.classList.add('done'),1100);
+      try{ ac().resume(); snap(); }catch(_){}
+      try{ navigator.vibrate && navigator.vibrate(18); }catch(_){}
+      counter.querySelector('b').textContent = found.size;
+      if(found.size===s.spots.length){
+        grabby(s.done, 6000);
+        if(!done[idx]) markDone();
+      } else {
+        if(found.size===1) grabby(s.grabbyHit, 4500);
+      }
+    } else {
+      const m = el('div','pm-miss','✕');
+      m.style.right = xRight+'%';
+      m.style.top = yPct+'%';
+      stage.appendChild(m);
+      setTimeout(()=>m.remove(),900);
+      grabby(s.grabbyMiss, 4500);
+    }
+  });
+  scr.appendChild(stage);
+  scr.appendChild(el('div','pm-hint','💡 געו בנקודות בסלון של גלבוע'));
+  root.appendChild(scr);
+};
+
+/* ---- PACK THE BOX ---- */
+RENDER.packbox = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage = el('div','pb-stage');
+
+  // The box (drop zone)
+  const box = el('div','pb-box');
+  box.innerHTML = `
+    <div class="box-flap-back"></div>
+    <div class="box-front"></div>
+    <div class="box-inner"><div class="pb-stack" id="pbStack"></div></div>
+    <div class="box-label">סלון · גלבוע</div>
+    <div class="seal-tape"></div>
+    <div class="box-stamp">נארז ✓</div>
+  `;
+  stage.appendChild(box);
+
+  // Shelf with items
+  const shelf = el('div','pb-shelf');
+  shelf.innerHTML = `<div class="pb-shelf-h">📦 שלב את הפריטים לתוך הקרטון</div>`;
+  s.items.forEach(it=>{
+    const card = el('div','pb-item');
+    card.dataset.id = it.id;
+    card.innerHTML = `<img src="${IMG}${it.img}" alt="">
+      <div class="name">${it.name}</div>
+      <div class="weight">💪 ${it.weight}</div>`;
+    shelf.appendChild(card);
+  });
+  stage.appendChild(shelf);
+
+  const sealBtn = el('button','btn-seal','🔒 סִגרו את הקרטון');
+  sealBtn.disabled = true;
+  stage.appendChild(sealBtn);
+
+  scr.appendChild(stage);
+  root.appendChild(scr);
+
+  // wiring drag
+  const stack = box.querySelector('#pbStack');
+  const placedOrder = [];   // array of item ids in drop order
+  const zones = [{el: box, kind:'box'}];
+  shelf.querySelectorAll('.pb-item').forEach(card=>{
+    const it = s.items.find(x=>x.id===card.dataset.id);
+    makeDraggable(card, zones, {
+      onDrop:(zone, el)=>{
+        if(zone.kind==='box'){
+          card.classList.add('placed');
+          placedOrder.push(it.id);
+          // add a visual block to the stack
+          const blk = el2 => null;
+          const block = document.createElement('div');
+          block.className = 'pb-stack-item';
+          block.style.background = it.color;
+          block.innerHTML = `<span class="it">${it.id==='sculpt'?'🗿':it.id==='mirror'?'🪞':'🍷'}</span>${it.name}`;
+          stack.appendChild(block);
+          try{ ac().resume(); thud(); }catch(_){}
+          try{ navigator.vibrate && navigator.vibrate(25); }catch(_){}
+          if(placedOrder.length === s.items.length) sealBtn.disabled = false;
+        }
+      }
+    });
+  });
+
+  sealBtn.onclick = ()=>{
+    sealBtn.disabled = true;
+    // expected order in placedOrder: heaviest first → sculpt, mirror, glass
+    const expected = ['sculpt','mirror','glass'];
+    const correct = placedOrder.every((id,i)=> id===expected[i]);
+    if(correct){
+      box.classList.add('sealed');
+      try{ tape(); setTimeout(()=>thud(), 250); }catch(_){}
+      try{ navigator.vibrate && navigator.vibrate([30,60,30]); }catch(_){}
+      setTimeout(()=>grabby(s.okGrabby, 8000), 600);
+      if(!done[idx]) setTimeout(markDone, 800);
+    } else {
+      // wrong → shake, items "shift", reset
+      box.classList.add('shaking');
+      try{ rattle(); }catch(_){}
+      try{ navigator.vibrate && navigator.vibrate([60,40,60,40,60]); }catch(_){}
+      grabby(s.errGrabby, 7000);
+      setTimeout(()=>{
+        box.classList.remove('shaking');
+        stack.innerHTML='';
+        placedOrder.length = 0;
+        shelf.querySelectorAll('.pb-item').forEach(c=>{
+          c.classList.remove('placed');
+          c.style.transform='';
+          c.style.transition='';
+        });
+        sealBtn.disabled = true;
+      }, 1200);
+    }
+  };
+};
+
+/* ---- SHAKE TEST (reskinned cardboard boxes) ---- */
+RENDER.shake = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const safeLeft = Math.random()<0.5;
+  const boxes = [
+    {name:'קרטון א׳', label:'סלון', safe:safeLeft},
+    {name:'קרטון ב׳', label:'סלון', safe:!safeLeft}
+  ];
+  const row = el('div','audio-row');
+  boxes.forEach(bx=>{
+    const c = el('div','audio-c');
+    c.innerHTML = `
+      <div class="audio-box-3d">
+        <div class="front"></div>
+        <div class="top"></div>
+        <div class="lbl">${bx.label}</div>
+      </div>
+      <div class="audio-name">${bx.name}</div>
+      <div class="audio-actions"></div>
+    `;
+    const actions = c.querySelector('.audio-actions');
+    const play = el('button','btn-play','▶ נערו את הקרטון');
+    play.onclick = ()=>{
+      try{ ac().resume(); }catch(_){}
+      bx.safe ? thud() : rattle();
+      c.classList.add('shaking');
+      play.classList.add('playing');
+      setTimeout(()=>{ play.classList.remove('playing'); c.classList.remove('shaking'); }, bx.safe ? 550 : 720);
+    };
+    const pick = el('button','btn-pick','בחרו את הקרטון הזה');
+    pick.onclick = ()=>{
+      if(done[idx])return;
+      if(bx.safe){
+        c.classList.add('correct');
+        row.querySelectorAll('button').forEach(b=>b.disabled=true);
+        try{ snap(); }catch(_){}
+        try{ navigator.vibrate && navigator.vibrate(40); }catch(_){}
+        grabby(s.okGrabby, 8000);
+        markDone();
+      } else {
+        c.classList.add('wrong');
+        try{ navigator.vibrate && navigator.vibrate([80,40,80]); }catch(_){}
+        grabby(s.errGrabby, 7000);
+        setTimeout(()=>c.classList.remove('wrong'),1200);
+      }
+    };
+    actions.appendChild(play);
+    actions.appendChild(pick);
+    row.appendChild(c);
+  });
+  scr.appendChild(row);
+  root.appendChild(scr);
+  setTimeout(()=>grabby('שני קרטונים נראים זהים. <b>האוזן מבחינה.</b> נער כל אחד והקשב — מי שותק?', 7000), 500);
+};
+
+/* ---- TV LAYERS ---- */
+RENDER.tvlayers = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage = el('div','tv-stage');
+  const frame = el('div','tv-frame');
+  // 5 layer overlays
+  s.layers.forEach(L=>{
+    const layer = el('div',`tv-layer ${L.cls}`);
+    if(L.cls==='L5') layer.innerHTML = `<div class="fragile-sticker">⚠ שביר ⚠</div>`;
+    frame.appendChild(layer);
+  });
+  stage.appendChild(frame);
+  const stand = el('div','tv-stand'); stage.appendChild(stand);
+  scr.appendChild(stage);
+
+  const tray = el('div','tv-layers-tray');
+  s.layers.forEach(L=>{
+    const card = el('div','tv-layer-card');
+    card.dataset.n = L.n;
+    card.innerHTML = `<div class="ln-n">${L.n}</div>
+      <div class="ln-t">${L.t}<small>${L.sub}</small></div>`;
+    tray.appendChild(card);
+  });
+  scr.appendChild(tray);
+
+  const prog = el('div','tv-prog');
+  for(let i=0;i<s.layers.length;i++) prog.appendChild(el('div','d'));
+  scr.appendChild(prog);
+  root.appendChild(scr);
+
+  let expectedNext = 1;
+  const zones = [{el: stage, kind:'tv'}];
+  tray.querySelectorAll('.tv-layer-card').forEach(card=>{
+    const n = parseInt(card.dataset.n);
+    makeDraggable(card, zones, {
+      onDrop:(zone, c)=>{
+        if(n !== expectedNext){
+          // bounce back
+          try{ navigator.vibrate && navigator.vibrate([60,40,60]); }catch(_){}
+          grabby('הסדר חשוב. <b>שכבה ' + expectedNext + ' לפני שכבה ' + n + '.</b> השריון לפני הריפוד, הסימון בסוף.', 6500);
+          return false;
+        }
+        card.classList.add('placed');
+        const L = s.layers.find(x=>x.n===n);
+        frame.querySelector('.tv-layer.'+L.cls).classList.add('on');
+        prog.children[n-1].classList.add('on');
+        try{ ac().resume(); snap(); }catch(_){}
+        try{ navigator.vibrate && navigator.vibrate(20); }catch(_){}
+        expectedNext++;
+        if(expectedNext > s.layers.length){
+          setTimeout(()=>grabby(s.okGrabby, 8000), 500);
+          if(!done[idx]) setTimeout(markDone, 600);
+        }
+        return true;
+      }
+    });
+  });
+  setTimeout(()=>grabby('5 שכבות, מבפנים החוצה. <b>שכבה 1 ראשונה.</b>', 5500), 600);
+};
+
+/* ---- STICKERS on cardboard box ---- */
+RENDER.stickers = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage = el('div','sk-stage');
+  const box = el('div','sk-box');
+  stage.appendChild(box);
+  const tray = el('div','sk-tray');
+  s.tokens.forEach(tk=>{
+    const t = el('div',`sk-token ${tk.cls}`);
+    t.dataset.id = tk.id;
+    t.innerHTML = `<span>${tk.ic}</span><span>${tk.t}</span>`;
+    tray.appendChild(t);
+  });
+  stage.appendChild(tray);
+  scr.appendChild(stage);
+  root.appendChild(scr);
+
+  const usedZones = new Set();
+  const zones = [{el: box, kind:'box'}];
+  let placedCount = 0;
+  tray.querySelectorAll('.sk-token').forEach(tk=>{
+    const tkData = s.tokens.find(x=>x.id===tk.dataset.id);
+    makeDraggable(tk, zones, {
+      onDrop:(zone, el2)=>{
+        if(zone.kind!=='box') return false;
+        // pick the next available zone position
+        const free = s.zones.findIndex((z,i)=>!usedZones.has(i));
+        if(free===-1) return false;
+        usedZones.add(free);
+        const z = s.zones[free];
+        const placed = document.createElement('div');
+        placed.className = 'sk-placed ' + tkData.cls;
+        placed.style.right = z.x+'%';
+        placed.style.top = z.y+'%';
+        placed.innerHTML = `<span>${tkData.ic}</span><span>${tkData.t}</span>`;
+        box.appendChild(placed);
+        tk.classList.add('placed');
+        try{ ac().resume(); tape(); }catch(_){}
+        try{ navigator.vibrate && navigator.vibrate(22); }catch(_){}
+        placedCount++;
+        if(placedCount===s.tokens.length){
+          setTimeout(()=>grabby(s.okGrabby, 8000), 400);
+          if(!done[idx]) setTimeout(markDone, 500);
+        }
+        return true;
+      }
+    });
+  });
+  setTimeout(()=>grabby('בקרטון של גלבוע — <b>4 סימונים, מכל זווית.</b> שלא יקרה שמישהו ישים מקרר מעל סירים.', 7000), 600);
+};
+
+/* ---- POLAROID MATCHING ---- */
+RENDER.polaroid = (s, root)=>{
+  const scr = el('div','scr');
+  scr.innerHTML = `<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="title" style="margin-top:6px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const wrap = el('div','pl-wrap');
+  const cols = el('div','pl-cols');
+  const left = el('div','pl-side');
+  const right = el('div','pl-side');
+  left.appendChild(el('div','pl-col-h','📷 הפריטים'));
+  right.appendChild(el('div','pl-col-h','✓ הגישות'));
+  let selected = null;
+  let matched = 0;
+  s.items.forEach(it=>{
+    const p = el('div','polaroid');
+    p.dataset.id = it.id;
+    p.innerHTML = `<div class="polaroid-img">${it.ic}</div>
+      <div class="polaroid-cap">${it.name}</div>
+      <div class="polaroid-detail">${it.detail}</div>`;
+    p.onclick = ()=>{
+      if(p.classList.contains('matched'))return;
+      if(selected && selected.el===p){ selected=null; p.classList.remove('sel'); return; }
+      [...left.querySelectorAll('.polaroid')].forEach(x=>x.classList.remove('sel'));
+      p.classList.add('sel');
+      selected = {kind:'item', id:it.id, el:p};
+    };
+    left.appendChild(p);
+  });
+  const aprs = [...s.approaches].sort(()=>Math.random()-0.5);
+  aprs.forEach(ap=>{
+    const c = el('div','approach-card');
+    c.dataset.id = ap.id;
+    c.innerHTML = `<div class="t">${ap.t}</div><div class="d">${ap.d}</div>`;
+    c.onclick = ()=>{
+      if(c.classList.contains('matched'))return;
+      if(selected && selected.kind==='item'){
+        if(selected.id===ap.id){
+          selected.el.classList.remove('sel');
+          selected.el.classList.add('matched');
+          c.classList.add('matched');
+          matched++;
+          selected=null;
+          try{ ac().resume(); snap(); }catch(_){}
+          try{ navigator.vibrate && navigator.vibrate(25); }catch(_){}
+          if(matched===s.items.length){
+            setTimeout(()=>grabby(s.okGrabby, 8000), 400);
+            if(!done[idx]) setTimeout(markDone, 500);
+          }
+        } else {
+          c.classList.add('wrong');
+          try{ navigator.vibrate && navigator.vibrate([60,40,60]); }catch(_){}
+          grabby('לא מתאים. <b>חשב מה החפץ באמת צריך.</b>', 5000);
+          setTimeout(()=>c.classList.remove('wrong'),700);
+        }
+      }
+    };
+    right.appendChild(c);
+  });
+  cols.appendChild(left); cols.appendChild(right);
+  wrap.appendChild(cols);
+  scr.appendChild(wrap);
+  root.appendChild(scr);
+  setTimeout(()=>grabby('לכל פריט מיוחד יש פתרון אחד נכון. <b>זהה את הצורך.</b>', 5500), 500);
+};
+
+/* ---- POSTCARD SUMMARY ---- */
+RENDER.postcard = (s, root)=>{
+  const scr = el('div','scr pc-stage');
+  scr.innerHTML = `<div><div class="eyebrow">סיכום פרק האריזה</div>
+    <h2 class="title" style="margin-top:6px">גלויה מתל אביב</h2></div>`;
+
+  const card = el('div','pc-card');
+  card.innerHTML = `
+    <div class="pc-postmark">ת״א<br>12:30<br>2026</div>
+    <div class="pc-from">משפחת גלבוע</div>
+    <div class="pc-route">תל אביב ⟵ חיפה</div>
+    <div class="pc-msg">
+      סיימנו לארוז את כל הבית.<br>
+      כל פריט במקומו, כל קרטון מסומן, האקווריום בדרך — והפסל של סבתא יושב כמו מלך בתחתית הקרטון.<br>
+      <b>הכל מוכן להעמסה.</b>
+    </div>
+    <div class="pc-stamps" id="pcStamps"></div>
+    <div class="pc-sig">— צוות Grabit 🚚</div>
+  `;
+  scr.appendChild(card);
+
+  const stamps = [
+    {ic:'🍷', t:'שבירים — עוטפים, מקבעים'},
+    {ic:'🔌', t:'חשמל — 5 שכבות הגנה'},
+    {ic:'📦', t:'קרטונים — 4 סימונים'},
+    {ic:'⭐', t:'מיוחדים — פתרון לכל אחד'}
+  ];
+  const stampsEl = card.querySelector('#pcStamps');
+  stamps.forEach((st,i)=>{
+    const s = el('div','pc-stamp');
+    s.style.animationDelay = (0.6 + i*0.35) + 's';
+    s.innerHTML = `<span>${st.ic}</span><span>${st.t}</span>`;
+    stampsEl.appendChild(s);
+  });
+
+  root.appendChild(scr);
+  setTimeout(()=>grabby('<b>ארזת בית של משפחה.</b> הם סומכים עלייך. נסיעה בטוחה לחיפה. 🚚', 10000), 1500);
+};
+
+/* BOOT */
+render();
+</script>
+</body>
+</html>
