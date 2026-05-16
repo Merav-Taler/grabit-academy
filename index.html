@@ -220,6 +220,220 @@ h2.q{font-size:20px;font-weight:900;color:var(--navy);line-height:1.3;}
 @keyframes drop{to{transform:translateY(110vh) rotate(720deg);opacity:.7;}}
 
 @media(max-width:360px){.scr{padding:12px 12px 18px;}.hero-title{font-size:19px;}h2.q{font-size:18px;}}
+
+/* ============================================================
+   V2 — EXPERIENTIAL UPGRADE (Chapter 1)
+   Grabi character · cardboard textures · tape strips · real drag
+   ============================================================ */
+
+/* --- CARDBOARD + TAPE textures (pure CSS, no images) --- */
+.cardboard{
+  background:
+    repeating-linear-gradient(90deg,rgba(140,98,52,.04) 0 2px,transparent 2px 5px),
+    repeating-linear-gradient(0deg,rgba(140,98,52,.05) 0 1px,transparent 1px 7px),
+    linear-gradient(180deg,#EAD7B7,#D9C094);
+  position:relative;
+}
+.tape{
+  position:absolute;background:rgba(255,235,165,.78);
+  border-left:1px dashed rgba(0,0,0,.07);border-right:1px dashed rgba(0,0,0,.07);
+  box-shadow:0 2px 5px rgba(0,0,0,.08);
+}
+.tape::before,.tape::after{content:"";position:absolute;top:0;bottom:0;width:6px;background:repeating-linear-gradient(45deg,transparent 0 3px,rgba(0,0,0,.04) 3px 5px);}
+.tape::before{left:0;} .tape::after{right:0;}
+
+/* --- STAMP "נארז ✓" --- */
+.stamp{
+  display:inline-flex;align-items:center;gap:7px;
+  border:3px solid var(--good);color:var(--good);
+  padding:6px 14px;border-radius:7px;font-weight:900;font-size:14px;
+  letter-spacing:.04em;transform:rotate(-6deg);
+  font-family:'Heebo',sans-serif;text-transform:uppercase;
+  background:rgba(231,246,238,.5);
+  animation:stamp-in .45s cubic-bezier(.5,1.6,.5,1) both;
+}
+@keyframes stamp-in{0%{transform:rotate(-6deg) scale(2.2);opacity:0;}60%{transform:rotate(-6deg) scale(.9);opacity:1;}100%{transform:rotate(-6deg) scale(1);}}
+
+/* --- GRABI character bubble --- */
+.grabi{
+  display:flex;gap:11px;align-items:flex-start;
+  background:linear-gradient(180deg,#FFF8EE,#FFEFD6);
+  border:1.5px solid #F5C887;border-radius:18px;padding:12px 13px;
+  position:relative;box-shadow:var(--shadow-sm);
+  animation:grabi-in .4s cubic-bezier(.4,1.3,.5,1) both;
+}
+.grabi::before{
+  content:"";position:absolute;top:-7px;right:30px;width:14px;height:14px;
+  background:#FFF8EE;border-left:1.5px solid #F5C887;border-top:1.5px solid #F5C887;
+  transform:rotate(45deg);
+}
+@keyframes grabi-in{from{opacity:0;transform:translateY(8px) scale(.97);}to{opacity:1;transform:none;}}
+.grabi-av{
+  width:46px;height:46px;border-radius:50%;background:#FFEFD6;
+  padding:2px;flex-shrink:0;box-shadow:var(--shadow-sm);
+  transition:transform .25s;
+}
+.grabi[data-mood="happy"] .grabi-av{transform:rotate(-6deg);}
+.grabi[data-mood="think"] .grabi-av{filter:hue-rotate(-5deg) brightness(.96);}
+.grabi[data-mood="proud"] .grabi-av{transform:scale(1.08) rotate(4deg);}
+.grabi-body{flex:1;}
+.grabi-name{font-weight:900;color:var(--orange-d);font-size:13px;letter-spacing:.01em;}
+.grabi-name::after{content:" • גרבי, מוביל ותיק";color:var(--ink-soft);font-weight:600;font-size:11.5px;letter-spacing:0;}
+.grabi-tx{font-size:14.5px;line-height:1.55;color:var(--ink);margin-top:2px;}
+.grabi-tx b{color:var(--orange-d);}
+
+/* --- TAPE-FLAG HOTSPOT (v2) --- */
+.flag{
+  position:absolute;transform:translate(50%,-100%);
+  background:linear-gradient(180deg,#FFF1AD,#FFD96B);
+  color:var(--navy);font-weight:900;font-size:13px;
+  padding:5px 10px 5px 22px;border-radius:4px;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  white-space:nowrap;display:flex;align-items:center;gap:5px;
+  cursor:pointer;animation:flag-wave 2.2s ease-in-out infinite;
+}
+.flag::before{
+  content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);
+  width:0;height:0;border:8px solid transparent;border-right-color:#FFD96B;
+}
+.flag::after{
+  content:"";position:absolute;left:5px;top:50%;transform:translateY(-50%);
+  width:11px;height:11px;border-radius:50%;background:var(--orange);
+  box-shadow:0 0 0 2px #FFF1AD,0 0 0 4px rgba(240,131,58,.4);
+}
+@keyframes flag-wave{0%,100%{transform:translate(50%,-100%) rotate(-2deg);}50%{transform:translate(50%,-100%) rotate(2deg);}}
+.flag.done{background:linear-gradient(180deg,#C9F2D9,#9CE3B7);animation:none;}
+.flag.done::after{background:var(--good);box-shadow:0 0 0 2px #C9F2D9;}
+.flag.done::before{border-right-color:#9CE3B7;}
+
+/* --- PACK-THE-BOX (drag) --- */
+.pb-stage{display:flex;flex-direction:column;gap:13px;}
+.pb-tray{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:11px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap;
+  box-shadow:var(--shadow-sm);min-height:90px;align-items:center;
+}
+.pb-item{
+  width:62px;height:62px;border-radius:11px;background:#fff;
+  border:2px solid var(--line);box-shadow:var(--shadow-sm);
+  display:flex;align-items:center;justify-content:center;
+  cursor:grab;touch-action:none;user-select:none;
+  position:relative;transition:transform .15s,box-shadow .15s;
+}
+.pb-item img{width:100%;height:100%;object-fit:cover;border-radius:9px;}
+.pb-item.dragging{cursor:grabbing;z-index:999;box-shadow:0 12px 25px rgba(0,0,0,.25);transform:scale(1.08) rotate(3deg);}
+.pb-item.placed{opacity:0;pointer-events:none;width:0;height:0;margin:0 -5px;}
+.pb-item .wt{
+  position:absolute;top:-7px;right:-7px;
+  background:var(--navy);color:#fff;font-size:10px;font-weight:900;
+  padding:2px 6px;border-radius:9px;letter-spacing:.02em;
+}
+.pb-box-wrap{position:relative;display:flex;justify-content:center;}
+.pb-box{
+  width:240px;max-width:100%;height:200px;position:relative;
+  perspective:600px;
+}
+.pb-box-walls{
+  position:absolute;inset:25px 0 0 0;
+  background:linear-gradient(180deg,#C99B6A,#B17F4D);
+  border-radius:6px;
+  box-shadow:inset 0 -8px 20px rgba(0,0,0,.18),inset 0 4px 0 rgba(0,0,0,.06),0 10px 22px rgba(0,0,0,.18);
+}
+.pb-box-walls::after{
+  content:"";position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 1px,transparent 1px 8px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0 2px,transparent 2px 6px);
+  border-radius:6px;pointer-events:none;
+}
+.pb-box-flap-l,.pb-box-flap-r{
+  position:absolute;top:0;width:50%;height:36px;
+  background:linear-gradient(180deg,#B17F4D,#9C6B3E);
+  box-shadow:0 4px 8px rgba(0,0,0,.18);
+}
+.pb-box-flap-l{left:0;transform-origin:bottom left;transform:rotate(-22deg);border-radius:4px 0 0 0;}
+.pb-box-flap-r{right:0;transform-origin:bottom right;transform:rotate(22deg);border-radius:0 4px 0 0;}
+.pb-box.closed .pb-box-flap-l{transform:rotate(0);transition:transform .5s cubic-bezier(.5,1.4,.5,1);}
+.pb-box.closed .pb-box-flap-r{transform:rotate(0);transition:transform .5s cubic-bezier(.5,1.4,.5,1);}
+.pb-box.wobble{animation:box-wobble .6s;}
+@keyframes box-wobble{0%,100%{transform:translateX(0) rotate(0);}20%{transform:translateX(-7px) rotate(-2deg);}40%{transform:translateX(7px) rotate(2deg);}60%{transform:translateX(-5px) rotate(-1deg);}80%{transform:translateX(5px) rotate(1deg);}}
+.pb-stack{
+  position:absolute;left:14px;right:14px;bottom:14px;top:46px;
+  display:flex;flex-direction:column-reverse;gap:2px;justify-content:flex-start;
+  overflow:hidden;
+}
+.pb-stack-item{
+  background:#fff;border-radius:5px;padding:4px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+  animation:stack-drop .35s cubic-bezier(.4,1.4,.6,1) both;flex-shrink:0;
+}
+.pb-stack-item img{width:auto;height:100%;max-height:46px;object-fit:contain;}
+@keyframes stack-drop{from{transform:translateY(-30px);opacity:0;}to{transform:none;opacity:1;}}
+.pb-drop-hint{
+  position:absolute;inset:46px 14px 14px;display:grid;place-items:center;
+  color:rgba(255,255,255,.85);font-weight:800;font-size:13px;
+  text-shadow:0 1px 3px rgba(0,0,0,.4);pointer-events:none;
+  text-align:center;line-height:1.4;
+}
+.pb-box.over .pb-box-walls{box-shadow:inset 0 0 0 3px var(--cyan),inset 0 -8px 20px rgba(0,0,0,.18),0 10px 22px rgba(0,0,0,.18);}
+.pb-actions{display:flex;gap:9px;}
+.pb-btn{flex:1;padding:11px;border-radius:12px;font-weight:900;font-size:14px;}
+.pb-btn-check{background:var(--navy);color:#fff;}
+.pb-btn-reset{background:var(--cream);color:var(--navy);border:1.5px solid var(--line);}
+
+/* --- TV LAYERS (drag) --- */
+.tvl-stage{background:#fff;border-radius:18px;padding:14px;border:1px solid var(--line);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:13px;}
+.tvl-screen{position:relative;width:100%;aspect-ratio:1.6/1;background:#0B0B0B;border-radius:8px;overflow:hidden;box-shadow:0 6px 16px rgba(0,0,0,.3);}
+.tvl-screen::before{content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);width:60%;height:14px;background:#0B0B0B;border-radius:0 0 12px 12px;}
+.tvl-overlay{position:absolute;inset:0;pointer-events:none;border-radius:8px;opacity:0;transition:opacity .35s;}
+.tvl-overlay.on{opacity:1;}
+.tvl-l-cables{background:radial-gradient(circle at 80% 30%,rgba(0,0,0,.4),transparent 25%);}
+.tvl-l-cables::after{content:"🔌";position:absolute;bottom:8px;right:10px;font-size:24px;}
+.tvl-l-cardboard{background:linear-gradient(180deg,rgba(193,140,75,.85),rgba(160,110,60,.9));box-shadow:inset 0 0 0 5px rgba(0,0,0,.15);}
+.tvl-l-bubble{background:
+    radial-gradient(circle 7px at 12px 12px,rgba(255,255,255,.45),transparent 60%),
+    radial-gradient(circle 7px at 32px 22px,rgba(255,255,255,.45),transparent 60%),
+    radial-gradient(circle 7px at 52px 14px,rgba(255,255,255,.45),transparent 60%),
+    radial-gradient(circle 7px at 72px 26px,rgba(255,255,255,.45),transparent 60%),
+    rgba(220,235,245,.55);
+  background-size:80px 32px,80px 32px,80px 32px,80px 32px,cover;}
+.tvl-l-wrap{background:repeating-linear-gradient(45deg,rgba(255,255,255,.18) 0 8px,rgba(190,210,225,.25) 8px 16px);box-shadow:inset 0 0 0 4px rgba(255,255,255,.3);}
+.tvl-l-label::after{content:"זהירות שביר";position:absolute;top:14px;left:14px;background:var(--bad);color:#fff;font-weight:900;font-size:13px;padding:4px 9px;border-radius:4px;transform:rotate(-6deg);box-shadow:0 3px 7px rgba(0,0,0,.3);letter-spacing:.02em;}
+.tvl-step{font-size:12px;font-weight:800;color:var(--ink-soft);text-align:center;}
+.tvl-step b{color:var(--orange);}
+.tvl-pool{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
+.tvl-chip{
+  background:var(--cream);border:2px solid var(--line);border-radius:11px;
+  padding:9px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:11px;font-weight:800;color:var(--navy);text-align:center;line-height:1.2;
+  cursor:grab;touch-action:none;user-select:none;
+  transition:transform .15s,box-shadow .15s;min-height:64px;justify-content:center;
+}
+.tvl-chip .cic{font-size:19px;}
+.tvl-chip.dragging{cursor:grabbing;z-index:999;box-shadow:0 12px 22px rgba(0,0,0,.25);transform:scale(1.1);}
+.tvl-chip.used{opacity:.35;pointer-events:none;}
+.tvl-chip.used::after{content:"✓";position:absolute;font-size:24px;color:var(--good);}
+.tvl-screen.over{box-shadow:0 0 0 3px var(--cyan),0 6px 16px rgba(0,0,0,.3);}
+
+/* --- HEAVY/MEDIUM/LIGHT weight chips on items --- */
+.pb-w-heavy{background:var(--navy);}
+.pb-w-medium{background:#7C8AA2;}
+.pb-w-light{background:#B8C2D4;}
+
+/* --- TAPE-STRIP on hero --- */
+.hero .tape-strip{
+  position:absolute;top:-6px;right:18px;width:78px;height:24px;
+  background:rgba(255,235,165,.85);transform:rotate(-4deg);
+  box-shadow:0 3px 8px rgba(0,0,0,.18);z-index:3;
+  border-left:1px dashed rgba(0,0,0,.08);border-right:1px dashed rgba(0,0,0,.08);
+}
+
+@media(max-width:360px){
+  .pb-box{width:210px;height:180px;}
+  .tvl-pool{gap:5px;}
+  .tvl-chip{font-size:10px;padding:7px 2px;}
+}
 </style>
 </head>
 <body>
@@ -277,129 +491,146 @@ const SCREENS=[
   coach:'המדריך מחולק ל-4 פרקים לפי שלבי ההובלה. <b>עוברים לפי הסדר</b>. בדרך נלמד את הכללים — דרך משימות אמיתיות, לא הרצאות. קדימה!'
 },
 {ch:1,time:'08:20',type:'scene',
-  img:'image57.png',room:'פרק 1 · אריזה',
-  title:'מתחילים מהסלון',
-  lead:'לפני שמעמיסים את המשאית, כל פריט נארז <b>בטוח, מסודר ומותאם לסוג התכולה</b>. בסלון של משפחת גלבוע מחכים לכם פריטים שבירים.',
+  img:'image57.png',room:'פרק 1 · אריזה · בית משפחת גלבוע',
+  title:'נכנסים לסלון',
+  lead:'נעמי גלבוע פותחת לכם את הדלת. ארבעה חדרים לפניכם, ובסלון — שלושה <b>פריטים שבירים</b> שהיא ביקשה במיוחד לשים לב אליהם.',
   items:[
-    {ic:'🍷',t:'כוסות יין'},
-    {ic:'🪞',t:'מראת זכוכית'},
-    {ic:'🗿',t:'פסל דקורטיבי'}
+    {ic:'🍷',t:'כוסות יין של סבתא של נעמי'},
+    {ic:'🪞',t:'מראת זכוכית מהפרוזדור'},
+    {ic:'🗿',t:'פסל דקורטיבי מהמדף'}
   ],
-  coach:'במסך הבא — היכנסו לסלון ולחצו על כל פריט כדי לגלות איך אורזים אותו נכון.'
+  grabi:{mood:'happy',line:'אני אתכם לאורך כל הפרק. כשתראו אותי — תקשיבו, יש לי קיצורי דרך משטח. <b>קדימה לסלון של נעמי.</b>'}
 },
 {ch:1,time:'08:35',type:'hotspot',
-  eyebrow:'חקירת הסלון',
-  q:'לחצו על כל פריט כדי ללמוד את כלל האריזה שלו',
+  eyebrow:'חקירת הסלון של משפחת גלבוע',
+  q:'נעצו דגל על כל פריט כדי לגלות איך אורזים אותו',
   img:'image57.png',
   spots:[
-    {x:38,y:62,ic:'🗿',t:'פסל דקורטיבי · סידור נכון',
-      d:'כבד? יורד ראשון לתחתית הארגז. פריטים כבדים בתחתית, וקלים ושבירים מעל — לשמירה על יציבות ומניעת נזק.'},
-    {x:62,y:55,ic:'🪞',t:'מראת זכוכית · ריפוד מתאים',
-      d:'משתמשים בכמות מספקת של חומרי ריפוד — פצפצים או נייר אריזה — מסביב לפריט, כדי לבלום זעזועים ומכות.'},
-    {x:50,y:78,ic:'🍷',t:'כוסות יין · עטיפה אישית',
-      d:'כל פריט שביר נארז בנפרד בחומר ריפוד — כדי למנוע חיכוך ושבר בין הפריטים בתוך הארגז.'},
-    {x:78,y:38,ic:'📦',t:'הארגז עצמו · מניעת תזוזה',
-      d:'אחרי שכל הפריטים בפנים — ממלאים את החללים הריקים בנייר או פצפצים, כדי שכלום לא יזוז במהלך הנסיעה.'}
-  ]
-},
-{ch:1,time:'08:50',type:'dragorder',
-  eyebrow:'היררכיה של ארגז',
-  q:'באיזה סדר מכניסים את הפריטים לארגז?',
-  sub:'הקישו על מספר ואז על הפריט. הכבד נכנס ראשון — לתחתית.',
-  mode:'thumbs',
-  targets:[
-    {img:'image16.png',label:'פסל דקורטיבי (כבד)',correct:1},
-    {img:'image11.png',label:'מראת זכוכית (בינוני)',correct:2},
-    {img:'image12.png',label:'כוסות יין (קל ושביר)',correct:3}
+    {x:38,y:62,ic:'🗿',t:'הפסל · סידור נכון',
+      d:'כבד? יורד ראשון לתחתית הארגז. כבד למטה, שביר למעלה. ככה הארגז נשאר יציב בנסיעה לחיפה.'},
+    {x:62,y:55,ic:'🪞',t:'המראה · ריפוד מתאים',
+      d:'פצפצים או נייר אריזה מסביב — הרבה, לא רק קצת. הריפוד הוא מה שבולם זעזועים על הכביש.'},
+    {x:50,y:78,ic:'🍷',t:'כוסות היין · עטיפה אישית',
+      d:'כל כוס נעטפת בנפרד. אסור שזכוכית תיגע בזכוכית — חיכוך = שבר.'},
+    {x:78,y:38,ic:'📦',t:'הארגז · מניעת תזוזה',
+      d:'אחרי שהכל בפנים — ממלאים את החללים הריקים. ארגז שזז בפנים = פריטים שזזים.'}
   ],
-  okTitle:'מעולה! סידרת נכון',
-  okDesc:'פריטים כבדים בתחתית, וקלים ושבירים מעל — לשמירה על יציבות ומניעת נזקים.',
-  errDesc:'נסו שוב — חישבו: מה אתם רוצים בתחתית כדי שהארגז יישאר יציב?'
+  grabiDone:{mood:'proud',line:'<b>ארבעה כללים, כל אחד מהפריט עצמו.</b> עכשיו בואו נכניס אותם לארגז בסדר הנכון.'}
+},
+{ch:1,time:'08:50',type:'packbox',
+  eyebrow:'אורזים את הסלון של נעמי',
+  q:'גררו את 3 הפריטים לארגז',
+  sub:'הסדר חשוב — הכבד יורד ראשון לתחתית. בסיום — הקליקו "סגור ארגז".',
+  items:[
+    {id:'statue',img:'image16.png',label:'הפסל',weight:'heavy',wText:'כבד',correct:1},
+    {id:'mirror',img:'image11.png',label:'המראה',weight:'medium',wText:'בינוני',correct:2},
+    {id:'glass',img:'image12.png',label:'כוסות יין',weight:'light',wText:'קל',correct:3}
+  ],
+  grabiHints:[
+    {mood:'think',line:'<b>חשבו: מה אתם רוצים בתחתית?</b> מה ששובר מעצמו את כל מה שמתחתיו.'}
+  ],
+  okTitle:'הארגז נסגר. נארז.',
+  okDesc:'<b>פסל למטה, מראה באמצע, כוסות למעלה.</b> זו ההיררכיה שמגיעה שלמה לחיפה.',
+  errDesc:'הארגז מתנדנד — הסדר לא יציב. נסו שוב, התחילו מהכבד.',
+  grabiDone:{mood:'proud',line:'<b>עכשיו תזכרו את התחושה הזו של "סגר".</b> אם הפריטים מסתדרים בלי לדחוף — סידרתם נכון.'}
 },
 {ch:1,time:'09:00',type:'audio',
-  eyebrow:'מבחן הניעור',
-  q:'איזה ארגז בטוח להובלה?',
-  sub:'סיימתם לארוז. עכשיו מוודאים שאין תזוזה. נערו את שני הארגזים והקשיבו טוב.',
-  okTitle:'בחרת נכון!',
-  okDesc:'ארגז שאינו משמיע רעשי תזוזה מעיד על אריזה יציבה — הפריטים מקובעים ולא זזים.',
-  errDesc:'נסו שוב — רעש תזוזה בעת ניעור מעיד על חללים ריקים ופריטים שלא מקובעים.'
+  eyebrow:'מבחן הניעור · על הספה של גלבוע',
+  q:'איזה ארגז בטוח לעלות למשאית?',
+  sub:'לפני שעולים — בודקים שאין תזוזה. נערו, הקשיבו, בחרו.',
+  okTitle:'בחירה נכונה',
+  okDesc:'ארגז שלא משמיע רעש = פריטים מקובעים, חללים מלאים. זה ארגז שמוכן לדרך.',
+  errDesc:'הרעש שהשמעת = פריטים זזים בפנים = שברים בחיפה. נערו את השני.',
+  grabi:{mood:'think',line:'<b>זה הטריק שלי בכל הובלה.</b> 5 שניות של ניעור חוסכות 5 דקות של התנצלות מול הלקוח.'}
 },
 {ch:1,time:'09:30',type:'walkthrough',
-  eyebrow:'מכשירי החשמל',
-  intro:'ממשיכים לאריזת המכשירים. עברו <b>חדר אחר חדר</b> ובחרו את הפעולה הנכונה.',
+  eyebrow:'מכשירי החשמל של משפחת גלבוע',
+  intro:'הסלון ארוז. נעמי מובילה אתכם <b>חדר אחר חדר</b> אל המכשירים החשמליים.',
   steps:[
-    {room:'המטבח · מקרר',img:'image23.png',
-      q:'מה צריך לעשות לפני הובלת המקרר?',
+    {room:'המטבח · המקרר',img:'image23.png',
+      q:'נעמי שואלת: "מה צריך לעשות לפני הובלת המקרר?"',
       opts:[
         {t:'לנתק מהחשמל ולהמתין 3 שעות'},
         {t:'לוודא שהמקרר מרוקן, יבש ומוכן להובלה',correct:true},
         {t:'להשאיר את המדפים בפנים שלא ילכו לאיבוד'}
       ],
-      ok:'נכון — עקרון <b>הריקון והייבוש</b>. מקרר ריק ויבש מגיע תקין ליעד.',
-      err:'נסו שוב. חשבו על העיקרון: ריקון וייבוש לפני הכל.'
+      ok:'נכון — <b>ריקון וייבוש</b>. מקרר רטוב = עובש בחיפה.',
+      err:'לא בדיוק. חשבו: מה קורה אם משאירים מים בפנים?',
+      grabi:{mood:'happy',line:'נעמי שכחה שיש לה גבינות בקצה התחתון. תזכירו לה לפני שמנתקים.'}
     },
-    {room:'חדר השירות · מכונת כביסה',img:'image35.png',
-      q:'מה חשוב לעשות לפני הובלת מכונת הכביסה?',
+    {room:'חדר השירות · מכונת הכביסה',img:'image35.png',
+      q:'גם המכונה שלה דורשת תשומת לב. מה הכי חשוב?',
       opts:[
         {t:'לרוקן מים ולסגור את הדלת היטב'},
         {t:'לקבע את התוף ולרוקן את המים',correct:true},
         {t:'לוודא שיש לפחות 3 אנשי צוות'}
       ],
-      ok:'בדיוק — <b>קיבוע החלקים הפנימיים</b>. תוף לא מקובע יכול להישבר בנסיעה.',
-      err:'נסו שוב. חשבו: מה החלק הפנימי שעלול לזוז ולהישבר?'
+      ok:'בדיוק — <b>קיבוע התוף</b>. בלי קיבוע, התוף נשבר במכה הראשונה.',
+      err:'יותר ספציפי — איזה חלק פנימי במכונה חייב להיות מקובע?',
+      grabi:{mood:'think',line:'במקור יש לרוב ברגי תוף שמגיעים עם המכונה. אם אבדו — תקנו חדשים, לא תהמרו.'}
     },
-    {room:'הסלון · טלוויזיה',img:'image26.png',
-      q:'איך נכון להגן על הטלוויזיה לפני הובלה?',
+    {room:'הסלון · הטלוויזיה',img:'image26.png',
+      q:'הטלוויזיה של גלבוע — איפה הסיכון הגדול?',
       opts:[
         {t:'לעטוף בניילון נצמד ולהניח בארגז'},
         {t:'להגן על המסך והפינות בריפוד מתאים',correct:true},
         {t:'להניח את הטלוויזיה בצורה שטוחה'}
       ],
-      ok:'נכון. <b>המסך והפינות</b> הם החלקים הרגישים ביותר — ריפוד מגן עליהם מזעזועים.',
-      err:'נסו שוב. אילו חלקים בטלוויזיה הכי רגישים לפגיעה?'
+      ok:'נכון — <b>המסך והפינות</b>. בעמוד הבא אנחנו עוטפים אותה שכבה אחרי שכבה.',
+      err:'חשבו: איזה חלק של מסך נשבר מאפילו מכה קטנה?'
     }
   ],
-  doneTitle:'כל המכשירים מוכנים!',
-  doneDesc:'יישמתם את 3 העקרונות — ריקון וייבוש, קיבוע, וריפוד מתאים — לפי המכשיר והחדר.'
+  doneTitle:'כל המכשירים מוכנים',
+  doneDesc:'<b>3 עקרונות, 3 חדרים.</b> ריקון וייבוש (מקרר), קיבוע (מכונה), ריפוד פינות (טלוויזיה).',
+  grabiDone:{mood:'happy',line:'עכשיו לטלוויזיה — זה החלק שאני הכי אוהב, כי רואים את העבודה. בואו.'}
 },
-{ch:1,time:'10:30',type:'tapplace',
-  eyebrow:'סימון הקרטון',
-  q:'סמנו את הקרטון של משפחת גלבוע',
-  sub:'הקישו על סימון ואז על מקום ריק על הקרטון. צריכים להופיע כל 4 הסימונים.',
-  boxImg:'image40.png',
-  tokens:[
-    {ic:'🍳',t:'מטבח · סירים'},
-    {ic:'⚠️',t:'שביר'},
-    {ic:'🏋️',t:'כבד'},
-    {ic:'⬆️',t:'צד למעלה'}
+{ch:1,time:'10:00',type:'tvlayers',
+  eyebrow:'בונים שכבות הגנה · הטלוויזיה של גלבוע',
+  q:'גררו כל שכבה על הטלוויזיה — לפי הסדר הנכון',
+  sub:'מבפנים החוצה. כל שכבה מוסיפה הגנה אחרת — תראו אותה נבנית בזמן אמת.',
+  layers:[
+    {id:'cables', ic:'🔌', label:'איסוף כבלים', correct:1, cls:'tvl-l-cables'},
+    {id:'cardboard',ic:'📦', label:'לוח קרטון', correct:2, cls:'tvl-l-cardboard'},
+    {id:'bubble',  ic:'🫧', label:'פצפצים', correct:3, cls:'tvl-l-bubble'},
+    {id:'wrap',    ic:'🎞️', label:'ניילון נצמד', correct:4, cls:'tvl-l-wrap'},
+    {id:'label',   ic:'⚠️', label:'מדבקת שביר', correct:5, cls:'tvl-l-label'}
   ],
-  zones:[
-    {x:6,y:8,w:42,h:38,ph:'מקום לסימון'},
-    {x:52,y:8,w:42,h:38,ph:'מקום לסימון'},
-    {x:6,y:54,w:42,h:38,ph:'מקום לסימון'},
-    {x:52,y:54,w:42,h:38,ph:'מקום לסימון'}
+  okTitle:'הטלוויזיה מוגנת בשלמותה',
+  okDesc:'<b>5 שכבות, כל אחת מתפקיד שונה.</b> שריון מבחוץ, ריפוד באמצע, ניתוק מבפנים, סימון לכל מי שמרים. ככה אורזים כל מכשיר חשמלי — ממסך מחשב ועד מקרר.',
+  errDesc:'שכבה לא נכונה — תזכרו: <b>מבפנים החוצה</b>, ובסוף תמיד הסימון.',
+  grabiHints:[
+    {mood:'think',line:'<b>חשבו ביד לפני שגוררים.</b> מה צריך להיות צמוד למסך? מה הכי קרוב לעין של מי שמרים?'}
   ],
-  okTitle:'מצוין!',
-  okDesc:'מיקום נכון של הסימונים עושה את כל ההבדל — הקרטון מוכן להובלה ולפריקה מסודרת בבית החדש.',
-  coach:'<b>טיפ מהשטח:</b> סמנו כל קרטון בכמה צדדים — כך המידע גלוי מכל כיוון בעמסה ובפריקה.'
+  grabiDone:{mood:'proud',line:'כשאני רואה ארגז עם <b>שביר</b> מודבק נכון — אני יודע מי ארז. תהיו האנשים האלה.'}
 },
 {ch:1,time:'11:30',type:'matching',
-  eyebrow:'חפצים מיוחדים',
+  eyebrow:'חפצים מיוחדים של גלבוע',
   q:'התאימו כל פריט לדרך הטיפול הנכונה',
-  intro:'משפחת גלבוע מעדכנת שיש עוד 3 חפצים שדורשים טיפול מיוחד. הקישו על פריט ואז על הפתרון.',
+  intro:'לפני שאתם מסיימים, נעמי נזכרת — יש עוד 3 דברים מיוחדים בדירה. הקישו פריט ואחר כך פתרון.',
   items:[
-    {id:'aq',ic:'🐠',name:'אקווריום',detail:'רגיש וכבד · מים ודגים'},
-    {id:'pn',ic:'🎹',name:'פסנתר',detail:'כבד ויקר · מעברים צרים'},
-    {id:'pl',ic:'🪴',name:'צמח גדול',detail:'גבוה ורגיש לתזוזות'}
+    {id:'aq',ic:'🐠',name:'האקווריום של עידן',detail:'רגיש וכבד · מים, דגים וצמחייה'},
+    {id:'pn',ic:'🎹',name:'הפסנתר של נעמי',detail:'כבד ויקר · מעברים צרים, 4 מדרגות'},
+    {id:'pl',ic:'🪴',name:'הצמח של סבתא',detail:'גבוה ורגיש לתזוזות'}
   ],
   approaches:[
     {id:'pn',t:'ציוד ייעודי וצוות',d:'מתכננים מראש, מוציאים בצורה מבוקרת'},
     {id:'aq',t:'דגים לשקיות עם חמצן',d:'האקווריום נארז ומוסע בנפרד'},
     {id:'pl',t:'בעמידה, עציץ מקובע',d:'נשמר מתזוזות ושבר'}
   ],
-  okTitle:'מצוין!',
-  okDesc:'כך פועלים עם חפצים מיוחדים — מזהים את הפריט, ומתאימים את שיטת העבודה לפי הצורך.',
-  errDesc:'לא מתאים. חשבו: מה הצורך הייחודי של הפריט?'
+  okTitle:'התאמת לכל אחד את הדרך שלו',
+  okDesc:'<b>אין נוסחה אחת.</b> כל חפץ מיוחד = שיטה משלו. מזהים את הצורך, מתאימים את הגישה.',
+  errDesc:'לא הצורך של הפריט הזה. מה הסיכון העיקרי שלו?'
+},
+{ch:1,time:'12:30',type:'summary',
+  title:'הדירה ארוזה · יוצאים לחיפה',
+  intro:'נעמי חותמת לכם על טופס המסירה. <b>3 דברים שזכרתם בדרך הקשה:</b>',
+  steps:[
+    {t:'הסדר חשוב יותר מהמהירות',d:'כבד למטה, שביר למעלה, חללים מלאים. מבחן ניעור = ביטוח חינם.'},
+    {t:'שכבות הגנה, לא רק עטיפה',d:'מכשיר חשמלי = איסוף → קרטון → ריפוד → הידוק → סימון. תמיד.'},
+    {t:'הקרטונים מספרים את הסיפור',d:'שם החדר, "שביר", "כבד", "צד למעלה" — בכמה צדדים. בחיפה זה יחסוך לכם שעה.'}
+  ],
+  stamp:'נארז ✓ · #2048',
+  grabiOutro:{mood:'proud',line:'<b>זהו, נסיעה בטוחה.</b> אני נשאר לקפה — אתם בדרך לחיפה. נתראה בפריקה.'}
 },
 {ch:1,time:'12:30',type:'summary',
   title:'סיכום פרק האריזה',
@@ -582,6 +813,70 @@ function thud(){const a=ac(),now=a.currentTime;const o=a.createOscillator(),g=a.
 
 function coach(t){const c=el('div','coach');c.innerHTML=`<img class="coach-av" src="${IMG}image5.png" alt=""><div class="coach-tx">${t}</div>`;return c;}
 function feedback(ok,title,desc){const f=el('div','fb '+(ok?'fb-good':'fb-bad'));f.innerHTML=`<div class="fi">${ok?'✅':'🔁'}</div><div><div class="ft">${title}</div><div class="fd">${desc}</div></div>`;return f;}
+
+/* ===== V2 helpers ===== */
+function grabi(line,mood){
+  mood=mood||'happy';
+  const c=el('div','grabi');c.dataset.mood=mood;
+  c.innerHTML=`<img class="grabi-av" src="${IMG}image5.png" alt="גרבי">
+    <div class="grabi-body">
+      <div class="grabi-name">גרבי</div>
+      <div class="grabi-tx">${line}</div>
+    </div>`;
+  return c;
+}
+function grabiFrom(g){return grabi(g.line,g.mood);}
+function vibrate(ms){try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}}
+
+/* Pointer-event drag: returns disposer.
+   onMove(e,dx,dy), onDrop(zoneEl|null) */
+function dragify(el,opts){
+  let startX=0,startY=0,dragging=false,curX=0,curY=0;
+  el.addEventListener('pointerdown',down);
+  function down(e){
+    if(opts.canDrag&&!opts.canDrag())return;
+    dragging=true;
+    el.setPointerCapture(e.pointerId);
+    startX=e.clientX;startY=e.clientY;
+    curX=0;curY=0;
+    el.classList.add('dragging');
+    el.style.position='relative';
+    el.style.zIndex='999';
+    if(opts.onStart)opts.onStart();
+    el.addEventListener('pointermove',move);
+    el.addEventListener('pointerup',up);
+    el.addEventListener('pointercancel',up);
+  }
+  function move(e){
+    if(!dragging)return;
+    curX=e.clientX-startX;
+    curY=e.clientY-startY;
+    el.style.transform=`translate(${curX}px,${curY}px) scale(1.08) rotate(3deg)`;
+    if(opts.onMove)opts.onMove(e,curX,curY);
+  }
+  function up(e){
+    if(!dragging)return;
+    dragging=false;
+    el.classList.remove('dragging');
+    /* hit-test the drop zones */
+    const r=el.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    let hit=null;
+    if(opts.zones){
+      for(const z of opts.zones()){
+        const zr=z.getBoundingClientRect();
+        if(cx>=zr.left && cx<=zr.right && cy>=zr.top && cy<=zr.bottom){hit=z;break;}
+      }
+    }
+    el.style.transform='';
+    el.style.zIndex='';
+    if(opts.onDrop)opts.onDrop(hit);
+    el.removeEventListener('pointermove',move);
+    el.removeEventListener('pointerup',up);
+    el.removeEventListener('pointercancel',up);
+  }
+  return ()=>el.removeEventListener('pointerdown',down);
+}
 function confetti(){const box=document.getElementById('confetti');const cols=['#F0833A','#2C7BE5','#3FA9F5','#2BA66B','#FFC000'];for(let i=0;i<70;i++){const c=el('div','cft');c.style.left=Math.random()*100+'%';c.style.background=cols[i%cols.length];c.style.animationDuration=(2.4+Math.random()*2)+'s';c.style.animationDelay=(Math.random()*0.6)+'s';box.appendChild(c);setTimeout(()=>c.remove(),5200);}}
 
 RENDER.cover=(s,root)=>{
@@ -605,6 +900,7 @@ RENDER.scene=(s,root)=>{
   const scr=el('div','scr');
   const h=el('div','hero');
   h.innerHTML=`<img src="${IMG}${s.img}" alt=""><div class="hero-grad"></div>
+    ${s.tape!==false?'<div class="tape-strip"></div>':''}
     <div class="hero-cap">
       ${s.room?`<div class="hero-room">${s.room}</div>`:''}
       <div class="hero-title">${s.title}</div>
@@ -618,7 +914,8 @@ RENDER.scene=(s,root)=>{
     card.appendChild(list);
   }
   scr.appendChild(card);
-  if(s.coach)scr.appendChild(coach(s.coach));
+  if(s.grabi)scr.appendChild(grabiFrom(s.grabi));
+  else if(s.coach)scr.appendChild(coach(s.coach));
   root.appendChild(scr);
 };
 
@@ -632,24 +929,32 @@ RENDER.hotspot=(s,root)=>{
   wrap.appendChild(counter);
   const visited=new Set();
   const panelHolder=el('div');
-  panelHolder.appendChild(el('div','hs-empty','👆 לחצו על אחת הנקודות הכתומות'));
+  panelHolder.appendChild(el('div','hs-empty','👆 הקישו על אחד הדגלים בתמונה'));
+  const doneHolder=el('div');
   s.spots.forEach((sp,i)=>{
-    const dot=el('button','hs-dot',String(i+1));
-    dot.style.right=sp.x+'%';dot.style.top=sp.y+'%';
-    dot.onclick=()=>{
+    const flag=el('button','flag',`${i+1}`);
+    flag.style.right=sp.x+'%';flag.style.top=sp.y+'%';
+    flag.onclick=()=>{
+      vibrate(12);
       visited.add(i);
-      dot.classList.add('done');
+      flag.classList.add('done');
       counter.textContent=visited.size+' / '+s.spots.length;
       const panel=el('div','hs-panel');
       panel.innerHTML=`<div class="pic">${sp.ic}</div>
         <div><div class="pt">${sp.t}</div><div class="pd">${sp.d}</div></div>`;
       panelHolder.innerHTML='';panelHolder.appendChild(panel);
-      if(visited.size===s.spots.length&&!done[idx])setTimeout(()=>markDone(),200);
+      if(visited.size===s.spots.length&&!done[idx]){
+        setTimeout(()=>{
+          markDone();
+          if(s.grabiDone){doneHolder.innerHTML='';doneHolder.appendChild(grabiFrom(s.grabiDone));}
+        },220);
+      }
     };
-    wrap.appendChild(dot);
+    wrap.appendChild(flag);
   });
   scr.appendChild(wrap);
   scr.appendChild(panelHolder);
+  scr.appendChild(doneHolder);
   root.appendChild(scr);
 };
 
@@ -756,7 +1061,8 @@ RENDER.audio=(s,root)=>{
     row.appendChild(c);
   });
   scr.appendChild(row);
-  scr.appendChild(coach('הקליקו על <b>"נערו את הארגז"</b> בכל אחד והקשיבו טוב — ארגז בטוח כמעט לא משמיע רעש תזוזה.'));
+  if(s.grabi)scr.appendChild(grabiFrom(s.grabi));
+  else scr.appendChild(coach('הקליקו על <b>"נערו את הארגז"</b> בכל אחד והקשיבו טוב — ארגז בטוח כמעט לא משמיע רעש תזוזה.'));
   scr.appendChild(fbHolder);
   root.appendChild(scr);
 };
@@ -784,6 +1090,7 @@ RENDER.walkthrough=(s,root)=>{
     stageHost.innerHTML='';
     if(stepIdx>=N){
       stageHost.appendChild(feedback(true,s.doneTitle,s.doneDesc));
+      if(s.grabiDone)stageHost.appendChild(grabiFrom(s.grabiDone));
       if(!done[idx])markDone();
       return;
     }
@@ -811,7 +1118,9 @@ RENDER.walkthrough=(s,root)=>{
           b.classList.add('correct');
           [...opts.children].forEach(c=>c.classList.add('lock'));
           b.classList.remove('lock');
+          vibrate(15);
           fbHolder.appendChild(feedback(true,'נכון!',st.ok));
+          if(st.grabi)fbHolder.appendChild(grabiFrom(st.grabi));
           const adv=el('button','btn-step',stepIdx<N-1?'המשך לחדר הבא ⟵':'לסיכום ⟵');
           adv.onclick=()=>{stepIdx++;renderStep();};
           fbHolder.appendChild(adv);
@@ -828,6 +1137,202 @@ RENDER.walkthrough=(s,root)=>{
     stageHost.appendChild(wrap);
   }
   renderStep();
+  root.appendChild(scr);
+};
+
+/* ===== PACK-THE-BOX (real drag) ===== */
+RENDER.packbox=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+  const stage=el('div','pb-stage');
+
+  const tray=el('div','pb-tray');
+  const boxWrap=el('div','pb-box-wrap');
+  const box=el('div','pb-box');
+  box.innerHTML=`<div class="pb-box-walls"></div>
+    <div class="pb-stack"></div>
+    <div class="pb-box-flap-l"></div>
+    <div class="pb-box-flap-r"></div>
+    <div class="pb-drop-hint">גררו פריט לכאן</div>`;
+  boxWrap.appendChild(box);
+  const stack=box.querySelector('.pb-stack');
+  const hint=box.querySelector('.pb-drop-hint');
+
+  const order=[];  /* item ids in placement order, bottom→top */
+  const itemEls={};
+
+  s.items.forEach(it=>{
+    const b=el('div','pb-item');
+    b.innerHTML=`<img src="${IMG}${it.img}" alt=""><span class="wt pb-w-${it.weight}">${it.wText}</span>`;
+    b.dataset.id=it.id;
+    tray.appendChild(b);
+    itemEls[it.id]=b;
+    dragify(b,{
+      canDrag:()=>!done[idx]&&!b.classList.contains('placed'),
+      onStart:()=>{vibrate(12);},
+      onMove:(e,dx,dy)=>{
+        const r=b.getBoundingClientRect();
+        const br=box.getBoundingClientRect();
+        const cx=r.left+r.width/2, cy=r.top+r.height/2;
+        const over=(cx>=br.left&&cx<=br.right&&cy>=br.top&&cy<=br.bottom);
+        box.classList.toggle('over',over);
+      },
+      zones:()=>[box],
+      onDrop:(hit)=>{
+        box.classList.remove('over');
+        if(hit===box){
+          /* place into stack */
+          b.classList.add('placed');
+          order.push(b.dataset.id);
+          const stackItem=el('div','pb-stack-item');
+          stackItem.innerHTML=`<img src="${IMG}${s.items.find(x=>x.id===b.dataset.id).img}" alt="">`;
+          stack.appendChild(stackItem);
+          hint.style.opacity='0';
+          vibrate(20);
+          if(order.length===s.items.length){
+            check.disabled=false;check.style.opacity='1';
+          }
+        }
+      }
+    });
+  });
+
+  stage.appendChild(tray);
+  stage.appendChild(boxWrap);
+
+  const actions=el('div','pb-actions');
+  const reset=el('button','pb-btn pb-btn-reset','התחל מחדש');
+  const check=el('button','pb-btn pb-btn-check','סגור ארגז ✓');
+  check.disabled=true;check.style.opacity='.45';
+  actions.appendChild(reset);actions.appendChild(check);
+  stage.appendChild(actions);
+
+  const fbHolder=el('div');
+
+  reset.onclick=()=>{
+    if(done[idx])return;
+    order.length=0;
+    stack.innerHTML='';
+    hint.style.opacity='';
+    box.classList.remove('closed');
+    Object.values(itemEls).forEach(e=>e.classList.remove('placed'));
+    check.disabled=true;check.style.opacity='.45';
+    fbHolder.innerHTML='';
+  };
+
+  check.onclick=()=>{
+    if(done[idx])return;
+    const correctOrder=[...s.items].sort((a,b)=>a.correct-b.correct).map(x=>x.id);
+    const ok=order.every((id,i)=>id===correctOrder[i]);
+    fbHolder.innerHTML='';
+    if(ok){
+      box.classList.add('closed');
+      vibrate([30,40,30]);
+      setTimeout(()=>{
+        const tape=el('div','tape');
+        tape.style.cssText='top:38px;left:0;right:0;height:14px;';
+        box.appendChild(tape);
+        const stamp=el('div','stamp','נארז ✓');
+        stamp.style.cssText='position:absolute;bottom:-12px;right:14px;';
+        box.appendChild(stamp);
+      },400);
+      fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));
+      if(s.grabiDone)fbHolder.appendChild(grabiFrom(s.grabiDone));
+      markDone();
+    }else{
+      box.classList.add('wobble');
+      vibrate([60,60,60]);
+      setTimeout(()=>box.classList.remove('wobble'),700);
+      fbHolder.appendChild(feedback(false,'לא יציב',s.errDesc));
+      if(s.grabiHints&&s.grabiHints[0])fbHolder.appendChild(grabiFrom(s.grabiHints[0]));
+    }
+  };
+
+  scr.appendChild(stage);
+  scr.appendChild(fbHolder);
+  root.appendChild(scr);
+};
+
+/* ===== TV LAYERS (real drag) ===== */
+RENDER.tvlayers=(s,root)=>{
+  const scr=el('div','scr');
+  scr.innerHTML=`<div><div class="eyebrow">${s.eyebrow}</div>
+    <h2 class="q" style="margin-top:4px">${s.q}</h2>
+    <p class="muted" style="margin-top:6px">${s.sub}</p></div>`;
+
+  const stage=el('div','tvl-stage');
+  const screen=el('div','tvl-screen');
+  /* prebuild overlay layers (hidden) */
+  s.layers.forEach(l=>{
+    const o=el('div','tvl-overlay '+l.cls);
+    o.dataset.id=l.id;
+    screen.appendChild(o);
+  });
+  const stepInfo=el('div','tvl-step','שכבה <b>1</b> מתוך '+s.layers.length+' — בחרו את השכבה הפנימית ביותר.');
+
+  const pool=el('div','tvl-pool');
+  let nextIdx=1;
+  const layerByCorrect=new Map(s.layers.map(l=>[l.correct,l]));
+  const fbHolder=el('div');
+
+  s.layers.forEach(l=>{
+    const chip=el('div','tvl-chip');
+    chip.innerHTML=`<span class="cic">${l.ic}</span><span>${l.label}</span>`;
+    chip.dataset.id=l.id;
+    chip.dataset.correct=l.correct;
+    pool.appendChild(chip);
+    dragify(chip,{
+      canDrag:()=>!done[idx]&&!chip.classList.contains('used'),
+      onStart:()=>vibrate(10),
+      onMove:(e,dx,dy)=>{
+        const r=chip.getBoundingClientRect();
+        const sr=screen.getBoundingClientRect();
+        const cx=r.left+r.width/2, cy=r.top+r.height/2;
+        const over=(cx>=sr.left&&cx<=sr.right&&cy>=sr.top&&cy<=sr.bottom);
+        screen.classList.toggle('over',over);
+      },
+      zones:()=>[screen],
+      onDrop:(hit)=>{
+        screen.classList.remove('over');
+        if(hit!==screen)return;
+        fbHolder.innerHTML='';
+        if(parseInt(chip.dataset.correct,10)===nextIdx){
+          chip.classList.add('used');
+          const ovl=screen.querySelector('.tvl-overlay[data-id="'+chip.dataset.id+'"]');
+          if(ovl)ovl.classList.add('on');
+          vibrate(25);
+          nextIdx++;
+          if(nextIdx>s.layers.length){
+            stepInfo.innerHTML='<b style="color:var(--good)">כל השכבות במקום ✓</b>';
+            fbHolder.appendChild(feedback(true,s.okTitle,s.okDesc));
+            if(s.grabiDone)fbHolder.appendChild(grabiFrom(s.grabiDone));
+            setTimeout(()=>{
+              const stamp=el('div','stamp','שביר · נארז ✓');
+              stamp.style.cssText='display:block;margin:8px auto 0;width:fit-content;';
+              fbHolder.appendChild(stamp);
+            },300);
+            markDone();
+          }else{
+            const next=layerByCorrect.get(nextIdx);
+            stepInfo.innerHTML=`שכבה <b>${nextIdx}</b> מתוך ${s.layers.length} — הבאה: ${next?next.label:''}`;
+          }
+        }else{
+          screen.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:350});
+          vibrate([50,40,50]);
+          fbHolder.appendChild(feedback(false,'שכבה לא נכונה',s.errDesc));
+          if(s.grabiHints&&s.grabiHints[0])fbHolder.appendChild(grabiFrom(s.grabiHints[0]));
+        }
+      }
+    });
+  });
+
+  stage.appendChild(screen);
+  stage.appendChild(stepInfo);
+  stage.appendChild(pool);
+  scr.appendChild(stage);
+  scr.appendChild(fbHolder);
   root.appendChild(scr);
 };
 
@@ -1012,7 +1517,13 @@ RENDER.summary=(s,root)=>{
       <div><div class="sum-t">${st.t}</div><div class="sum-d">${st.d}</div></div>`;
     scr.appendChild(it);
   });
-  scr.appendChild(coach(s.outro));
+  if(s.stamp){
+    const wrap=el('div');wrap.style.cssText='text-align:center;padding:6px 0 2px;';
+    const st=el('div','stamp',s.stamp);st.style.fontSize='15px';
+    wrap.appendChild(st);scr.appendChild(wrap);
+  }
+  if(s.grabiOutro)scr.appendChild(grabiFrom(s.grabiOutro));
+  else if(s.outro)scr.appendChild(coach(s.outro));
   root.appendChild(scr);
 };
 
